@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package rpc_header;
+
+message RpcHeader
+{
+    bytes service_name = 1; // 服务名称
+    bytes method_name = 2;  // 方法名称
+    uint32 args_size = 3;   // 参数大小
+}
