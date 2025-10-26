@@ -14,7 +14,7 @@ public:
     void start();
 
     const std::string get(const std::string& path);
-    const std::string create(const std::string& path, const std::string& data, uint datalen, int state);
+    void create(const std::string& path, const std::string& data, uint datalen, int state);
 
 private:
     // zookeeper 的会话端口

@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package rpc;
+
+// 使用工具生成 service 描述
+option cc_generic_services = true;
+
+message errorinfo
+{
+    uint32 error_code = 1;
+    bytes err_msg = 2;
+}
+
+message req
+{
+    bytes str = 1;
+}
+
+message res
+{
+    errorinfo err = 1;
+    bytes str = 2;
+}
+
+service servicerpc
+{
+    rpc getinfo(req) returns (res);
+}

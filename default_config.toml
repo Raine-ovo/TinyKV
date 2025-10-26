@@ -1,0 +1,11 @@
+# TOML 配置文档
+
+config_name = "TinyKV"
+
+[zookeeper]
+host = "127.0.0.1"
+port = 2181
+
+[rpc_server]
+host = "127.0.0.1"
+port = "8000"

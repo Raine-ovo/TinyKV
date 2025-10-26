@@ -1,12 +1,16 @@
 #include "common/rpc/rpc_provider.h"
 #include "common/logger/logger.h"
+#include "discovery/zookeeper/zk_client.h"
 #include "proto/rpc_header.pb.h"
 
+#include <cstdint>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/stubs/callback.h>
 #include <muduo/net/InetAddress.h>
 
 #include <functional>
+#include <netinet/in.h>
+#include <zookeeper/zookeeper.h>
 
 RpcProvider::RpcProvider(std::string ip,
                 std::string port,
@@ -28,6 +32,25 @@ void RpcProvider::run()
                                     std::placeholders::_3));
     // 设置线程数量
     _serverPtr->setThreadNum(4);
+    
+    // 同时需要把新的服务告知给 zookeeper
+    ZkClient zk_cli;
+    zk_cli.start();
+    // service 为永久性节点，method为临时性节点
+    for (auto &sn: _serviceMap)
+    {
+        //  /service_name 
+        std::string service_name = '/' + sn.first;
+        zk_cli.create(service_name, "", 0, 0);
+        
+        for (auto &mn: sn.second._methodMap)
+        {
+            std::string method_name = service_name + '/' + mn.first;
+            std::string method_data = _serverPtr->ipPort();
+            zk_cli.create(method_name, method_data, method_data.size(), ZOO_EPHEMERAL);
+            LOG_INFO("register {} on {}", method_name, method_data);
+        }
+    }
 
     // 启用网络服务
     _serverPtr->start();
@@ -52,15 +75,19 @@ void RpcProvider::onMessage(const muduo::net::TcpConnectionPtr &conn,
                 muduo::net::Buffer *buffer,
                 muduo::Timestamp time)
 {
+    LOG_ERROR("recv message from consumer.");
     // 序列化
     std::string recv_buf = buffer->retrieveAllAsString();
+    LOG_INFO("recv total bytes: {}, info: {}", recv_buf.size(), recv_buf);
 
     // 这里 C/S 段规定：前 4 个字节表示可变字符串的长度（请求），获取参数
     // 然后后面是获取 request 参数
     
     // uint32_t 为 4 个字节
-    uint32_t header_size = 0;
-    recv_buf.copy((char*)&header_size, 4, 0);
+    uint32_t net_header_size = 0;
+    recv_buf.copy((char*)&net_header_size, 4, 0);
+    uint32_t header_size = ntohl(net_header_size);
+    LOG_INFO("net header_size: {}, header_size: {}", net_header_size, header_size);
 
     // 根据 header size 读取 header
     std::string rpc_header_str = recv_buf.substr(4, header_size);
@@ -171,4 +198,5 @@ void RpcProvider::sendRpcResponse(const muduo::net::TcpConnectionPtr &conn,
     }
     // rpc 为短连接，完成一次 rpc 请求断开连接
     conn->shutdown();
+    delete response; // 释放动态创建的 response
 }

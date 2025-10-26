@@ -6,6 +6,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "toml.hpp"
+
 class Config
 {
 public:
@@ -15,6 +17,8 @@ public:
 
 private:
     std::unordered_map<std::string, std::string> _configMap;
+
+    void traverse_toml(const toml::value &value, const std::string &prefix);
 
     // 单例模式
     Config();
