@@ -19,6 +19,7 @@ public:
 
     static uint random_time(const uint &begin, const uint &end);
     void reset(uint timeout = 1000); // 重置时间 timeout
+    void random_reset(const uint &begin, const uint &end);
     
     void setCallback(TimerCallback callback);
     void run(); // 启用线程

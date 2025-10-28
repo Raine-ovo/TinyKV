@@ -38,6 +38,11 @@ void Timer::reset(uint timeout)
     _runningtime = 0;
 }
 
+void Timer::random_reset(const uint &begin, const uint &end)
+{
+    reset(random_time(begin, end));
+}
+
 void Timer::setCallback(TimerCallback callback)
 {
     _callback = callback;
@@ -59,7 +64,7 @@ void Timer::run()
             if (_runningtime >= _timeout)
             {
                 _callback();
-                return ;
+                _runningtime = 0; // 实现循环定时触发
             }
         }
     });

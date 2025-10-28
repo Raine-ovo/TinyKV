@@ -2,3 +2,4 @@ CompileFlags:            # 编译标志部分
   Add:
     - "-std=c++20"      # 添加 C++20 支持
     - "-isystem/home/rainea/.xmake/packages/t/toml11/v4.4.0/d9b5d9555a9849b0a8e5714c4e66d566/include" # 包含头文件, 绝对路径]
+    - "-isystem/home/rainea/.xmake/packages/g/gtest/v1.17.0/fe669f042f444a6cb3a06c810a609640/include" # 包含头文件, 绝对路径

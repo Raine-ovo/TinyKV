@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include <cstdlib>
+#include <format>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/message.h>
 
@@ -39,6 +40,7 @@ void RpcChannel::CallMethod(const ::google::protobuf::MethodDescriptor* method,
     if (!request->SerializeToString(&args_str))
     {
         LOG_ERROR("{}:{} request serialize failed.", service_name, method_name);
+        if (controller) controller->SetFailed(std::format("{}:{} request serialize failed.", service_name, method_name));
         return ;
     }
     args_size = args_str.size();
@@ -55,6 +57,7 @@ void RpcChannel::CallMethod(const ::google::protobuf::MethodDescriptor* method,
     if (!rpcHeader.SerializeToString(&rpcHeader_str))
     {
         LOG_ERROR("{}:{} rpc header serialize failed.", service_name, method_name);
+        if (controller) controller->SetFailed(std::format("{}:{} rpc header serialize failed.", service_name, method_name));
     }
 
     // ! 注意，这里 str.size() 的出来的是主机字节序，而我们的数据是需要
@@ -89,6 +92,7 @@ void RpcChannel::CallMethod(const ::google::protobuf::MethodDescriptor* method,
     if ("" == conn_str)
     {
         LOG_ERROR("{}:{} is not exist in zookeeper!", service_name, method_name);
+        if (controller) controller->SetFailed(std::format("{}:{} is not exist in zookeeper!", service_name, method_name));
         return ;
     }
 
@@ -99,6 +103,8 @@ void RpcChannel::CallMethod(const ::google::protobuf::MethodDescriptor* method,
     if (pos == std::string::npos)
     {
         LOG_INFO("host:port extracted failed => {}.", conn_str);
+        if (controller) controller->SetFailed(std::format("host:port extracted failed => {}.", conn_str));
+        return ;
     }
     
     auto [host, port] = 
@@ -117,6 +123,7 @@ void RpcChannel::CallMethod(const ::google::protobuf::MethodDescriptor* method,
     if (-1 == clientfd)
     {
         LOG_ERROR("create socket failed.");
+        if (controller) controller->SetFailed("create socket failed.");
         exit(EXIT_FAILURE);
     }
 
@@ -124,6 +131,7 @@ void RpcChannel::CallMethod(const ::google::protobuf::MethodDescriptor* method,
     if (-1 == connect(clientfd, (struct sockaddr*)&server_addr, sizeof(server_addr)))
     {
         LOG_ERROR("socket connect {}:{} failed.", host, port);
+        if (controller) controller->SetFailed(std::format("socket connect {}:{} failed.", host, port));
         close(clientfd);
         return ;
     }
@@ -134,6 +142,7 @@ void RpcChannel::CallMethod(const ::google::protobuf::MethodDescriptor* method,
     {
         LOG_ERROR("socket send rpc to {}:{} failed.", host, port);
         close(clientfd);
+        if (controller) controller->SetFailed(std::format("socket send rpc to {}:{} failed.", host, port));
         return ;
     }
 
@@ -146,6 +155,7 @@ void RpcChannel::CallMethod(const ::google::protobuf::MethodDescriptor* method,
     {
         LOG_ERROR("socket recv rpc to {}:{} failed.", host, port);
         close(clientfd);
+        if (controller) controller->SetFailed(std::format("socket recv rpc to {}:{} failed.", host, port));
         return ;
     }
 
@@ -155,6 +165,7 @@ void RpcChannel::CallMethod(const ::google::protobuf::MethodDescriptor* method,
     {
         LOG_ERROR("response {} parse failed.", response_str);
         close(clientfd);
+        if (controller) controller->SetFailed(std::format("response {} parse failed.", response_str));
         return ;
     }
 
