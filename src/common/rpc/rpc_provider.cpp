@@ -6,6 +6,8 @@
 #include <cstdint>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/stubs/callback.h>
+#include <memory>
+#include <muduo/net/EventLoop.h>
 #include <muduo/net/InetAddress.h>
 
 #include <functional>
@@ -13,12 +15,11 @@
 #include <zookeeper/zookeeper.h>
 
 RpcProvider::RpcProvider(std::string ip,
-                std::string port,
-                muduo::net::EventLoop* loop)
+                std::string port)
 {
     muduo::net::InetAddress addr(ip, stoi(port));
-    _serverPtr = std::make_unique<muduo::net::TcpServer>(loop, addr, "RpcProvider");
-    _loop = loop;
+    _loop = std::make_unique<muduo::net::EventLoop>();
+    _serverPtr = std::make_unique<muduo::net::TcpServer>(_loop.get(), addr, "RpcProvider");
 }
 
 // 启动rpc服务节点
@@ -75,10 +76,9 @@ void RpcProvider::onMessage(const muduo::net::TcpConnectionPtr &conn,
                 muduo::net::Buffer *buffer,
                 muduo::Timestamp time)
 {
-    LOG_ERROR("recv message from consumer.");
     // 序列化
     std::string recv_buf = buffer->retrieveAllAsString();
-    LOG_INFO("recv total bytes: {}, info: {}", recv_buf.size(), recv_buf);
+    // LOG_INFO("recv total bytes: {}, info: {}", recv_buf.size(), recv_buf);
 
     // 这里 C/S 段规定：前 4 个字节表示可变字符串的长度（请求），获取参数
     // 然后后面是获取 request 参数
@@ -87,7 +87,7 @@ void RpcProvider::onMessage(const muduo::net::TcpConnectionPtr &conn,
     uint32_t net_header_size = 0;
     recv_buf.copy((char*)&net_header_size, 4, 0);
     uint32_t header_size = ntohl(net_header_size);
-    LOG_INFO("net header_size: {}, header_size: {}", net_header_size, header_size);
+    // LOG_INFO("net header_size: {}, header_size: {}", net_header_size, header_size);
 
     // 根据 header size 读取 header
     std::string rpc_header_str = recv_buf.substr(4, header_size);
@@ -96,7 +96,7 @@ void RpcProvider::onMessage(const muduo::net::TcpConnectionPtr &conn,
     std::string method_name;
     uint32_t args_size;
 
-    LOG_INFO("rpc_provider:onMessage received message.");
+    // LOG_INFO("rpc_provider:onMessage received message.");
 
     if (rpc_header.ParseFromString(rpc_header_str))
     {
@@ -153,7 +153,7 @@ void RpcProvider::onMessage(const muduo::net::TcpConnectionPtr &conn,
     ::google::protobuf::Closure *done = 
         ::google::protobuf::NewCallback<RpcProvider, const muduo::net::TcpConnectionPtr&, ::google::protobuf::Message*>(this, &RpcProvider::sendRpcResponse, conn, response);
 
-    LOG_INFO("Now calling {}:{}", service_name, method_name);
+    // LOG_INFO("Now calling {}:{}", service_name, method_name);
     service->CallMethod(method, nullptr, request, response, done);
 }
     
@@ -195,8 +195,8 @@ void RpcProvider::sendRpcResponse(const muduo::net::TcpConnectionPtr &conn,
     else
     {
         LOG_ERROR("serialize response_str = {} failed.", response_str);
+        conn->shutdown();
     }
-    // rpc 为短连接，完成一次 rpc 请求断开连接
-    conn->shutdown();
+    // 在 raft 节点之间的连接应该是长连接
     delete response; // 释放动态创建的 response
 }

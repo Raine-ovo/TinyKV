@@ -54,7 +54,9 @@ struct Entry
 class Raft : public raft::RaftService
 {
 public:
-    Raft() = delete; // 只使用 Make 作为构建 Raft 的方法
+    Raft(std::vector<std::shared_ptr<RaftClient>> &peers, const uint32_t &me,
+        std::shared_ptr<Persister> persister, std::shared_ptr<LockQueue<ApplyMsg>> applyChan);
+    Raft();
     ~Raft();
 
     void Make(std::vector<std::shared_ptr<RaftClient>> &peers, const uint32_t &me,
@@ -64,6 +66,7 @@ public:
     void Start();
 
     void Kill();
+    bool Killed();
 
 private:
     std::shared_mutex _mutex;
@@ -106,7 +109,6 @@ private:
 
     // 把日志提交给上层服务
     void Applier();
-    bool Killed();    // 选举
     ::raft::AppendEntriesResponse AppendEntriesRPC(uint64_t term, uint32_t leaderId, uint64_t preLogIndex,
                                             uint64_t prevLogTerm, const std::vector<Entry>& logs, uint64_t leaderCommit);
     // 发起一次选举
@@ -117,6 +119,16 @@ private:
     void HeartBeat();
     // 日志复制
     void AppendEntries();
+
+    /* 持久化相关函数 */
+    // 序列化日志为字节流
+    std::vector<uint8_t> SerializeLogs();
+    // 反序列化并应用到日志
+    void UnSerializeLogs(const std::vector<uint8_t>& meta_logs);
+    // 持久化
+    void Persist(const std::vector<uint8_t> snapshot);
+    // 创建 Raft 时恢复持久化数据
+    void ReadPersistData();
 
     bool newerLogs(uint64_t lastLogIndex, uint64_t lastLogTerm);
     ::raft::RequestVoteResponse RequestVoteRPC(uint64_t term, uint32_t candidateId,

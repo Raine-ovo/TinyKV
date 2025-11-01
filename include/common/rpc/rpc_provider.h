@@ -26,8 +26,7 @@ class RpcProvider
 {
 public:
     RpcProvider(std::string ip,
-                std::string port,
-                muduo::net::EventLoop* loop);
+                std::string port);
     // 启动rpc服务节点
     void run();
     // 注册rpc服务
@@ -36,7 +35,7 @@ public:
 private:
     // 网络模块
     std::unique_ptr<muduo::net::TcpServer> _serverPtr;
-    muduo::net::EventLoop *_loop;
+    std::unique_ptr<muduo::net::EventLoop> _loop;
     // 回调函数
     void onConnection(const muduo::net::TcpConnectionPtr &conn);
     void onMessage(const muduo::net::TcpConnectionPtr &conn,

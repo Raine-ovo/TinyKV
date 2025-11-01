@@ -25,7 +25,9 @@ public:
     }
     void write_string(const std::string &str);
     void write_bytes(const std::vector<uint8_t> &data);
+    void write_raw(const void* data, size_t size);
     bool is_good();
+    void flush();
 
 private:
     std::ofstream _file;

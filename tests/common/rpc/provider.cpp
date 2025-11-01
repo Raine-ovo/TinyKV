@@ -33,8 +33,7 @@ private:
 
 int main ()
 {
-    muduo::net::EventLoop loop;
-    RpcProvider provider("127.0.0.1", "8000", &loop);
+    RpcProvider provider("127.0.0.1", "8000");
     provider.registerService(new class provider);
     provider.run();
     return 0;

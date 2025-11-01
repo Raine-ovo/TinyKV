@@ -50,6 +50,14 @@ void Timer::setCallback(TimerCallback callback)
 
 void Timer::run()
 {
+    is_stopped = false;
+    
+    // 确保一个计时器只有一个线程运行
+    if (_thread != nullptr)
+    {
+        return ;
+    }
+
     _thread = std::make_shared<std::thread>([&]() {
         while (true)
         {

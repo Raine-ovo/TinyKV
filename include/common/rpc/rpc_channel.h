@@ -12,6 +12,7 @@ public:
                     ::google::protobuf::Message* response, 
                     ::google::protobuf::Closure* done);
 private:
+    
 };
 
 #endif // RPC_CHANNEL_H
