@@ -1,9 +1,11 @@
 #include "metadata/raft/raft.h"
 #include "common/persister/persister.h"
 #include "common/timer/timer.h"
+#include "metadata/raft/log_manager.h"
 #include "proto/raft.pb.h"
 #include "common/logger/logger.h"
 #include "proto/persister.pb.h"
+#include <algorithm>
 #include <cassert>
 #include <cstdint>
 #include <iterator>
@@ -32,8 +34,9 @@ Raft::Raft(std::vector<std::shared_ptr<RaftClient>> &peers, const uint32_t &me,
       _commitIndex(0),
       _lastApplied(0),
 
+      _log_manager(),
+
       // logs 默认初始 index = 1
-      _logs(std::move(std::vector<Entry>(1, {0, ""}))),
       _matchIndex(std::move(std::vector<uint64_t>(peers.size(), 0))),
       _nextIndex(std::move(std::vector<uint64_t>(peers.size(), 0))),
 
@@ -49,12 +52,39 @@ Raft::Raft(std::vector<std::shared_ptr<RaftClient>> &peers, const uint32_t &me,
     _thread.detach();
 
     _electTimer->random_reset(MIN_ELECT_TIMEOUT, MAX_ELECT_TIMEOUT);
-    _electTimer->run(); // 开启选举超时计时
 }
 
 Raft::Raft()
 {
 
+}
+
+// 服务层启动 Raft 确认一致性后，由 Leader 向客户端返回结果
+// 返回：index，term，isleader
+std::tuple<int, int, bool> Raft::Start(const std::string& command)
+{
+    uint32_t index = -1;
+    uint64_t term = -1;
+    bool isLeader = false;
+
+    std::unique_lock<std::shared_mutex> lock(_mutex);
+    term = _currentTerm;
+    if (_status != STATUS::LEADER)
+    {
+        return {index, term, isLeader};
+    }
+
+    // 如果是 leader 则进行处理
+    Entry one_log{term, command};
+    // 追加日志, 由日志复制机制进行一致
+    _log_manager.put(one_log);
+    
+    LOG_INFO("Node[{}] received command {} and add it to logs.", _me, command);
+    
+    index = _log_manager.lastIndex();
+    isLeader = true;
+    
+    return { index, term, isLeader };
 }
 
 void Raft::Make(std::vector<std::shared_ptr<RaftClient>> &peers, const uint32_t &me,
@@ -74,7 +104,9 @@ void Raft::Make(std::vector<std::shared_ptr<RaftClient>> &peers, const uint32_t 
     _lastApplied = 0;
 
     // logs 默认初始 index = 1
-    _logs = std::move(std::vector<Entry>(1, {0, ""}));
+    _log_manager.reset();
+    _log_manager.set_lastIncludedIndex(0);
+    _log_manager.set_lastIncludedTerm(0);
 
     _matchIndex = std::move(std::vector<uint64_t>(peers.size(), 0));
     _nextIndex = std::move(std::vector<uint64_t>(peers.size(), 0));
@@ -122,6 +154,8 @@ void Raft::TurnFollower(uint64_t term)
     _status = STATUS::FOLLOWER;
     _currentTerm = term;
     _votedFor = -1; // 即 uint32_t 最大的数
+    
+    Persist();
 
     // 因为通过 leader rpc 变为了非 leader ，需要重置计时器
     _heartbeatTimer->stop();
@@ -131,7 +165,7 @@ void Raft::TurnFollower(uint64_t term)
 std::vector<uint8_t> Raft::SerializeLogs()
 {
     ::persister::LogEntryVector entries;
-    for (const auto& log : _logs)
+    for (const auto& log : _log_manager.get_entries())
     {
         ::persister::LogEntry* one_log = entries.add_entries();
         one_log->set_term(log.term);
@@ -163,6 +197,18 @@ void Raft::Persist(const std::vector<uint8_t> snapshot)
     _persister->save_snapshot(snapshot);
 }
 
+void Raft::Persist()
+{
+    if (_persister == nullptr)
+    {
+        LOG_ERROR("raft node {}'s persister is nullptr!", _me);
+        return ;
+    }
+
+    // 把 logs 进行序列化
+    _persister->save_state(_currentTerm, _votedFor, std::move(SerializeLogs()));
+}
+
 void Raft::ReadPersistData()
 {
     auto state_opt = _persister->load_state();
@@ -190,11 +236,13 @@ void Raft::ElectPrepare()
     // 2. 给自己投票
     _votedFor = _me;
 
+    Persist();
+
     ::raft::RequestVoteRequest request;
     request.set_term(_currentTerm);
     request.set_candidateid(_me);
-    request.set_lastlogindex(_logs.size() - 1);
-    request.set_lastlogterm(_logs.back().term);
+    request.set_lastlogindex(_log_manager.lastIndex());
+    request.set_lastlogterm(_log_manager.lastTerm());
 
     LOG_DEBUG("[{}] start one election, term={}", _me, _currentTerm);
 
@@ -252,6 +300,9 @@ void Raft::Elect(const ::raft::RequestVoteRequest &request)
 
                     // 变成 leader
                     _status = STATUS::LEADER;
+                    // 更新 nextIndex 和 matchIndex
+                    std::for_each(_nextIndex.begin(), _nextIndex.end(), [&](uint64_t& index) { index = _log_manager.lastIndex() + 1; });
+                    std::for_each(_matchIndex.begin(), _matchIndex.end(), [](uint64_t& index) { index = 0; });
                     // 立刻开始发送心跳确认身份
                     _heartbeatTimer->run();
                 }
@@ -271,11 +322,46 @@ void Raft::Elect(const ::raft::RequestVoteRequest &request)
 // 心跳计时器回调函数
 void Raft::HeartBeat()
 {
+    {
+        std::shared_lock<std::shared_mutex> lock(_mutex);
+        if (_status != STATUS::LEADER)
+        {
+            return ;
+        }
+    }
+
     // 在回调函数中，开启线程执行 AppendEntries
     std::thread td([this]() {
         this->AppendEntries();
     });
     td.detach();
+}
+
+void Raft::UpdateCommitIndex()
+{
+    for (int N = _log_manager.lastIndex(); N >= _commitIndex; -- N)
+    {
+        // 只更新自己任期的日志
+        if (_log_manager.get(N).term != _currentTerm)
+        {
+            continue;
+        }
+
+        int matched = 1;
+        for (int i = 0; i < _peers.size(); ++ i)
+        {
+            if (i == _me) continue;
+            if (_matchIndex[i] >= N)
+            {
+                ++ matched;
+            }
+        }
+        if (matched > _peers.size() / 2)
+        {
+            _commitIndex = matched;
+            break;
+        }
+    }
 }
 
 // leader 给 peers 发送日志, 在线程中执行
@@ -309,19 +395,28 @@ void Raft::AppendEntries()
             {
                 std::shared_lock<std::shared_mutex> lock(_mutex);
 
+                // 检查是否落后太多
+                if (_nextIndex[index] <= _log_manager.get_lastIncludedIndex())
+                {
+                    InstallSnapshot(index);
+                    return ;
+                }
+
                 pre_log_index = _nextIndex[index] - 1;
                 request.set_prevlogindex(pre_log_index);
-                request.set_prevlogterm(_logs[pre_log_index].term);
+                request.set_prevlogterm(_log_manager.get(pre_log_index).term);
                 // 获取 entries
-                log_entries_size = _logs.size() - 1 - _nextIndex[index] + 1;
+                log_entries_size = _log_manager.lastIndex() - _nextIndex[index] + 1;
                 ::google::protobuf::RepeatedPtrField<::raft::LogEntry>* logEntries = request.mutable_entries();
-                for (size_t i = _nextIndex[index]; i < _logs.size(); ++ i)
+                for (size_t i = _nextIndex[index]; i <= _log_manager.lastIndex(); ++ i)
                 {
                     ::raft::LogEntry *one_log = logEntries->Add();
-                    one_log->set_term(_logs[i].term);
-                    one_log->set_command(_logs[i].command);
+                    one_log->set_term(_log_manager.get(i).term);
+                    one_log->set_command(_log_manager.get(i).command);
                 }
             }
+
+            LOG_INFO("Node[{}] => Node[{}]: 发送日志 {}-{}", _me, index, pre_log_index+1, _log_manager.lastIndex());
 
             ::raft::AppendEntriesResponse response = peer->AppendEntries(request);
 
@@ -349,24 +444,7 @@ void Raft::AppendEntries()
                     _nextIndex[index] = _matchIndex[index] + 1;
 
                     // 再更新全局的 commit_index
-                    for (size_t N = _logs.size() - 1; N > _commitIndex; -- N )
-                    {
-                        // 只更新自己任期的日志
-                        if (_logs[N].term == _currentTerm) {
-                            size_t commited = 1; // me
-                            for (size_t i = 0; i < _peers.size(); ++ i)
-                            {
-                                if (i == _me) continue;
-                                commited += (_matchIndex[i] >= N);
-                            }
-                            if (commited > _peers.size() / 2)
-                            {
-                                // 更新 commit_index
-                                _commitIndex = N;
-                                break;
-                            }
-                        }
-                    }
+                    UpdateCommitIndex();
                 }
                 else
                 {
@@ -386,6 +464,44 @@ void Raft::AppendEntries()
     }
 }
 
+void Raft::InstallSnapshot(uint32_t index)
+{
+    auto peer = _peers[index];
+
+    // 不能发送日志了，需要进行快照安装
+    ::raft::InstallSnapshotRequest request;
+    request.set_term(_currentTerm);
+    request.set_leaderid(_me);
+    request.set_lastincludedindex(_log_manager.get_lastIncludedIndex());
+    request.set_lastincludedterm(_log_manager.get_lastIncludedTerm());
+    request.set_data(_persister->load_snapshot().value());
+
+    ::raft::InstallSnapshotResponse response = peer->InstallSnapshot(request);
+    
+    if (peer->getController()->Failed())
+    {
+        return ;
+    }
+
+    if (response.term() > _currentTerm)
+    {
+        TurnFollower(response.term());
+        return ;
+    }
+
+    // 过期 rpc
+    if (_status != STATUS::LEADER && _currentTerm != request.term())
+    {
+        return ;
+    }
+
+    // 接收到了快照
+    _matchIndex[index] = std::max(_matchIndex[index], request.lastincludedindex());
+    _nextIndex[index] = _matchIndex[index] + 1;
+
+    UpdateCommitIndex();
+}
+
 void Raft::Applier()
 {
     // 将 committed 日志提交到服务层（通过 applyChan 通道）
@@ -399,7 +515,7 @@ void Raft::Applier()
                 ApplyMsg msg;
                 msg.CommandValid = true;
                 msg.CommandIndex = idx;
-                msg.Command = _logs[idx].command;
+                msg.Command = _log_manager.get(idx).command;
 
                 msg.SnapshotValid = false;
 
@@ -423,10 +539,10 @@ void Raft::Applier()
 // 因为在 RequestVote 已经加锁，所以这里不需要加锁
 bool Raft::newerLogs(uint64_t lastLogIndex, uint64_t lastLogTerm)
 {
-    if (_logs.size() == 1) return true;
+    if (_log_manager.lastIndex() == 0) return true;
 
-    uint64_t my_lastLogIndex = _logs.size() - 1;
-    uint64_t my_lastLogTerm  = _logs.back().term;
+    uint64_t my_lastLogIndex = _log_manager.lastIndex();
+    uint64_t my_lastLogTerm  = _log_manager.lastTerm();
 
     return (
         lastLogTerm > my_lastLogTerm
@@ -493,7 +609,7 @@ bool Raft::newerLogs(uint64_t lastLogIndex, uint64_t lastLogTerm)
 
     // 一致性检测
     // 没有 prevLogIndex 处日志 或 preLogIndex 处日志 term 冲突
-    if (_logs.size() <= preLogIndex || _logs[preLogIndex].term != prevLogTerm)
+    if (_log_manager.lastIndex() < preLogIndex || _log_manager.get(preLogIndex).term != prevLogTerm)
     {
         response.set_success(false);
         return response;
@@ -507,10 +623,11 @@ bool Raft::newerLogs(uint64_t lastLogIndex, uint64_t lastLogTerm)
     for (; idx < logs.size(); ++ idx)
     {
         int _log_index = preLogIndex + 1 + idx;
-        if (_log_index >= _logs.size()) break;
-        if (_logs[_log_index].term != logs[idx].term)
+        if (_log_index > _log_manager.lastIndex()) break;
+        if (_log_manager.get(_log_index).term != logs[idx].term)
         {
-            _logs.resize(_log_index);
+            _log_manager.resize(_log_index);
+            Persist();
             break;
         }
     }
@@ -518,13 +635,19 @@ bool Raft::newerLogs(uint64_t lastLogIndex, uint64_t lastLogTerm)
     // idx 为 logs 与 _logs 冲突点
     // 冲突点及后面所有的 logs 复制到 _logs
     auto to_add = logs | std::views::drop(idx);
-    std::ranges::copy(to_add, std::back_inserter(_logs));
+    for (const auto& log : to_add)
+    {
+        _log_manager.put(log);
+    }
+    Persist();
 
     // 更新 commit_index
     if (leaderCommit > _commitIndex)
     {
-        _commitIndex = std::min(leaderCommit, _logs.size() - 1);
+        _commitIndex = std::min(leaderCommit, _log_manager.lastIndex());
     }
+
+    LOG_INFO("Node[{}] received logs from Node[{}]", _me, leaderId);
 
     return response;
 }
@@ -562,5 +685,97 @@ void Raft::AppendEntriesRPC(::google::protobuf::RpcController* controller,
                               request->prevlogterm(),
                               logs,
                               request->leadercommit());
+    done->Run();
+}
+
+::raft::InstallSnapshotResponse Raft::InstallSnapshot(uint64_t term, uint32_t leaderId, uint64_t lastIncludedIndex,
+                    uint64_t lastIncludedTerm, std::vector<uint8_t> data)
+{
+    ::raft::InstallSnapshotResponse response;
+    response.set_term(std::max(term, _currentTerm));
+
+    if (term < _currentTerm)
+    {
+        return response;
+    }
+
+    if (term > _currentTerm)
+    {
+        TurnFollower(term);
+    }
+
+    if (lastIncludedIndex < _commitIndex)
+    {
+        // 如果对方的快照比我 commit 还小，说明这个快照已经过期
+        return response;
+    }
+
+    if (lastIncludedIndex >= _log_manager.lastIndex())
+    {
+        // leader 的快照覆盖了我的所有日志，全部接受
+        // 把日志全部丢弃，并保存快照数据
+        _log_manager.reset();
+    }
+    else
+    {
+        // 没有全部覆盖，那就把没覆盖的部分保留
+
+        // 这里要作一个一致性检查
+        if (lastIncludedTerm != _log_manager.get(lastIncludedIndex).term)
+        {
+            // 根据强 leader 原则，舍弃自己的日志
+            _log_manager.reset();
+        }
+        else
+        {
+            _log_manager.drop(lastIncludedIndex);
+        }
+    }
+
+    // 更新 metadata
+    _commitIndex = std::max(_commitIndex, lastIncludedIndex);
+
+    _log_manager.set_lastIncludedIndex(lastIncludedIndex);
+    _log_manager.set_lastIncludedTerm(lastIncludedTerm);
+    Persist();
+
+    // 把快照安装到服务层
+    std::thread td([&]() {
+        ApplyMsg msg;
+        msg.CommandValid = false;
+        
+        msg.SnapshotValid = true;
+        msg.Snapshot = std::move(data);
+        msg.SnapshotIndex = lastIncludedIndex;
+        msg.SnapshotTerm = lastIncludedTerm;
+
+        _applyChan->push(msg);
+    });
+    td.detach();
+
+    return response;
+}
+
+void Raft::InstallSnapshotRPC(::google::protobuf::RpcController* controller,
+                    const ::raft::InstallSnapshotRequest* request,
+                    ::raft::InstallSnapshotResponse* response,
+                    ::google::protobuf::Closure* done)
+{
+    uint64_t term = request->term();
+    uint32_t leaderId = request->leaderid();
+    uint64_t lastIncludedIndex = request->lastincludedindex();
+    uint64_t lastIncludedTerm = request->lastincludedterm();
+    std::string proto_data = request->data();
+    std::vector<uint8_t> data (
+        reinterpret_cast<const uint8_t*>(proto_data.data()),
+        reinterpret_cast<const uint8_t*>(proto_data.data() + proto_data.size())
+    );
+
+    *response = InstallSnapshot(term, 
+                                leaderId,
+                                lastIncludedIndex, 
+                                lastIncludedTerm,
+                                std::move(data));
+
     done->Run();
 }

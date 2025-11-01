@@ -5,6 +5,7 @@
 #include "metadata/raft/raft_client.h"
 #include "common/rpc/rpc_provider.h"
 
+#include <chrono>
 #include <cstdint>
 #include <cstdlib>
 #include <exception>
@@ -83,9 +84,26 @@ void Start_A_Raft_Node(const std::string& ip, uint32_t port)
         }
     });
 
+    // 给 raft 节点加入日志
+    std::thread add_logs([&]() {
+        int index = 0;
+        while (true)
+        {
+            try {
+                std::string command = std::format("command_{}", index);
+                raft->Start(command);
+            } catch (const std::exception& e) {
+                std::cout << "日志复制机制异常: " << e.what() << std::endl;
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            ++ index;
+        }
+    });
+
     std::cout << "节点 " << node_id << " 启动完成" << std::endl;
     td.join();
     applyChan_thread.join();
+    add_logs.join();
 }
 
 // 传入 ip 、 node_id

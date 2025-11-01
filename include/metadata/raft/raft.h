@@ -6,6 +6,7 @@
 #include <memory>
 #include <shared_mutex>
 #include <string>
+#include <sys/types.h>
 #include <vector>
 #include <mutex>
 
@@ -14,6 +15,7 @@
 #include "proto/raft.pb.h"
 #include "raft_client.h"
 #include "common/persister/persister.h"
+#include "log_manager.h"
 
 /*
  * Raft 算法实现：
@@ -41,14 +43,9 @@ struct ApplyMsg
     uint64_t CommandIndex; // 日志索引
 
     bool SnapshotValid; // 提交的信息是快照
-    std::string Snapshot;
+    std::vector<uint8_t> Snapshot;
     uint64_t SnapshotIndex; // 索引
-};
-
-struct Entry
-{
-    uint64_t term;
-    std::string command;
+    uint64_t SnapshotTerm;
 };
 
 class Raft : public raft::RaftService
@@ -62,8 +59,9 @@ public:
     void Make(std::vector<std::shared_ptr<RaftClient>> &peers, const uint32_t &me,
         std::shared_ptr<Persister> persister, std::shared_ptr<LockQueue<ApplyMsg>> applyChan);
 
-    // 服务层启动 Raft 确认一致性后，向客户端返回结果
-    void Start();
+    // 服务层启动 Raft 确认一致性后，由 Leader 向客户端返回结果
+    // 返回：index，term，isleader
+    std::tuple<int, int, bool> Start(const std::string& command);
 
     void Kill();
     bool Killed();
@@ -78,7 +76,7 @@ private:
     // 持久化状态
     uint64_t _currentTerm;
     uint32_t _votedFor;
-    std::vector<Entry> _logs;
+    LogManager _log_manager;
 
     // 自身状态
     STATUS _status;
@@ -102,6 +100,8 @@ private:
     // 提交上层信息的通道
     std::shared_ptr<LockQueue<ApplyMsg>> _applyChan;
 
+private:
+
     void TurnFollower(uint64_t term);
 
     // 返回状态：term、isleader
@@ -119,6 +119,12 @@ private:
     void HeartBeat();
     // 日志复制
     void AppendEntries();
+    // Follower 接收日志/快照后更新 matchIndex
+    void UpdateCommitIndex();
+
+    // Leader 向落后的 follower 提供快照
+    // 在 AppendEntries 中检测是否落后
+    void InstallSnapshot(uint32_t index);
 
     /* 持久化相关函数 */
     // 序列化日志为字节流
@@ -127,6 +133,7 @@ private:
     void UnSerializeLogs(const std::vector<uint8_t>& meta_logs);
     // 持久化
     void Persist(const std::vector<uint8_t> snapshot);
+    void Persist();
     // 创建 Raft 时恢复持久化数据
     void ReadPersistData();
 
@@ -143,6 +150,13 @@ private:
                         const ::raft::AppendEntriesRequest* request,
                         ::raft::AppendEntriesResponse* response,
                         ::google::protobuf::Closure* done);
+    
+    ::raft::InstallSnapshotResponse InstallSnapshot(uint64_t term, uint32_t leaderId, uint64_t lastIncludedIndex,
+                        uint64_t lastIncludedTerm, std::vector<uint8_t> data);
+    void InstallSnapshotRPC(::google::protobuf::RpcController* controller,
+                       const ::raft::InstallSnapshotRequest* request,
+                       ::raft::InstallSnapshotResponse* response,
+                       ::google::protobuf::Closure* done);
 };
 
 #endif

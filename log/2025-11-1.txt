@@ -1,585 +1,582 @@
-14:0:37 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8000
-14:0:37 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8001
-14:0:37 => [ERROR]load_state => open file: ../data/8002/state failed.
-14:0:37 => [INFO]RaftService registerService.
-14:0:37 => [INFO]method RequestVoteRPC has been registered by service RaftService
-14:0:37 => [INFO]method AppendEntriesRPC has been registered by service RaftService
-14:0:37 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
-14:0:37 => [INFO]service RaftService has been registered!
-14:0:37 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
-14:0:37 => [INFO]zookeeper init success.
-14:0:37 => [INFO]znode /RaftService/InstallSnapshotRPC:127.0.0.1:8002 create success.
-14:0:37 => [INFO]register /RaftService/InstallSnapshotRPC on 127.0.0.1:8002
-14:0:37 => [INFO]znode /RaftService/AppendEntriesRPC:127.0.0.1:8002 create success.
-14:0:37 => [INFO]register /RaftService/AppendEntriesRPC on 127.0.0.1:8002
-14:0:37 => [INFO]znode /RaftService/RequestVoteRPC:127.0.0.1:8002 create success.
-14:0:37 => [INFO]register /RaftService/RequestVoteRPC on 127.0.0.1:8002
-14:0:37 => [DEBUG][2] start one election, term=1
-14:0:38 => [DEBUG][2] start one election, term=2
-14:0:39 => [DEBUG][2] start one election, term=3
-14:0:39 => [DEBUG][2] start one election, term=4
-14:0:40 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8000
-14:0:40 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
-14:0:40 => [ERROR]load_state => open file: ../data/8001/state failed.
-14:0:40 => [INFO]RaftService registerService.
-14:0:40 => [INFO]method RequestVoteRPC has been registered by service RaftService
-14:0:40 => [INFO]method AppendEntriesRPC has been registered by service RaftService
-14:0:40 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
-14:0:40 => [INFO]service RaftService has been registered!
-14:0:40 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
-14:0:40 => [INFO]zookeeper init success.
-14:0:40 => [INFO]register /RaftService/InstallSnapshotRPC on 127.0.0.1:8001
-14:0:40 => [INFO]register /RaftService/AppendEntriesRPC on 127.0.0.1:8001
-14:0:40 => [INFO]register /RaftService/RequestVoteRPC on 127.0.0.1:8001
-14:0:40 => [DEBUG][2] start one election, term=5
-14:0:40 => [DEBUG][1] start one election, term=1
-14:0:40 => [INFO]connected to 127.0.0.1:8002 successfully
-14:0:40 => [INFO]RaftRpc RaftService:RequestVoteRPC to 127.0.0.1:8002 - header_size: 31, args_size: 4
-14:0:40 => [DEBUG]RaftRPC RaftService:RequestVoteRPC to 127.0.0.1:8002 completed successfully
-14:0:40 => [INFO]connected to 127.0.0.1:8001 successfully
-14:0:41 => [INFO]RaftRpc RaftService:RequestVoteRPC to 127.0.0.1:8001 - header_size: 31, args_size: 4
-14:0:41 => [INFO]RaftRpc RaftService:RequestVoteRPC to 127.0.0.1:8001 - header_size: 31, args_size: 4
-14:0:41 => [DEBUG]RaftRPC RaftService:RequestVoteRPC to 127.0.0.1:8001 completed successfully
-14:0:41 => [INFO]RaftRpc RaftService:RequestVoteRPC to 127.0.0.1:8001 - header_size: 31, args_size: 4
-14:0:41 => [INFO]RaftRpc RaftService:RequestVoteRPC to 127.0.0.1:8001 - header_size: 31, args_size: 4
-14:0:41 => [INFO]RaftRpc RaftService:RequestVoteRPC to 127.0.0.1:8001 - header_size: 31, args_size: 4
-14:0:41 => [DEBUG]RaftRPC RaftService:RequestVoteRPC to 127.0.0.1:8001 completed successfully
-14:0:41 => [DEBUG]RaftRPC RaftService:RequestVoteRPC to 127.0.0.1:8001 completed successfully
-14:0:41 => [DEBUG]RaftRPC RaftService:RequestVoteRPC to 127.0.0.1:8001 completed successfully
-14:0:41 => [DEBUG]RaftRPC RaftService:RequestVoteRPC to 127.0.0.1:8001 completed successfully
-14:0:41 => [INFO][2] became a leader with term=5
-14:0:41 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:41 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:41 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:41 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:41 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:41 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:41 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:41 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:41 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:41 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:41 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:42 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:42 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:42 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:42 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 25
-14:0:42 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:42 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 17
-14:0:42 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:42 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 25
-14:0:42 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:42 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 25
-14:0:42 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:42 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 25
-14:0:42 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:42 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 17
-14:0:42 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:42 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 17
-14:0:42 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:42 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 20
-14:0:43 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:43 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:43 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:43 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 17
-14:0:43 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:43 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:43 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:43 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:43 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:43 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 23
-14:0:43 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:43 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:43 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:43 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 25
-14:0:43 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:43 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 25
-14:0:43 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:43 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8001
-14:0:43 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
-14:0:43 => [ERROR]load_state => open file: ../data/8000/state failed.
-14:0:43 => [INFO]RaftService registerService.
-14:0:43 => [INFO]method RequestVoteRPC has been registered by service RaftService
-14:0:43 => [INFO]method AppendEntriesRPC has been registered by service RaftService
-14:0:43 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
-14:0:43 => [INFO]service RaftService has been registered!
-14:0:43 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
-14:0:43 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 23
-14:0:43 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:43 => [INFO]zookeeper init success.
-14:0:44 => [INFO]register /RaftService/InstallSnapshotRPC on 127.0.0.1:8000
-14:0:44 => [INFO]register /RaftService/AppendEntriesRPC on 127.0.0.1:8000
-14:0:44 => [INFO]register /RaftService/RequestVoteRPC on 127.0.0.1:8000
-14:0:40 => [INFO]connected to 127.0.0.1:8000 successfully
-14:0:44 => [INFO]RaftRpc RaftService:RequestVoteRPC to 127.0.0.1:8000 - header_size: 31, args_size: 4
-14:0:44 => [DEBUG]RaftRPC RaftService:RequestVoteRPC to 127.0.0.1:8000 completed successfully
-14:0:43 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 25
-14:0:44 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:44 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 25
-14:0:44 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:44 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 25
-14:0:44 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:44 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 17
-14:0:44 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:44 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:44 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:44 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 25
-14:0:44 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:44 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:44 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:44 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 25
-14:0:44 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:44 => [DEBUG][0] start one election, term=2
-14:0:44 => [INFO]connected to 127.0.0.1:8002 successfully
-14:0:44 => [INFO]RaftRpc RaftService:RequestVoteRPC to 127.0.0.1:8002 - header_size: 31, args_size: 2
-14:0:44 => [INFO]connected to 127.0.0.1:8001 successfully
-14:0:44 => [INFO]RaftRpc RaftService:RequestVoteRPC to 127.0.0.1:8001 - header_size: 31, args_size: 2
-14:0:44 => [DEBUG]RaftRPC RaftService:RequestVoteRPC to 127.0.0.1:8002 completed successfully
-14:0:44 => [DEBUG]RaftRPC RaftService:RequestVoteRPC to 127.0.0.1:8001 completed successfully
-14:0:44 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 17
-14:0:44 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:44 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 25
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 25
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 25
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 25
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:45 => [INFO]connected to 127.0.0.1:8000 successfully
-14:0:45 => [INFO]RaftRpc RaftService:RequestVoteRPC to 127.0.0.1:8000 - header_size: 31, args_size: 4
-14:0:45 => [INFO]RaftRpc RaftService:RequestVoteRPC to 127.0.0.1:8000 - header_size: 31, args_size: 4
-14:0:45 => [DEBUG]RaftRPC RaftService:RequestVoteRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 21
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 19
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 19
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 19
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 19
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 25
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 25
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 20
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 19
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 19
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 23
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 25
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 23
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 25
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 25
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 25
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 19
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 25
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 25
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 25
-14:0:45 => [DEBUG]RaftRPC RaftService:RequestVoteRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:RequestVoteRPC to 127.0.0.1:8000 - header_size: 31, args_size: 4
-14:0:45 => [DEBUG]RaftRPC RaftService:RequestVoteRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:RequestVoteRPC to 127.0.0.1:8000 - header_size: 31, args_size: 4
-14:0:45 => [DEBUG]RaftRPC RaftService:RequestVoteRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 25
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 25
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 19
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 19
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 25
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 23
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 23
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 23
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 23
-14:0:45 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:45 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 23
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:44 => [DEBUG][0] start one election, term=6
-14:0:46 => [INFO]RaftRpc RaftService:RequestVoteRPC to 127.0.0.1:8001 - header_size: 31, args_size: 2
-14:0:46 => [INFO]RaftRpc RaftService:RequestVoteRPC to 127.0.0.1:8002 - header_size: 31, args_size: 2
-14:0:46 => [DEBUG]RaftRPC RaftService:RequestVoteRPC to 127.0.0.1:8002 completed successfully
-14:0:46 => [INFO][0] became a leader with term=6
-14:0:46 => [DEBUG]RaftRPC RaftService:RequestVoteRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 17
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 19
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 15
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 15
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 15
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 15
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 15
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 15
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 15
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 15
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 15
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 15
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:46 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:46 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 13
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 13
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 13
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 13
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 13
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 13
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 16
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 16
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 15
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 15
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 15
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 15
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:47 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:47 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 15
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 15
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 15
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 15
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 19
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 15
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 15
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 19
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:48 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:48 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 13
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 13
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 15
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 15
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 15
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 15
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 13
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 13
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:49 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:49 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 19
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 19
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:50 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 21
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:50 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 19
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8002 - header_size: 33, args_size: 19
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8002 completed successfully
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 19
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 25
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 19
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 19
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8000 completed successfully
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 17
-14:0:51 => [ERROR]RaftRpc send to 127.0.0.1:8000 failed: send failed: 32
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8000 - header_size: 33, args_size: 25
-14:0:51 => [ERROR]send failed: 32
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:51 => [DEBUG]RaftRPC RaftService:AppendEntriesRPC to 127.0.0.1:8001 completed successfully
-14:0:51 => [DEBUG][2] start one election, term=7
-14:0:51 => [INFO]RaftRpc RaftService:RequestVoteRPC to 127.0.0.1:8001 - header_size: 31, args_size: 4
-14:0:51 => [DEBUG]RaftRPC RaftService:RequestVoteRPC to 127.0.0.1:8001 completed successfully
-14:0:51 => [INFO]RaftRpc RaftService:AppendEntriesRPC to 127.0.0.1:8001 - header_size: 33, args_size: 21
-14:0:51 => [ERROR]RaftRpc send to 127.0.0.1:8001 failed: send failed: 32
+14:37:22 => [INFO]Node[0] => Node[1]: 发送日志 10-9
+14:37:22 => [INFO]Node[0] => Node[2]: 发送日志 1-9
+14:37:22 => [INFO]Node[1] received logs from Node[0]
+14:37:22 => [INFO]Node[0] received command command_15 and add it to logs.
+14:37:22 => [INFO]Node[0] => Node[1]: 发送日志 10-10
+14:37:22 => [INFO]Node[0] => Node[2]: 发送日志 1-10
+14:37:22 => [INFO]Node[1] received logs from Node[0]
+14:37:22 => [INFO]Node[0] => Node[1]: 发送日志 11-10
+14:37:22 => [INFO]Node[0] => Node[2]: 发送日志 1-10
+14:37:22 => [INFO]Node[1] received logs from Node[0]
+14:37:22 => [INFO]Node[0] => Node[1]: 发送日志 11-10
+14:37:22 => [INFO]Node[0] => Node[2]: 发送日志 1-10
+14:37:22 => [INFO]Node[1] received logs from Node[0]
+14:37:22 => [INFO]Node[0] => Node[1]: 发送日志 11-10
+14:37:22 => [INFO]Node[0] => Node[2]: 发送日志 1-10
+14:37:22 => [INFO]Node[1] received logs from Node[0]
+14:37:22 => [INFO]Node[0] => Node[1]: 发送日志 11-10
+14:37:22 => [INFO]Node[0] => Node[2]: 发送日志 1-10
+14:37:22 => [INFO]Node[1] received logs from Node[0]
+14:37:22 => [INFO]Node[0] => Node[1]: 发送日志 11-10
+14:37:22 => [INFO]Node[0] => Node[2]: 发送日志 1-10
+14:37:22 => [INFO]Node[1] received logs from Node[0]
+14:37:22 => [INFO]Node[0] => Node[1]: 发送日志 11-10
+14:37:22 => [INFO]Node[0] => Node[2]: 发送日志 1-10
+14:37:22 => [INFO]Node[1] received logs from Node[0]
+14:37:22 => [INFO]Node[0] => Node[1]: 发送日志 11-10
+14:37:22 => [INFO]Node[0] => Node[2]: 发送日志 1-10
+14:37:22 => [INFO]Node[1] received logs from Node[0]
+14:37:22 => [INFO]Node[0] => Node[1]: 发送日志 11-10
+14:37:23 => [INFO]Node[0] => Node[2]: 发送日志 1-10
+14:37:22 => [INFO]Node[1] received logs from Node[0]
+14:37:23 => [INFO]Node[0] received command command_16 and add it to logs.
+14:37:23 => [INFO]Node[0] => Node[1]: 发送日志 11-11
+14:37:23 => [INFO]Node[0] => Node[2]: 发送日志 1-11
+14:37:23 => [INFO]Node[1] received logs from Node[0]
+14:37:23 => [INFO]Node[0] => Node[1]: 发送日志 12-11
+14:37:23 => [INFO]Node[0] => Node[2]: 发送日志 1-11
+14:37:23 => [INFO]Node[1] received logs from Node[0]
+14:37:23 => [INFO]Node[0] => Node[1]: 发送日志 12-11
+14:37:23 => [INFO]Node[0] => Node[2]: 发送日志 1-11
+14:37:23 => [INFO]Node[1] received logs from Node[0]
+14:37:23 => [INFO]Node[0] => Node[1]: 发送日志 12-11
+14:37:23 => [INFO]Node[0] => Node[2]: 发送日志 1-11
+14:37:23 => [INFO]Node[1] received logs from Node[0]
+14:37:23 => [INFO]Node[0] => Node[1]: 发送日志 12-11
+14:37:23 => [INFO]Node[0] => Node[2]: 发送日志 1-11
+14:37:23 => [INFO]Node[1] received logs from Node[0]
+14:37:23 => [INFO]Node[0] => Node[1]: 发送日志 12-11
+14:37:23 => [INFO]Node[0] => Node[2]: 发送日志 1-11
+14:37:23 => [INFO]Node[1] received logs from Node[0]
+14:37:23 => [INFO]Node[0] => Node[1]: 发送日志 12-11
+14:37:23 => [INFO]Node[0] => Node[2]: 发送日志 1-11
+14:37:23 => [INFO]Node[1] received logs from Node[0]
+14:37:23 => [INFO]Node[0] => Node[2]: 发送日志 1-11
+14:37:23 => [INFO]Node[0] => Node[1]: 发送日志 12-11
+14:37:23 => [INFO]Node[1] received logs from Node[0]
+14:37:23 => [INFO]Node[0] => Node[1]: 发送日志 12-11
+14:37:24 => [INFO]Node[0] => Node[2]: 发送日志 1-11
+14:37:23 => [INFO]Node[1] received logs from Node[0]
+14:37:24 => [INFO]Node[0] received command command_17 and add it to logs.
+14:37:24 => [INFO]Node[0] => Node[1]: 发送日志 12-12
+14:37:24 => [INFO]Node[0] => Node[2]: 发送日志 1-12
+14:37:24 => [INFO]Node[1] received logs from Node[0]
+14:37:24 => [INFO]Node[0] => Node[1]: 发送日志 13-12
+14:37:24 => [INFO]Node[0] => Node[2]: 发送日志 1-12
+14:37:24 => [INFO]Node[1] received logs from Node[0]
+14:37:24 => [INFO]Node[0] => Node[1]: 发送日志 13-12
+14:37:24 => [INFO]Node[0] => Node[2]: 发送日志 1-12
+14:37:24 => [INFO]Node[1] received logs from Node[0]
+14:37:24 => [INFO]Node[0] => Node[1]: 发送日志 13-12
+14:37:24 => [INFO]Node[0] => Node[2]: 发送日志 1-12
+14:37:24 => [INFO]Node[1] received logs from Node[0]
+14:37:24 => [INFO]Node[0] => Node[1]: 发送日志 13-12
+14:37:24 => [INFO]Node[0] => Node[2]: 发送日志 1-12
+14:37:24 => [INFO]Node[1] received logs from Node[0]
+14:37:24 => [INFO]Node[0] => Node[1]: 发送日志 13-12
+14:37:24 => [INFO]Node[0] => Node[2]: 发送日志 1-12
+14:37:24 => [INFO]Node[1] received logs from Node[0]
+14:37:24 => [INFO]Node[0] => Node[1]: 发送日志 13-12
+14:37:24 => [INFO]Node[0] => Node[2]: 发送日志 1-12
+14:37:24 => [INFO]Node[1] received logs from Node[0]
+14:37:24 => [INFO]Node[0] => Node[1]: 发送日志 13-12
+14:37:24 => [INFO]Node[0] => Node[2]: 发送日志 1-12
+14:37:24 => [INFO]Node[1] received logs from Node[0]
+14:37:24 => [INFO]Node[0] => Node[1]: 发送日志 13-12
+14:37:25 => [INFO]Node[0] => Node[2]: 发送日志 1-12
+14:37:24 => [INFO]Node[1] received logs from Node[0]
+14:37:25 => [INFO]Node[0] received command command_18 and add it to logs.
+14:37:25 => [INFO]Node[0] => Node[1]: 发送日志 13-13
+14:37:25 => [INFO]Node[0] => Node[2]: 发送日志 1-13
+14:37:25 => [INFO]Node[1] received logs from Node[0]
+14:37:25 => [INFO]Node[0] => Node[1]: 发送日志 14-13
+14:37:25 => [INFO]Node[0] => Node[2]: 发送日志 1-13
+14:37:25 => [INFO]Node[1] received logs from Node[0]
+14:37:25 => [INFO]Node[0] => Node[1]: 发送日志 14-13
+14:37:25 => [INFO]Node[0] => Node[2]: 发送日志 1-13
+14:37:25 => [INFO]Node[1] received logs from Node[0]
+14:37:25 => [INFO]Node[0] => Node[1]: 发送日志 14-13
+14:37:25 => [INFO]Node[0] => Node[2]: 发送日志 1-13
+14:37:25 => [INFO]Node[1] received logs from Node[0]
+14:37:25 => [INFO]Node[0] => Node[1]: 发送日志 14-13
+14:37:25 => [INFO]Node[0] => Node[2]: 发送日志 1-13
+14:37:25 => [INFO]Node[1] received logs from Node[0]
+14:37:25 => [INFO]Node[0] => Node[2]: 发送日志 1-13
+14:37:25 => [INFO]Node[0] => Node[1]: 发送日志 14-13
+14:37:25 => [INFO]Node[1] received logs from Node[0]
+14:37:25 => [INFO]Node[0] => Node[1]: 发送日志 14-13
+14:37:25 => [INFO]Node[0] => Node[2]: 发送日志 1-13
+14:37:25 => [INFO]Node[1] received logs from Node[0]
+14:37:25 => [INFO]Node[0] => Node[1]: 发送日志 14-13
+14:37:25 => [INFO]Node[0] => Node[2]: 发送日志 1-13
+14:37:25 => [INFO]Node[1] received logs from Node[0]
+14:37:25 => [INFO]Node[0] => Node[1]: 发送日志 14-13
+14:37:26 => [INFO]Node[0] => Node[2]: 发送日志 1-13
+14:37:25 => [INFO]Node[1] received logs from Node[0]
+14:37:26 => [INFO]Node[0] => Node[1]: 发送日志 14-13
+14:37:26 => [INFO]Node[0] => Node[2]: 发送日志 1-13
+14:37:26 => [INFO]Node[1] received logs from Node[0]
+14:37:26 => [INFO]Node[0] received command command_19 and add it to logs.
+14:37:26 => [INFO]Node[0] => Node[1]: 发送日志 14-14
+14:37:26 => [INFO]Node[0] => Node[2]: 发送日志 1-14
+14:37:26 => [INFO]Node[1] received logs from Node[0]
+14:37:26 => [INFO]Node[0] => Node[1]: 发送日志 15-14
+14:37:26 => [INFO]Node[0] => Node[2]: 发送日志 1-14
+14:37:26 => [INFO]Node[1] received logs from Node[0]
+14:37:26 => [INFO]Node[0] => Node[1]: 发送日志 15-14
+14:37:26 => [INFO]Node[0] => Node[2]: 发送日志 1-14
+14:37:26 => [INFO]Node[1] received logs from Node[0]
+14:37:26 => [INFO]Node[0] => Node[1]: 发送日志 15-14
+14:37:26 => [INFO]Node[0] => Node[2]: 发送日志 1-14
+14:37:26 => [INFO]Node[1] received logs from Node[0]
+14:37:26 => [INFO]Node[0] => Node[1]: 发送日志 15-14
+14:37:26 => [INFO]Node[0] => Node[2]: 发送日志 1-14
+14:37:26 => [INFO]Node[1] received logs from Node[0]
+14:37:26 => [INFO]Node[0] => Node[2]: 发送日志 1-14
+14:37:26 => [INFO]Node[0] => Node[1]: 发送日志 15-14
+14:37:26 => [INFO]Node[1] received logs from Node[0]
+14:37:26 => [INFO]Node[0] => Node[1]: 发送日志 15-14
+14:37:26 => [INFO]Node[0] => Node[2]: 发送日志 1-14
+14:37:26 => [INFO]Node[1] received logs from Node[0]
+14:37:26 => [INFO]Node[0] => Node[1]: 发送日志 15-14
+14:37:27 => [INFO]Node[0] => Node[2]: 发送日志 1-14
+14:37:26 => [INFO]Node[1] received logs from Node[0]
+14:37:27 => [INFO]Node[0] => Node[1]: 发送日志 15-14
+14:37:27 => [INFO]Node[0] => Node[2]: 发送日志 1-14
+14:37:27 => [INFO]Node[1] received logs from Node[0]
+14:37:27 => [INFO]Node[0] received command command_20 and add it to logs.
+14:37:27 => [INFO]Node[0] => Node[1]: 发送日志 15-15
+14:37:27 => [INFO]Node[0] => Node[2]: 发送日志 1-15
+14:37:27 => [INFO]Node[1] received logs from Node[0]
+14:37:27 => [INFO]Node[0] => Node[1]: 发送日志 16-15
+14:37:27 => [INFO]Node[0] => Node[2]: 发送日志 1-15
+14:37:27 => [INFO]Node[1] received logs from Node[0]
+14:37:27 => [INFO]Node[0] => Node[1]: 发送日志 16-15
+14:37:27 => [INFO]Node[0] => Node[2]: 发送日志 1-15
+14:37:27 => [INFO]Node[1] received logs from Node[0]
+14:37:27 => [INFO]Node[0] => Node[1]: 发送日志 16-15
+14:37:27 => [INFO]Node[0] => Node[2]: 发送日志 1-15
+14:37:27 => [INFO]Node[1] received logs from Node[0]
+14:37:27 => [INFO]Node[0] => Node[1]: 发送日志 16-15
+14:37:27 => [INFO]Node[0] => Node[2]: 发送日志 1-15
+14:37:27 => [INFO]Node[1] received logs from Node[0]
+14:37:27 => [INFO]Node[0] => Node[1]: 发送日志 16-15
+14:37:27 => [INFO]Node[0] => Node[2]: 发送日志 1-15
+14:37:27 => [INFO]Node[1] received logs from Node[0]
+14:37:27 => [INFO]Node[0] => Node[1]: 发送日志 16-15
+14:37:27 => [INFO]Node[0] => Node[2]: 发送日志 1-15
+14:37:27 => [INFO]Node[1] received logs from Node[0]
+14:37:27 => [INFO]Node[0] => Node[1]: 发送日志 16-15
+14:37:28 => [INFO]Node[0] => Node[2]: 发送日志 1-15
+14:37:27 => [INFO]Node[1] received logs from Node[0]
+14:37:28 => [INFO]Node[0] => Node[1]: 发送日志 16-15
+14:37:28 => [INFO]Node[0] => Node[2]: 发送日志 1-15
+14:37:28 => [INFO]Node[1] received logs from Node[0]
+14:37:28 => [INFO]Node[0] received command command_21 and add it to logs.
+14:37:28 => [INFO]Node[0] => Node[1]: 发送日志 16-16
+14:37:28 => [INFO]Node[0] => Node[2]: 发送日志 1-16
+14:37:28 => [INFO]Node[1] received logs from Node[0]
+14:37:28 => [INFO]Node[0] => Node[2]: 发送日志 1-16
+14:37:28 => [INFO]Node[0] => Node[1]: 发送日志 17-16
+14:37:28 => [INFO]Node[0] => Node[1]: 发送日志 16-16
+14:37:28 => [INFO]Node[0] => Node[2]: 发送日志 1-16
+14:37:28 => [INFO]Node[1] received logs from Node[0]
+14:37:28 => [INFO]Node[0] => Node[1]: 发送日志 17-16
+14:37:28 => [INFO]Node[0] => Node[2]: 发送日志 1-16
+14:37:28 => [INFO]Node[1] received logs from Node[0]
+14:37:28 => [INFO]Node[0] => Node[1]: 发送日志 17-16
+14:37:28 => [INFO]Node[0] => Node[2]: 发送日志 1-16
+14:37:28 => [INFO]Node[1] received logs from Node[0]
+14:37:28 => [INFO]Node[0] => Node[1]: 发送日志 17-16
+14:37:28 => [INFO]Node[0] => Node[2]: 发送日志 1-16
+14:37:28 => [INFO]Node[1] received logs from Node[0]
+14:37:28 => [INFO]Node[0] => Node[1]: 发送日志 17-16
+14:37:28 => [INFO]Node[0] => Node[2]: 发送日志 1-16
+14:37:28 => [INFO]Node[1] received logs from Node[0]
+14:37:28 => [INFO]Node[0] => Node[1]: 发送日志 17-16
+14:37:28 => [INFO]Node[0] => Node[2]: 发送日志 1-16
+14:37:28 => [INFO]Node[1] received logs from Node[0]
+14:37:28 => [INFO]Node[0] => Node[1]: 发送日志 17-16
+14:37:29 => [INFO]Node[0] => Node[2]: 发送日志 1-16
+14:37:28 => [INFO]Node[1] received logs from Node[0]
+14:37:29 => [INFO]Node[0] received command command_22 and add it to logs.
+14:37:29 => [INFO]Node[0] => Node[1]: 发送日志 17-17
+14:37:29 => [INFO]Node[0] => Node[2]: 发送日志 1-17
+14:37:29 => [INFO]Node[1] received logs from Node[0]
+14:37:29 => [INFO]Node[0] => Node[1]: 发送日志 18-17
+14:37:29 => [INFO]Node[0] => Node[2]: 发送日志 1-17
+14:37:29 => [INFO]Node[1] received logs from Node[0]
+14:37:29 => [INFO]Node[0] => Node[1]: 发送日志 18-17
+14:37:29 => [INFO]Node[0] => Node[2]: 发送日志 1-17
+14:37:29 => [INFO]Node[1] received logs from Node[0]
+14:37:29 => [INFO]Node[0] => Node[1]: 发送日志 18-17
+14:37:29 => [INFO]Node[0] => Node[2]: 发送日志 1-17
+14:37:29 => [INFO]Node[1] received logs from Node[0]
+14:37:29 => [INFO]Node[0] => Node[1]: 发送日志 18-17
+14:37:29 => [INFO]Node[0] => Node[2]: 发送日志 1-17
+14:37:29 => [INFO]Node[1] received logs from Node[0]
+14:37:29 => [INFO]Node[0] => Node[1]: 发送日志 18-17
+14:37:29 => [INFO]Node[0] => Node[2]: 发送日志 1-17
+14:37:29 => [INFO]Node[1] received logs from Node[0]
+14:37:29 => [INFO]Node[0] => Node[1]: 发送日志 18-17
+14:37:29 => [INFO]Node[0] => Node[2]: 发送日志 1-17
+14:37:29 => [INFO]Node[1] received logs from Node[0]
+14:37:29 => [INFO]Node[0] => Node[1]: 发送日志 18-17
+14:37:29 => [INFO]Node[0] => Node[2]: 发送日志 1-17
+14:37:29 => [INFO]Node[1] received logs from Node[0]
+14:37:29 => [INFO]Node[0] => Node[1]: 发送日志 18-17
+14:37:30 => [INFO]Node[0] => Node[2]: 发送日志 1-17
+14:37:29 => [INFO]Node[1] received logs from Node[0]
+14:37:30 => [INFO]Node[0] received command command_23 and add it to logs.
+14:37:30 => [INFO]Node[0] => Node[1]: 发送日志 18-18
+14:37:30 => [INFO]Node[0] => Node[2]: 发送日志 1-18
+14:37:30 => [INFO]Node[1] received logs from Node[0]
+14:37:30 => [INFO]Node[0] => Node[1]: 发送日志 19-18
+14:37:30 => [INFO]Node[0] => Node[2]: 发送日志 1-18
+14:37:30 => [INFO]Node[1] received logs from Node[0]
+14:37:30 => [INFO]Node[0] => Node[1]: 发送日志 19-18
+14:37:30 => [INFO]Node[0] => Node[2]: 发送日志 1-18
+14:37:30 => [INFO]Node[1] received logs from Node[0]
+14:37:30 => [INFO]Node[0] => Node[1]: 发送日志 19-18
+14:37:30 => [INFO]Node[0] => Node[2]: 发送日志 1-18
+14:37:30 => [INFO]Node[1] received logs from Node[0]
+14:37:30 => [INFO]Node[0] => Node[1]: 发送日志 19-18
+14:37:30 => [INFO]Node[0] => Node[2]: 发送日志 1-18
+14:37:30 => [INFO]Node[1] received logs from Node[0]
+14:37:30 => [INFO]Node[0] => Node[1]: 发送日志 19-18
+14:37:30 => [INFO]Node[0] => Node[2]: 发送日志 1-18
+14:37:30 => [INFO]Node[1] received logs from Node[0]
+14:37:30 => [INFO]Node[0] => Node[1]: 发送日志 19-18
+14:37:30 => [INFO]Node[0] => Node[2]: 发送日志 1-18
+14:37:30 => [INFO]Node[1] received logs from Node[0]
+14:37:30 => [INFO]Node[0] => Node[1]: 发送日志 19-18
+14:37:30 => [INFO]Node[0] => Node[2]: 发送日志 1-18
+14:37:30 => [INFO]Node[1] received logs from Node[0]
+14:37:30 => [INFO]Node[0] => Node[1]: 发送日志 19-18
+14:37:31 => [INFO]Node[0] => Node[2]: 发送日志 1-18
+14:37:30 => [INFO]Node[1] received logs from Node[0]
+14:37:31 => [INFO]Node[0] received command command_24 and add it to logs.
+14:37:31 => [INFO]Node[0] => Node[1]: 发送日志 19-19
+14:37:31 => [INFO]Node[0] => Node[2]: 发送日志 1-19
+14:37:31 => [INFO]Node[1] received logs from Node[0]
+14:37:31 => [INFO]Node[0] => Node[1]: 发送日志 20-19
+14:37:31 => [INFO]Node[0] => Node[2]: 发送日志 1-19
+14:37:31 => [INFO]Node[1] received logs from Node[0]
+14:37:31 => [INFO]Node[0] => Node[1]: 发送日志 20-19
+14:37:31 => [INFO]Node[0] => Node[2]: 发送日志 1-19
+14:37:31 => [INFO]Node[1] received logs from Node[0]
+14:37:31 => [INFO]Node[0] => Node[2]: 发送日志 1-19
+14:37:31 => [INFO]Node[0] => Node[1]: 发送日志 20-19
+14:37:31 => [INFO]Node[1] received logs from Node[0]
+14:37:31 => [INFO]Node[0] => Node[1]: 发送日志 20-19
+14:37:31 => [INFO]Node[0] => Node[2]: 发送日志 1-19
+14:37:31 => [INFO]Node[1] received logs from Node[0]
+14:37:31 => [INFO]Node[0] => Node[1]: 发送日志 20-19
+14:37:31 => [INFO]Node[0] => Node[2]: 发送日志 1-19
+14:37:31 => [INFO]Node[1] received logs from Node[0]
+14:37:31 => [INFO]Node[0] => Node[1]: 发送日志 20-19
+14:37:31 => [INFO]Node[0] => Node[2]: 发送日志 1-19
+14:37:31 => [INFO]Node[1] received logs from Node[0]
+14:37:31 => [INFO]Node[0] => Node[1]: 发送日志 20-19
+14:37:31 => [INFO]Node[0] => Node[2]: 发送日志 1-19
+14:37:31 => [INFO]Node[1] received logs from Node[0]
+14:37:31 => [INFO]Node[0] => Node[1]: 发送日志 20-19
+14:37:32 => [INFO]Node[0] => Node[2]: 发送日志 1-19
+14:37:31 => [INFO]Node[1] received logs from Node[0]
+14:37:32 => [INFO]Node[0] => Node[1]: 发送日志 20-19
+14:37:32 => [INFO]Node[0] => Node[2]: 发送日志 1-19
+14:37:32 => [INFO]Node[1] received logs from Node[0]
+14:37:32 => [INFO]Node[0] received command command_25 and add it to logs.
+14:37:32 => [INFO]Node[0] => Node[2]: 发送日志 1-20
+14:37:32 => [INFO]Node[0] => Node[1]: 发送日志 20-20
+14:37:32 => [INFO]Node[1] received logs from Node[0]
+14:37:32 => [INFO]Node[0] => Node[1]: 发送日志 21-20
+14:37:32 => [INFO]Node[0] => Node[2]: 发送日志 1-20
+14:37:32 => [INFO]Node[1] received logs from Node[0]
+14:37:32 => [INFO]Node[0] => Node[1]: 发送日志 21-20
+14:37:32 => [INFO]Node[0] => Node[2]: 发送日志 1-20
+14:37:32 => [INFO]Node[1] received logs from Node[0]
+14:37:32 => [INFO]Node[0] => Node[1]: 发送日志 21-20
+14:37:32 => [INFO]Node[0] => Node[2]: 发送日志 1-20
+14:37:32 => [INFO]Node[1] received logs from Node[0]
+14:37:32 => [INFO]Node[0] => Node[1]: 发送日志 21-20
+14:37:32 => [INFO]Node[0] => Node[2]: 发送日志 1-20
+14:37:32 => [INFO]Node[1] received logs from Node[0]
+14:37:32 => [INFO]Node[0] => Node[1]: 发送日志 21-20
+14:37:32 => [INFO]Node[0] => Node[2]: 发送日志 1-20
+14:37:32 => [INFO]Node[1] received logs from Node[0]
+14:37:32 => [INFO]Node[0] => Node[1]: 发送日志 21-20
+14:37:32 => [INFO]Node[0] => Node[2]: 发送日志 1-20
+14:37:32 => [INFO]Node[1] received logs from Node[0]
+14:37:32 => [INFO]Node[0] => Node[1]: 发送日志 21-20
+14:37:33 => [INFO]Node[0] => Node[2]: 发送日志 1-20
+14:37:32 => [INFO]Node[1] received logs from Node[0]
+14:37:33 => [INFO]Node[0] => Node[1]: 发送日志 21-20
+14:37:33 => [INFO]Node[0] => Node[2]: 发送日志 1-20
+14:37:33 => [ERROR]request 	0     parse failed!
+14:37:33 => [INFO]Node[0] received command command_26 and add it to logs.
+14:37:33 => [INFO]Node[0] => Node[1]: 发送日志 21-21
+14:37:33 => [INFO]Node[0] => Node[2]: 发送日志 1-21
+14:37:33 => [INFO]Node[0] => Node[1]: 发送日志 21-21
+14:37:33 => [INFO]Node[0] => Node[2]: 发送日志 1-21
+14:37:33 => [INFO]Node[0] => Node[1]: 发送日志 21-21
+14:37:33 => [INFO]Node[0] => Node[2]: 发送日志 1-21
+14:37:33 => [INFO]Node[0] => Node[1]: 发送日志 21-21
+14:37:33 => [INFO]Node[0] => Node[2]: 发送日志 1-21
+14:37:33 => [INFO]Node[0] => Node[1]: 发送日志 21-21
+14:37:33 => [INFO]Node[0] => Node[2]: 发送日志 1-21
+14:37:33 => [INFO]Node[0] => Node[1]: 发送日志 21-21
+14:37:33 => [INFO]Node[0] => Node[2]: 发送日志 1-21
+14:37:33 => [DEBUG][1] start one election, term=10
+14:37:33 => [INFO][1] became a leader with term=10
+14:37:33 => [INFO]Node[1] => Node[0]: 发送日志 41-40
+14:37:33 => [INFO]Node[1] => Node[2]: 发送日志 41-40
+14:37:33 => [INFO]Node[1] => Node[0]: 发送日志 40-40
+14:37:34 => [INFO]Node[1] => Node[2]: 发送日志 41-40
+14:37:34 => [INFO]Node[1] => Node[0]: 发送日志 39-40
+14:37:34 => [INFO]Node[1] => Node[2]: 发送日志 41-40
+14:37:34 => [INFO]Node[1] => Node[0]: 发送日志 38-40
+14:37:34 => [INFO]Node[1] => Node[2]: 发送日志 41-40
+14:37:34 => [INFO]Node[1] => Node[0]: 发送日志 37-40
+14:37:34 => [INFO]Node[1] => Node[2]: 发送日志 41-40
+14:37:34 => [INFO]Node[1] => Node[0]: 发送日志 36-40
+14:37:34 => [INFO]Node[1] => Node[2]: 发送日志 41-40
+14:37:34 => [INFO]Node[1] => Node[0]: 发送日志 35-40
+14:37:34 => [INFO]Node[1] => Node[2]: 发送日志 41-40
+14:37:34 => [INFO]Node[1] => Node[0]: 发送日志 34-40
+14:37:34 => [INFO]Node[1] => Node[2]: 发送日志 41-40
+14:37:34 => [INFO]Node[1] received command command_23 and add it to logs.
+14:37:34 => [INFO]Node[1] => Node[0]: 发送日志 33-41
+14:37:34 => [INFO]Node[1] => Node[2]: 发送日志 41-41
+14:37:34 => [INFO]Node[1] => Node[0]: 发送日志 32-41
+14:37:34 => [INFO]Node[1] => Node[2]: 发送日志 41-41
+14:37:34 => [INFO]Node[1] => Node[0]: 发送日志 31-41
+14:37:35 => [INFO]Node[1] => Node[2]: 发送日志 41-41
+14:37:35 => [INFO]Node[1] => Node[0]: 发送日志 30-41
+14:37:35 => [INFO]Node[1] => Node[2]: 发送日志 41-41
+14:37:35 => [INFO]Node[1] => Node[0]: 发送日志 29-41
+14:37:35 => [INFO]Node[1] => Node[2]: 发送日志 41-41
+14:37:35 => [INFO]Node[1] => Node[0]: 发送日志 28-41
+14:37:35 => [INFO]Node[1] => Node[2]: 发送日志 41-41
+14:37:35 => [INFO]Node[1] => Node[0]: 发送日志 27-41
+14:37:35 => [INFO]Node[1] => Node[2]: 发送日志 41-41
+14:37:35 => [INFO]Node[1] => Node[0]: 发送日志 26-41
+14:37:35 => [INFO]Node[1] => Node[2]: 发送日志 41-41
+14:37:35 => [INFO]Node[1] => Node[0]: 发送日志 25-41
+14:37:35 => [INFO]Node[1] => Node[2]: 发送日志 41-41
+14:37:35 => [INFO]Node[1] received command command_24 and add it to logs.
+14:37:35 => [INFO]Node[1] => Node[0]: 发送日志 24-42
+14:37:35 => [INFO]Node[1] => Node[2]: 发送日志 41-42
+14:37:35 => [INFO]Node[1] => Node[0]: 发送日志 23-42
+14:37:35 => [INFO]Node[1] => Node[2]: 发送日志 41-42
+14:37:35 => [INFO]Node[1] => Node[0]: 发送日志 22-42
+14:37:35 => [INFO]Node[1] => Node[2]: 发送日志 41-42
+14:37:33 => [INFO]Node[0] received logs from Node[1]
+14:37:35 => [INFO]Node[1] => Node[0]: 发送日志 43-42
+14:37:36 => [INFO]Node[1] => Node[2]: 发送日志 41-42
+14:37:35 => [INFO]Node[0] received logs from Node[1]
+14:37:36 => [INFO]Node[1] => Node[0]: 发送日志 43-42
+14:37:36 => [INFO]Node[1] => Node[2]: 发送日志 41-42
+14:37:36 => [INFO]Node[0] received logs from Node[1]
+14:37:36 => [INFO]Node[1] => Node[0]: 发送日志 43-42
+14:37:36 => [INFO]Node[0] received logs from Node[1]
+14:37:36 => [INFO]Node[1] => Node[2]: 发送日志 41-42
+14:37:36 => [INFO]Node[1] => Node[0]: 发送日志 43-42
+14:37:36 => [INFO]Node[1] => Node[2]: 发送日志 41-42
+14:37:36 => [INFO]Node[0] received logs from Node[1]
+14:37:36 => [INFO]Node[1] => Node[0]: 发送日志 43-42
+14:37:36 => [INFO]Node[1] => Node[2]: 发送日志 41-42
+14:37:36 => [INFO]Node[0] received logs from Node[1]
+14:37:36 => [INFO]Node[1] => Node[0]: 发送日志 43-42
+14:37:36 => [INFO]Node[1] => Node[2]: 发送日志 41-42
+14:37:36 => [INFO]Node[0] received logs from Node[1]
+14:37:36 => [INFO]Node[1] received command command_25 and add it to logs.
+14:37:36 => [INFO]Node[1] => Node[0]: 发送日志 43-43
+14:37:36 => [INFO]Node[1] => Node[2]: 发送日志 41-43
+14:37:36 => [INFO]Node[0] received logs from Node[1]
+14:37:36 => [INFO]Node[1] => Node[0]: 发送日志 44-43
+14:37:36 => [INFO]Node[1] => Node[2]: 发送日志 41-43
+14:37:36 => [INFO]Node[0] received logs from Node[1]
+14:37:36 => [INFO]Node[1] => Node[0]: 发送日志 44-43
+14:37:36 => [INFO]Node[0] received logs from Node[1]
+14:37:36 => [INFO]Node[1] => Node[2]: 发送日志 41-43
+14:37:36 => [INFO]Node[1] => Node[0]: 发送日志 44-43
+14:37:37 => [INFO]Node[1] => Node[2]: 发送日志 41-43
+14:37:36 => [INFO]Node[0] received logs from Node[1]
+14:37:37 => [INFO]Node[1] => Node[0]: 发送日志 44-43
+14:37:37 => [INFO]Node[1] => Node[2]: 发送日志 41-43
+14:37:37 => [INFO]Node[0] received logs from Node[1]
+14:37:37 => [INFO]Node[1] => Node[0]: 发送日志 44-43
+14:37:37 => [INFO]Node[1] => Node[2]: 发送日志 41-43
+14:37:37 => [INFO]Node[0] received logs from Node[1]
+14:37:37 => [INFO]Node[1] => Node[0]: 发送日志 44-43
+14:37:37 => [INFO]Node[1] => Node[2]: 发送日志 41-43
+14:37:37 => [INFO]Node[0] received logs from Node[1]
+14:37:37 => [INFO]Node[1] => Node[0]: 发送日志 44-43
+14:37:37 => [INFO]Node[1] => Node[2]: 发送日志 41-43
+14:37:37 => [INFO]Node[0] received logs from Node[1]
+14:37:37 => [INFO]Node[1] => Node[0]: 发送日志 44-43
+14:37:37 => [INFO]Node[1] => Node[2]: 发送日志 41-43
+14:37:37 => [INFO]Node[0] received logs from Node[1]
+14:37:37 => [INFO]Node[1] => Node[0]: 发送日志 44-43
+14:37:37 => [INFO]Node[1] => Node[2]: 发送日志 41-43
+14:37:37 => [INFO]Node[0] received logs from Node[1]
+14:37:37 => [INFO]Node[1] received command command_26 and add it to logs.
+14:37:37 => [INFO]Node[1] => Node[0]: 发送日志 44-44
+14:37:37 => [INFO]Node[1] => Node[2]: 发送日志 41-44
+14:37:37 => [INFO]Node[0] received logs from Node[1]
+14:37:37 => [INFO]Node[1] => Node[0]: 发送日志 45-44
+14:37:37 => [INFO]Node[1] => Node[2]: 发送日志 41-44
+14:37:37 => [INFO]Node[0] received logs from Node[1]
+14:37:37 => [INFO]Node[1] => Node[0]: 发送日志 45-44
+14:37:38 => [INFO]Node[1] => Node[2]: 发送日志 41-44
+14:37:37 => [INFO]Node[0] received logs from Node[1]
+14:37:38 => [INFO]Node[1] => Node[0]: 发送日志 45-44
+14:37:38 => [INFO]Node[1] => Node[2]: 发送日志 41-44
+14:37:38 => [INFO]Node[0] received logs from Node[1]
+14:37:38 => [INFO]Node[1] => Node[0]: 发送日志 45-44
+14:37:38 => [INFO]Node[0] received logs from Node[1]
+14:37:38 => [INFO]Node[1] => Node[2]: 发送日志 41-44
+14:37:38 => [INFO]Node[1] => Node[0]: 发送日志 45-44
+14:37:38 => [INFO]Node[1] => Node[2]: 发送日志 41-44
+14:37:38 => [INFO]Node[0] received logs from Node[1]
+14:37:38 => [INFO]Node[1] => Node[0]: 发送日志 45-44
+14:37:38 => [INFO]Node[1] => Node[2]: 发送日志 41-44
+14:37:38 => [INFO]Node[0] received logs from Node[1]
+14:37:38 => [INFO]Node[1] => Node[0]: 发送日志 45-44
+14:37:38 => [INFO]Node[1] => Node[2]: 发送日志 41-44
+14:37:38 => [INFO]Node[0] received logs from Node[1]
+14:37:38 => [INFO]Node[1] => Node[0]: 发送日志 45-44
+14:37:38 => [INFO]Node[1] => Node[2]: 发送日志 41-44
+14:37:38 => [INFO]Node[0] received logs from Node[1]
+14:37:38 => [INFO]Node[1] received command command_27 and add it to logs.
+14:37:38 => [INFO]Node[1] => Node[0]: 发送日志 45-45
+14:37:38 => [INFO]Node[0] received logs from Node[1]
+14:37:38 => [INFO]Node[1] => Node[2]: 发送日志 41-45
+14:37:38 => [INFO]Node[1] => Node[0]: 发送日志 46-45
+14:37:38 => [INFO]Node[1] => Node[2]: 发送日志 41-45
+14:37:38 => [INFO]Node[0] received logs from Node[1]
+14:37:38 => [INFO]Node[1] => Node[0]: 发送日志 46-45
+14:37:39 => [INFO]Node[1] => Node[2]: 发送日志 41-45
+14:37:38 => [INFO]Node[0] received logs from Node[1]
+14:37:39 => [INFO]Node[1] => Node[0]: 发送日志 46-45
+14:37:39 => [INFO]Node[1] => Node[2]: 发送日志 41-45
+14:37:39 => [INFO]Node[0] received logs from Node[1]
+14:37:39 => [INFO]Node[1] => Node[0]: 发送日志 46-45
+14:37:39 => [INFO]Node[1] => Node[2]: 发送日志 41-45
+14:37:39 => [INFO]Node[0] received logs from Node[1]
+14:37:39 => [INFO]Node[1] => Node[0]: 发送日志 46-45
+14:37:39 => [INFO]Node[0] received logs from Node[1]
+14:37:39 => [INFO]Node[1] => Node[2]: 发送日志 41-45
+14:37:39 => [INFO]Node[1] => Node[0]: 发送日志 46-45
+14:37:39 => [INFO]Node[0] received logs from Node[1]
+14:37:39 => [INFO]Node[1] => Node[2]: 发送日志 41-45
+14:37:39 => [INFO]Node[1] => Node[0]: 发送日志 46-45
+14:37:39 => [INFO]Node[1] => Node[2]: 发送日志 41-45
+14:37:39 => [INFO]Node[0] received logs from Node[1]
+14:37:39 => [INFO]Node[1] => Node[0]: 发送日志 46-45
+14:37:39 => [INFO]Node[1] => Node[2]: 发送日志 41-45
+14:37:39 => [INFO]Node[0] received logs from Node[1]
+14:37:39 => [INFO]Node[1] received command command_28 and add it to logs.
+14:37:39 => [INFO]Node[1] => Node[0]: 发送日志 46-46
+14:37:39 => [INFO]Node[1] => Node[2]: 发送日志 41-46
+14:37:39 => [INFO]Node[0] received logs from Node[1]
+14:37:39 => [INFO]Node[1] => Node[0]: 发送日志 47-46
+14:37:39 => [INFO]Node[1] => Node[2]: 发送日志 41-46
+14:37:39 => [INFO]Node[0] received logs from Node[1]
+14:37:39 => [INFO]Node[1] => Node[0]: 发送日志 47-46
+14:37:40 => [INFO]Node[1] => Node[2]: 发送日志 41-46
+14:37:39 => [INFO]Node[0] received logs from Node[1]
+14:37:40 => [INFO]Node[1] => Node[0]: 发送日志 47-46
+14:37:40 => [INFO]Node[1] => Node[2]: 发送日志 41-46
+14:37:40 => [INFO]Node[0] received logs from Node[1]
+14:37:40 => [INFO]Node[1] => Node[0]: 发送日志 47-46
+14:37:40 => [INFO]Node[1] => Node[2]: 发送日志 41-46
+14:37:40 => [INFO]Node[0] received logs from Node[1]
+14:37:40 => [INFO]Node[1] => Node[0]: 发送日志 47-46
+14:37:40 => [INFO]Node[1] => Node[2]: 发送日志 41-46
+14:37:40 => [INFO]Node[0] received logs from Node[1]
+14:37:40 => [INFO]Node[1] => Node[0]: 发送日志 47-46
+14:37:40 => [INFO]Node[1] => Node[2]: 发送日志 41-46
+14:37:40 => [INFO]Node[0] received logs from Node[1]
+14:37:40 => [INFO]Node[1] => Node[0]: 发送日志 47-46
+14:37:40 => [INFO]Node[0] received logs from Node[1]
+14:37:40 => [INFO]Node[1] => Node[2]: 发送日志 41-46
+14:37:40 => [INFO]Node[1] => Node[0]: 发送日志 47-46
+14:37:40 => [INFO]Node[1] => Node[2]: 发送日志 41-46
+14:37:40 => [INFO]Node[0] received logs from Node[1]
+14:37:40 => [INFO]Node[1] received command command_29 and add it to logs.
+14:37:40 => [INFO]Node[1] => Node[0]: 发送日志 47-47
+14:37:40 => [INFO]Node[1] => Node[2]: 发送日志 41-47
+14:37:40 => [INFO]Node[0] received logs from Node[1]
+14:37:40 => [INFO]Node[1] => Node[0]: 发送日志 48-47
+14:37:40 => [INFO]Node[1] => Node[2]: 发送日志 41-47
+14:37:40 => [INFO]Node[0] received logs from Node[1]
+14:37:40 => [INFO]Node[1] => Node[0]: 发送日志 48-47
+14:37:40 => [INFO]Node[1] => Node[2]: 发送日志 41-47
+14:37:40 => [INFO]Node[1] => Node[0]: 发送日志 47-47
+14:37:41 => [INFO]Node[1] => Node[2]: 发送日志 41-47
+14:37:41 => [INFO]Node[1] => Node[0]: 发送日志 46-47
+14:37:41 => [INFO]Node[1] => Node[2]: 发送日志 41-47
+14:37:41 => [INFO]Node[1] => Node[0]: 发送日志 45-47
+14:37:41 => [INFO]Node[1] => Node[2]: 发送日志 41-47
+14:37:41 => [INFO]Node[1] => Node[0]: 发送日志 44-47
+14:37:41 => [INFO]Node[1] => Node[2]: 发送日志 41-47
+14:37:41 => [INFO]Node[1] => Node[0]: 发送日志 43-47
+14:37:41 => [INFO]Node[1] => Node[2]: 发送日志 41-47
+14:37:41 => [INFO]Node[1] => Node[0]: 发送日志 42-47
+14:37:41 => [INFO]Node[1] => Node[2]: 发送日志 41-47
+14:37:41 => [INFO]Node[1] received command command_30 and add it to logs.
+14:37:41 => [INFO]Node[1] => Node[0]: 发送日志 41-48
+14:37:41 => [INFO]Node[1] => Node[2]: 发送日志 41-48
+14:37:40 => [INFO]Node[0] received logs from Node[1]
+14:37:41 => [INFO]Node[1] => Node[0]: 发送日志 49-48
+14:37:41 => [INFO]Node[1] => Node[2]: 发送日志 41-48
+14:37:41 => [INFO]Node[0] received logs from Node[1]
+14:37:41 => [INFO]Node[1] => Node[0]: 发送日志 49-48
+14:37:41 => [INFO]Node[1] => Node[2]: 发送日志 41-48
+14:37:41 => [INFO]Node[0] received logs from Node[1]
+14:37:41 => [INFO]Node[1] => Node[0]: 发送日志 49-48
+14:37:42 => [INFO]Node[1] => Node[2]: 发送日志 41-48
+14:37:41 => [INFO]Node[0] received logs from Node[1]
+14:37:42 => [INFO]Node[1] => Node[0]: 发送日志 49-48
+14:37:42 => [INFO]Node[1] => Node[2]: 发送日志 41-48
+14:37:42 => [INFO]Node[0] received logs from Node[1]
+14:37:42 => [INFO]Node[1] => Node[0]: 发送日志 49-48
+14:37:42 => [INFO]Node[1] => Node[2]: 发送日志 41-48
+14:37:42 => [INFO]Node[0] received logs from Node[1]
+14:37:42 => [INFO]Node[1] => Node[0]: 发送日志 49-48
+14:37:42 => [INFO]Node[1] => Node[2]: 发送日志 41-48
+14:37:42 => [INFO]Node[0] received logs from Node[1]
+14:37:42 => [INFO]Node[1] => Node[0]: 发送日志 49-48
+14:37:42 => [INFO]Node[1] => Node[2]: 发送日志 41-48
+14:37:42 => [INFO]Node[0] received logs from Node[1]
+14:37:42 => [INFO]Node[1] => Node[0]: 发送日志 49-48
+14:37:42 => [INFO]Node[1] => Node[2]: 发送日志 41-48
+14:37:42 => [INFO]Node[0] received logs from Node[1]
+14:37:42 => [INFO]Node[1] => Node[0]: 发送日志 49-48
+14:37:42 => [INFO]Node[1] => Node[2]: 发送日志 41-48
+14:37:42 => [INFO]Node[0] received logs from Node[1]
+14:37:42 => [INFO]Node[1] received command command_31 and add it to logs.
+14:37:42 => [INFO]Node[1] => Node[0]: 发送日志 49-49
+14:37:42 => [INFO]Node[1] => Node[2]: 发送日志 41-49
+14:37:42 => [INFO]Node[0] received logs from Node[1]
+14:37:42 => [INFO]Node[1] => Node[0]: 发送日志 50-49
+14:37:42 => [INFO]Node[1] => Node[2]: 发送日志 41-49
+14:37:42 => [INFO]Node[0] received logs from Node[1]
+14:37:42 => [INFO]Node[1] => Node[0]: 发送日志 50-49
+14:37:43 => [INFO]Node[1] => Node[2]: 发送日志 41-49
+14:37:42 => [INFO]Node[0] received logs from Node[1]
+14:37:43 => [INFO]Node[1] => Node[0]: 发送日志 50-49
+14:37:43 => [INFO]Node[1] => Node[2]: 发送日志 41-49
+14:37:43 => [INFO]Node[1] => Node[0]: 发送日志 49-49
+14:37:43 => [ERROR]RaftRpc send to 127.0.0.1:8000 failed: send failed: 32
+14:37:43 => [INFO]Node[1] => Node[2]: 发送日志 41-49
+14:37:43 => [INFO]Node[1] => Node[0]: 发送日志 49-49
+14:37:43 => [INFO]Node[1] => Node[2]: 发送日志 41-49
+14:37:43 => [INFO]Node[1] => Node[0]: 发送日志 49-49
+14:37:43 => [INFO]Node[1] => Node[2]: 发送日志 41-49
+14:37:43 => [INFO]Node[1] => Node[0]: 发送日志 49-49
+14:37:43 => [INFO]Node[1] => Node[2]: 发送日志 41-49
+14:37:43 => [INFO]Node[1] => Node[0]: 发送日志 49-49
+14:37:43 => [INFO]Node[1] => Node[2]: 发送日志 41-49
