@@ -16,6 +16,11 @@ add_requires("protobuf")
 add_requires("toml11")
 add_requires("muduo")
 add_requires("gtest")
+add_requires("rocksdb v10.5.1", {
+    configs = {
+        cxxflags = "-std=c++20"  -- 为 RocksDB 编译添加 C++20 标志
+    }
+})
 
 -- 加入 include
 add_includedirs("include")
@@ -73,10 +78,19 @@ target("timer")
     add_deps("logger")
     set_targetdir("lib")
 
+target("rocksdb")
+    set_kind("static")
+    add_files("src/common/storage/rocksdb_client.cpp")
+    add_headerfiles("include/common/storage/rocksdb_client.h")
+    add_deps("logger")
+    add_packages("rocksdb")
+    add_links("rocksdb")
+    set_targetdir("lib")
+
 target("raft")
     set_kind("static")
-    add_files("src/metadata/raft/*.cpp", "src/proto/raft.pb.cc")
-    add_headerfiles("include/metadata/raft/*.h")
+    add_files("src/storage/raft/*.cpp", "src/proto/raft.pb.cc", "src/proto/command.pb.cc")
+    add_headerfiles("include/storage/raft/*.h")
     add_deps("rpc", "persister", "logger", "timer")
     add_packages("protobuf")
     set_targetdir("lib")
@@ -124,3 +138,12 @@ target("test_raft")
     add_deps("raft", "rpc", "persister", "logger")
     set_targetdir("bin")
     add_packages("gtest")
+
+target("test_rocksdb")
+    set_kind("binary")
+    -- ? 不知道为什么一直报错，说 rocksb 头文件声明的函数没实现，这里先把 rocksdb_client.cpp 也加进来
+    add_files("tests/common/test_rocksdb.cpp", "src/common/storage/rocksdb_client.cpp")
+    add_deps("logger")
+    add_packages("gtest", "rocksdb")
+    set_targetdir("bin")
+    

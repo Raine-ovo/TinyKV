@@ -53,7 +53,7 @@ struct RequestVoteResponseDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RequestVoteResponseDefaultTypeInternal _RequestVoteResponse_default_instance_;
 PROTOBUF_CONSTEXPR LogEntry::LogEntry(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.command_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+    /*decltype(_impl_.command_)*/nullptr
   , /*decltype(_impl_.term_)*/uint64_t{0u}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct LogEntryDefaultTypeInternal {
@@ -219,34 +219,38 @@ static const ::_pb::Message* const file_default_instances[] = {
 };
 
 const char descriptor_table_protodef_raft_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\nraft.proto\022\004raft\"b\n\022RequestVoteRequest"
-  "\022\014\n\004term\030\001 \001(\004\022\023\n\013candidateId\030\002 \001(\r\022\024\n\014l"
-  "astLogIndex\030\003 \001(\004\022\023\n\013lastLogTerm\030\004 \001(\004\"8"
-  "\n\023RequestVoteResponse\022\014\n\004term\030\001 \001(\004\022\023\n\013v"
-  "oteGranted\030\002 \001(\010\")\n\010LogEntry\022\014\n\004term\030\001 \001"
-  "(\004\022\017\n\007command\030\002 \001(\014\"\230\001\n\024AppendEntriesReq"
-  "uest\022\014\n\004term\030\001 \001(\004\022\020\n\010leaderId\030\002 \001(\r\022\024\n\014"
-  "prevLogIndex\030\003 \001(\004\022\023\n\013prevLogTerm\030\004 \001(\004\022"
-  "\037\n\007entries\030\005 \003(\0132\016.raft.LogEntry\022\024\n\014lead"
-  "erCommit\030\006 \001(\004\"6\n\025AppendEntriesResponse\022"
-  "\014\n\004term\030\001 \001(\004\022\017\n\007success\030\002 \001(\010\"{\n\026Instal"
-  "lSnapshotRequest\022\014\n\004term\030\001 \001(\004\022\020\n\010leader"
-  "Id\030\002 \001(\r\022\031\n\021lastIncludedIndex\030\003 \001(\004\022\030\n\020l"
-  "astIncludedTerm\030\004 \001(\004\022\014\n\004data\030\005 \001(\014\"\'\n\027I"
-  "nstallSnapshotResponse\022\014\n\004term\030\001 \001(\0042\364\001\n"
-  "\013RaftService\022E\n\016RequestVoteRPC\022\030.raft.Re"
-  "questVoteRequest\032\031.raft.RequestVoteRespo"
-  "nse\022K\n\020AppendEntriesRPC\022\032.raft.AppendEnt"
-  "riesRequest\032\033.raft.AppendEntriesResponse"
-  "\022Q\n\022InstallSnapshotRPC\022\034.raft.InstallSna"
-  "pshotRequest\032\035.raft.InstallSnapshotRespo"
-  "nseB\003\200\001\001b\006proto3"
+  "\n\nraft.proto\022\004raft\032\rcommand.proto\"b\n\022Req"
+  "uestVoteRequest\022\014\n\004term\030\001 \001(\004\022\023\n\013candida"
+  "teId\030\002 \001(\r\022\024\n\014lastLogIndex\030\003 \001(\004\022\023\n\013last"
+  "LogTerm\030\004 \001(\004\"8\n\023RequestVoteResponse\022\014\n\004"
+  "term\030\001 \001(\004\022\023\n\013voteGranted\030\002 \001(\010\";\n\010LogEn"
+  "try\022\014\n\004term\030\001 \001(\004\022!\n\007command\030\002 \001(\0132\020.com"
+  "mand.Command\"\230\001\n\024AppendEntriesRequest\022\014\n"
+  "\004term\030\001 \001(\004\022\020\n\010leaderId\030\002 \001(\r\022\024\n\014prevLog"
+  "Index\030\003 \001(\004\022\023\n\013prevLogTerm\030\004 \001(\004\022\037\n\007entr"
+  "ies\030\005 \003(\0132\016.raft.LogEntry\022\024\n\014leaderCommi"
+  "t\030\006 \001(\004\"6\n\025AppendEntriesResponse\022\014\n\004term"
+  "\030\001 \001(\004\022\017\n\007success\030\002 \001(\010\"{\n\026InstallSnapsh"
+  "otRequest\022\014\n\004term\030\001 \001(\004\022\020\n\010leaderId\030\002 \001("
+  "\r\022\031\n\021lastIncludedIndex\030\003 \001(\004\022\030\n\020lastIncl"
+  "udedTerm\030\004 \001(\004\022\014\n\004data\030\005 \001(\014\"\'\n\027InstallS"
+  "napshotResponse\022\014\n\004term\030\001 \001(\0042\364\001\n\013RaftSe"
+  "rvice\022E\n\016RequestVoteRPC\022\030.raft.RequestVo"
+  "teRequest\032\031.raft.RequestVoteResponse\022K\n\020"
+  "AppendEntriesRPC\022\032.raft.AppendEntriesReq"
+  "uest\032\033.raft.AppendEntriesResponse\022Q\n\022Ins"
+  "tallSnapshotRPC\022\034.raft.InstallSnapshotRe"
+  "quest\032\035.raft.InstallSnapshotResponseB\003\200\001"
+  "\001b\006proto3"
   ;
+static const ::_pbi::DescriptorTable* const descriptor_table_raft_2eproto_deps[1] = {
+  &::descriptor_table_command_2eproto,
+};
 static ::_pbi::once_flag descriptor_table_raft_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_raft_2eproto = {
-    false, false, 856, descriptor_table_protodef_raft_2eproto,
+    false, false, 889, descriptor_table_protodef_raft_2eproto,
     "raft.proto",
-    &descriptor_table_raft_2eproto_once, nullptr, 0, 7,
+    &descriptor_table_raft_2eproto_once, descriptor_table_raft_2eproto_deps, 1, 7,
     schemas, file_default_instances, TableStruct_raft_2eproto::offsets,
     file_level_metadata_raft_2eproto, file_level_enum_descriptors_raft_2eproto,
     file_level_service_descriptors_raft_2eproto,
@@ -733,8 +737,19 @@ void RequestVoteResponse::InternalSwap(RequestVoteResponse* other) {
 
 class LogEntry::_Internal {
  public:
+  static const ::command::Command& command(const LogEntry* msg);
 };
 
+const ::command::Command&
+LogEntry::_Internal::command(const LogEntry* msg) {
+  return *msg->_impl_.command_;
+}
+void LogEntry::clear_command() {
+  if (GetArenaForAllocation() == nullptr && _impl_.command_ != nullptr) {
+    delete _impl_.command_;
+  }
+  _impl_.command_ = nullptr;
+}
 LogEntry::LogEntry(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -745,18 +760,13 @@ LogEntry::LogEntry(const LogEntry& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   LogEntry* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.command_){}
+      decltype(_impl_.command_){nullptr}
     , decltype(_impl_.term_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.command_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.command_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_command().empty()) {
-    _this->_impl_.command_.Set(from._internal_command(), 
-      _this->GetArenaForAllocation());
+  if (from._internal_has_command()) {
+    _this->_impl_.command_ = new ::command::Command(*from._impl_.command_);
   }
   _this->_impl_.term_ = from._impl_.term_;
   // @@protoc_insertion_point(copy_constructor:raft.LogEntry)
@@ -767,14 +777,10 @@ inline void LogEntry::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.command_){}
+      decltype(_impl_.command_){nullptr}
     , decltype(_impl_.term_){uint64_t{0u}}
     , /*decltype(_impl_._cached_size_)*/{}
   };
-  _impl_.command_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.command_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 LogEntry::~LogEntry() {
@@ -788,7 +794,7 @@ LogEntry::~LogEntry() {
 
 inline void LogEntry::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.command_.Destroy();
+  if (this != internal_default_instance()) delete _impl_.command_;
 }
 
 void LogEntry::SetCachedSize(int size) const {
@@ -801,7 +807,10 @@ void LogEntry::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.command_.ClearToEmpty();
+  if (GetArenaForAllocation() == nullptr && _impl_.command_ != nullptr) {
+    delete _impl_.command_;
+  }
+  _impl_.command_ = nullptr;
   _impl_.term_ = uint64_t{0u};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -820,11 +829,10 @@ const char* LogEntry::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
         } else
           goto handle_unusual;
         continue;
-      // bytes command = 2;
+      // .command.Command command = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_command();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          ptr = ctx->ParseMessage(_internal_mutable_command(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -864,10 +872,11 @@ uint8_t* LogEntry::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_term(), target);
   }
 
-  // bytes command = 2;
-  if (!this->_internal_command().empty()) {
-    target = stream->WriteBytesMaybeAliased(
-        2, this->_internal_command(), target);
+  // .command.Command command = 2;
+  if (this->_internal_has_command()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::command(this),
+        _Internal::command(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -886,11 +895,11 @@ size_t LogEntry::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // bytes command = 2;
-  if (!this->_internal_command().empty()) {
+  // .command.Command command = 2;
+  if (this->_internal_has_command()) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-        this->_internal_command());
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.command_);
   }
 
   // uint64 term = 1;
@@ -916,8 +925,9 @@ void LogEntry::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTO
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!from._internal_command().empty()) {
-    _this->_internal_set_command(from._internal_command());
+  if (from._internal_has_command()) {
+    _this->_internal_mutable_command()->::command::Command::MergeFrom(
+        from._internal_command());
   }
   if (from._internal_term() != 0) {
     _this->_internal_set_term(from._internal_term());
@@ -938,14 +948,13 @@ bool LogEntry::IsInitialized() const {
 
 void LogEntry::InternalSwap(LogEntry* other) {
   using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.command_, lhs_arena,
-      &other->_impl_.command_, rhs_arena
-  );
-  swap(_impl_.term_, other->_impl_.term_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(LogEntry, _impl_.term_)
+      + sizeof(LogEntry::_impl_.term_)
+      - PROTOBUF_FIELD_OFFSET(LogEntry, _impl_.command_)>(
+          reinterpret_cast<char*>(&_impl_.command_),
+          reinterpret_cast<char*>(&other->_impl_.command_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata LogEntry::GetMetadata() const {

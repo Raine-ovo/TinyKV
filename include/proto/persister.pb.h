@@ -30,6 +30,7 @@
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/unknown_field_set.h>
+#include "raft.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_persister_2eproto
@@ -45,184 +46,16 @@ struct TableStruct_persister_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_persister_2eproto;
 namespace persister {
-class LogEntry;
-struct LogEntryDefaultTypeInternal;
-extern LogEntryDefaultTypeInternal _LogEntry_default_instance_;
 class LogEntryVector;
 struct LogEntryVectorDefaultTypeInternal;
 extern LogEntryVectorDefaultTypeInternal _LogEntryVector_default_instance_;
 }  // namespace persister
 PROTOBUF_NAMESPACE_OPEN
-template<> ::persister::LogEntry* Arena::CreateMaybeMessage<::persister::LogEntry>(Arena*);
 template<> ::persister::LogEntryVector* Arena::CreateMaybeMessage<::persister::LogEntryVector>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace persister {
 
 // ===================================================================
-
-class LogEntry final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:persister.LogEntry) */ {
- public:
-  inline LogEntry() : LogEntry(nullptr) {}
-  ~LogEntry() override;
-  explicit PROTOBUF_CONSTEXPR LogEntry(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  LogEntry(const LogEntry& from);
-  LogEntry(LogEntry&& from) noexcept
-    : LogEntry() {
-    *this = ::std::move(from);
-  }
-
-  inline LogEntry& operator=(const LogEntry& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline LogEntry& operator=(LogEntry&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const LogEntry& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const LogEntry* internal_default_instance() {
-    return reinterpret_cast<const LogEntry*>(
-               &_LogEntry_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    0;
-
-  friend void swap(LogEntry& a, LogEntry& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(LogEntry* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(LogEntry* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  LogEntry* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<LogEntry>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const LogEntry& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const LogEntry& from) {
-    LogEntry::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(LogEntry* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "persister.LogEntry";
-  }
-  protected:
-  explicit LogEntry(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kCommandFieldNumber = 2,
-    kTermFieldNumber = 1,
-  };
-  // bytes command = 2;
-  void clear_command();
-  const std::string& command() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_command(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_command();
-  PROTOBUF_NODISCARD std::string* release_command();
-  void set_allocated_command(std::string* command);
-  private:
-  const std::string& _internal_command() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_command(const std::string& value);
-  std::string* _internal_mutable_command();
-  public:
-
-  // uint64 term = 1;
-  void clear_term();
-  uint64_t term() const;
-  void set_term(uint64_t value);
-  private:
-  uint64_t _internal_term() const;
-  void _internal_set_term(uint64_t value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:persister.LogEntry)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr command_;
-    uint64_t term_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_persister_2eproto;
-};
-// -------------------------------------------------------------------
 
 class LogEntryVector final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:persister.LogEntryVector) */ {
@@ -272,7 +105,7 @@ class LogEntryVector final :
                &_LogEntryVector_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    0;
 
   friend void swap(LogEntryVector& a, LogEntryVector& b) {
     a.Swap(&b);
@@ -347,22 +180,22 @@ class LogEntryVector final :
   enum : int {
     kEntriesFieldNumber = 1,
   };
-  // repeated .persister.LogEntry entries = 1;
+  // repeated .raft.LogEntry entries = 1;
   int entries_size() const;
   private:
   int _internal_entries_size() const;
   public:
   void clear_entries();
-  ::persister::LogEntry* mutable_entries(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::persister::LogEntry >*
+  ::raft::LogEntry* mutable_entries(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::raft::LogEntry >*
       mutable_entries();
   private:
-  const ::persister::LogEntry& _internal_entries(int index) const;
-  ::persister::LogEntry* _internal_add_entries();
+  const ::raft::LogEntry& _internal_entries(int index) const;
+  ::raft::LogEntry* _internal_add_entries();
   public:
-  const ::persister::LogEntry& entries(int index) const;
-  ::persister::LogEntry* add_entries();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::persister::LogEntry >&
+  const ::raft::LogEntry& entries(int index) const;
+  ::raft::LogEntry* add_entries();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::raft::LogEntry >&
       entries() const;
 
   // @@protoc_insertion_point(class_scope:persister.LogEntryVector)
@@ -373,7 +206,7 @@ class LogEntryVector final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::persister::LogEntry > entries_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::raft::LogEntry > entries_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -388,117 +221,40 @@ class LogEntryVector final :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// LogEntry
-
-// uint64 term = 1;
-inline void LogEntry::clear_term() {
-  _impl_.term_ = uint64_t{0u};
-}
-inline uint64_t LogEntry::_internal_term() const {
-  return _impl_.term_;
-}
-inline uint64_t LogEntry::term() const {
-  // @@protoc_insertion_point(field_get:persister.LogEntry.term)
-  return _internal_term();
-}
-inline void LogEntry::_internal_set_term(uint64_t value) {
-  
-  _impl_.term_ = value;
-}
-inline void LogEntry::set_term(uint64_t value) {
-  _internal_set_term(value);
-  // @@protoc_insertion_point(field_set:persister.LogEntry.term)
-}
-
-// bytes command = 2;
-inline void LogEntry::clear_command() {
-  _impl_.command_.ClearToEmpty();
-}
-inline const std::string& LogEntry::command() const {
-  // @@protoc_insertion_point(field_get:persister.LogEntry.command)
-  return _internal_command();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void LogEntry::set_command(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.command_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:persister.LogEntry.command)
-}
-inline std::string* LogEntry::mutable_command() {
-  std::string* _s = _internal_mutable_command();
-  // @@protoc_insertion_point(field_mutable:persister.LogEntry.command)
-  return _s;
-}
-inline const std::string& LogEntry::_internal_command() const {
-  return _impl_.command_.Get();
-}
-inline void LogEntry::_internal_set_command(const std::string& value) {
-  
-  _impl_.command_.Set(value, GetArenaForAllocation());
-}
-inline std::string* LogEntry::_internal_mutable_command() {
-  
-  return _impl_.command_.Mutable(GetArenaForAllocation());
-}
-inline std::string* LogEntry::release_command() {
-  // @@protoc_insertion_point(field_release:persister.LogEntry.command)
-  return _impl_.command_.Release();
-}
-inline void LogEntry::set_allocated_command(std::string* command) {
-  if (command != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.command_.SetAllocated(command, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.command_.IsDefault()) {
-    _impl_.command_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:persister.LogEntry.command)
-}
-
-// -------------------------------------------------------------------
-
 // LogEntryVector
 
-// repeated .persister.LogEntry entries = 1;
+// repeated .raft.LogEntry entries = 1;
 inline int LogEntryVector::_internal_entries_size() const {
   return _impl_.entries_.size();
 }
 inline int LogEntryVector::entries_size() const {
   return _internal_entries_size();
 }
-inline void LogEntryVector::clear_entries() {
-  _impl_.entries_.Clear();
-}
-inline ::persister::LogEntry* LogEntryVector::mutable_entries(int index) {
+inline ::raft::LogEntry* LogEntryVector::mutable_entries(int index) {
   // @@protoc_insertion_point(field_mutable:persister.LogEntryVector.entries)
   return _impl_.entries_.Mutable(index);
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::persister::LogEntry >*
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::raft::LogEntry >*
 LogEntryVector::mutable_entries() {
   // @@protoc_insertion_point(field_mutable_list:persister.LogEntryVector.entries)
   return &_impl_.entries_;
 }
-inline const ::persister::LogEntry& LogEntryVector::_internal_entries(int index) const {
+inline const ::raft::LogEntry& LogEntryVector::_internal_entries(int index) const {
   return _impl_.entries_.Get(index);
 }
-inline const ::persister::LogEntry& LogEntryVector::entries(int index) const {
+inline const ::raft::LogEntry& LogEntryVector::entries(int index) const {
   // @@protoc_insertion_point(field_get:persister.LogEntryVector.entries)
   return _internal_entries(index);
 }
-inline ::persister::LogEntry* LogEntryVector::_internal_add_entries() {
+inline ::raft::LogEntry* LogEntryVector::_internal_add_entries() {
   return _impl_.entries_.Add();
 }
-inline ::persister::LogEntry* LogEntryVector::add_entries() {
-  ::persister::LogEntry* _add = _internal_add_entries();
+inline ::raft::LogEntry* LogEntryVector::add_entries() {
+  ::raft::LogEntry* _add = _internal_add_entries();
   // @@protoc_insertion_point(field_add:persister.LogEntryVector.entries)
   return _add;
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::persister::LogEntry >&
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::raft::LogEntry >&
 LogEntryVector::entries() const {
   // @@protoc_insertion_point(field_list:persister.LogEntryVector.entries)
   return _impl_.entries_;
@@ -507,8 +263,6 @@ LogEntryVector::entries() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
-// -------------------------------------------------------------------
-
 
 // @@protoc_insertion_point(namespace_scope)
 

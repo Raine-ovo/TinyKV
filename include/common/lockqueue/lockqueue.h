@@ -4,8 +4,9 @@
 #include <queue>
 #include <mutex>
 #include <condition_variable>
+#include <shared_mutex>
 
-// 该队列会被 muduo库中或其他的多线程进行写入 msg ，还要被写日志线程写入文件，
+// 该队列会被 muduo 库中或其他的多线程进行写入 msg ，还要被写日志线程写入文件，
 // 因此需要实现线程安全
 
 // 为了防止日志系统的写线程频繁在空队列时进行加锁和释放锁带来的性能损耗，这里选择
@@ -15,6 +16,14 @@ class LockQueue
 {
 public:
     void push(const T &msg)
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        _queue.push(msg);
+        _cond.notify_one(); // 因为只有一个磁盘 I/O 线程，只需要唤醒一个
+    }
+
+    // 移动语义版本的 push
+    void push(T&& msg)
     {
         std::lock_guard<std::mutex> lock(_mutex);
         _queue.push(msg);
@@ -32,6 +41,18 @@ public:
         T msg = _queue.front();
         _queue.pop();
         return msg;
+    }
+
+    size_t size()
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        return _queue.empty();
+    }
+
+    bool empty()
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        return _queue.empty();
     }
 
 private:

@@ -31,6 +31,7 @@
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/service.h>
 #include <google/protobuf/unknown_field_set.h>
+#include "command.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_raft_2eproto
@@ -545,19 +546,23 @@ class LogEntry final :
     kCommandFieldNumber = 2,
     kTermFieldNumber = 1,
   };
-  // bytes command = 2;
-  void clear_command();
-  const std::string& command() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_command(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_command();
-  PROTOBUF_NODISCARD std::string* release_command();
-  void set_allocated_command(std::string* command);
+  // .command.Command command = 2;
+  bool has_command() const;
   private:
-  const std::string& _internal_command() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_command(const std::string& value);
-  std::string* _internal_mutable_command();
+  bool _internal_has_command() const;
   public:
+  void clear_command();
+  const ::command::Command& command() const;
+  PROTOBUF_NODISCARD ::command::Command* release_command();
+  ::command::Command* mutable_command();
+  void set_allocated_command(::command::Command* command);
+  private:
+  const ::command::Command& _internal_command() const;
+  ::command::Command* _internal_mutable_command();
+  public:
+  void unsafe_arena_set_allocated_command(
+      ::command::Command* command);
+  ::command::Command* unsafe_arena_release_command();
 
   // uint64 term = 1;
   void clear_term();
@@ -576,7 +581,7 @@ class LogEntry final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr command_;
+    ::command::Command* command_;
     uint64_t term_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -1533,53 +1538,88 @@ inline void LogEntry::set_term(uint64_t value) {
   // @@protoc_insertion_point(field_set:raft.LogEntry.term)
 }
 
-// bytes command = 2;
-inline void LogEntry::clear_command() {
-  _impl_.command_.ClearToEmpty();
+// .command.Command command = 2;
+inline bool LogEntry::_internal_has_command() const {
+  return this != internal_default_instance() && _impl_.command_ != nullptr;
 }
-inline const std::string& LogEntry::command() const {
+inline bool LogEntry::has_command() const {
+  return _internal_has_command();
+}
+inline const ::command::Command& LogEntry::_internal_command() const {
+  const ::command::Command* p = _impl_.command_;
+  return p != nullptr ? *p : reinterpret_cast<const ::command::Command&>(
+      ::command::_Command_default_instance_);
+}
+inline const ::command::Command& LogEntry::command() const {
   // @@protoc_insertion_point(field_get:raft.LogEntry.command)
   return _internal_command();
 }
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void LogEntry::set_command(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.command_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:raft.LogEntry.command)
-}
-inline std::string* LogEntry::mutable_command() {
-  std::string* _s = _internal_mutable_command();
-  // @@protoc_insertion_point(field_mutable:raft.LogEntry.command)
-  return _s;
-}
-inline const std::string& LogEntry::_internal_command() const {
-  return _impl_.command_.Get();
-}
-inline void LogEntry::_internal_set_command(const std::string& value) {
-  
-  _impl_.command_.Set(value, GetArenaForAllocation());
-}
-inline std::string* LogEntry::_internal_mutable_command() {
-  
-  return _impl_.command_.Mutable(GetArenaForAllocation());
-}
-inline std::string* LogEntry::release_command() {
-  // @@protoc_insertion_point(field_release:raft.LogEntry.command)
-  return _impl_.command_.Release();
-}
-inline void LogEntry::set_allocated_command(std::string* command) {
-  if (command != nullptr) {
+inline void LogEntry::unsafe_arena_set_allocated_command(
+    ::command::Command* command) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.command_);
+  }
+  _impl_.command_ = command;
+  if (command) {
     
   } else {
     
   }
-  _impl_.command_.SetAllocated(command, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.command_.IsDefault()) {
-    _impl_.command_.Set("", GetArenaForAllocation());
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:raft.LogEntry.command)
+}
+inline ::command::Command* LogEntry::release_command() {
+  
+  ::command::Command* temp = _impl_.command_;
+  _impl_.command_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
   }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::command::Command* LogEntry::unsafe_arena_release_command() {
+  // @@protoc_insertion_point(field_release:raft.LogEntry.command)
+  
+  ::command::Command* temp = _impl_.command_;
+  _impl_.command_ = nullptr;
+  return temp;
+}
+inline ::command::Command* LogEntry::_internal_mutable_command() {
+  
+  if (_impl_.command_ == nullptr) {
+    auto* p = CreateMaybeMessage<::command::Command>(GetArenaForAllocation());
+    _impl_.command_ = p;
+  }
+  return _impl_.command_;
+}
+inline ::command::Command* LogEntry::mutable_command() {
+  ::command::Command* _msg = _internal_mutable_command();
+  // @@protoc_insertion_point(field_mutable:raft.LogEntry.command)
+  return _msg;
+}
+inline void LogEntry::set_allocated_command(::command::Command* command) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.command_);
+  }
+  if (command) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(command));
+    if (message_arena != submessage_arena) {
+      command = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, command, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.command_ = command;
   // @@protoc_insertion_point(field_set_allocated:raft.LogEntry.command)
 }
 

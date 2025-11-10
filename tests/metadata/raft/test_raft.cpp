@@ -1,8 +1,9 @@
 #include "common/lockqueue/lockqueue.h"
 #include "common/rpc/rpc_channel.h"
 #include "common/rpc/raft_rpc_channel.h"
-#include "metadata/raft/raft.h"
-#include "metadata/raft/raft_client.h"
+#include "proto/command.pb.h"
+#include "storage/raft/raft.h"
+#include "storage/raft/raft_client.h"
 #include "common/rpc/rpc_provider.h"
 
 #include <chrono>
@@ -75,7 +76,7 @@ void Start_A_Raft_Node(const std::string& ip, uint32_t port)
                 ApplyMsg msg = applyChan->pop();
                 std::cout << "节点 " << node_id << " 接收到消息: "
                     << "CommandValid=" << msg.CommandValid
-                    << ", Command=" << msg.Command
+                    << ", Command=" << "[]"
                     << ", CommandIndex=" << msg.CommandIndex << std::endl;
             } catch (const std::exception &e) {
                 std::cout << "节点 " << node_id << " 处理消息异常" << e.what() << std::endl;
@@ -90,7 +91,10 @@ void Start_A_Raft_Node(const std::string& ip, uint32_t port)
         while (true)
         {
             try {
-                std::string command = std::format("command_{}", index);
+                ::command::Command command;
+                auto cmd = command.mutable_put();
+                cmd->set_key("key");
+                cmd->set_value("value");
                 raft->Start(command);
             } catch (const std::exception& e) {
                 std::cout << "日志复制机制异常: " << e.what() << std::endl;

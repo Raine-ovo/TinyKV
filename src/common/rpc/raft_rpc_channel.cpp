@@ -170,7 +170,7 @@ bool RaftRpcChannel::receiveResponse(google::protobuf::Message* response,
 {
     std::lock_guard<std::mutex> lock(_mutex);
 
-    if (!isConnected() && connectServer())
+    if (!isConnected() && !connectServer())
     {
         std::string error_msg = "Not connected to peer";
         LOG_ERROR("RaftRPC receive failed: {}", error_msg);

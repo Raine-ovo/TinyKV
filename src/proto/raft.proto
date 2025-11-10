@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package raft;
 
+import "command.proto";
+
 option cc_generic_services = true;
 
 message RequestVoteRequest
@@ -21,7 +23,7 @@ message RequestVoteResponse
 message LogEntry
 {
     uint64 term = 1;
-    bytes command = 2;
+    command.Command command = 2;
 }
 
 message AppendEntriesRequest
