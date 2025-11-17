@@ -25,6 +25,7 @@ public:
     void run(); // 启用线程
 
     void stop(); // 停止计时器
+    void kill();
 
 private:
     TimerCallback _callback;
@@ -37,7 +38,8 @@ private:
     // 底层线程, 因为创建线程后就直接跑了，为了在 run 后跑，需要用指针
     std::shared_ptr<std::thread> _thread;
 
-    bool is_stopped;
+    bool is_stopped; 
+    bool is_killed; // 不需要计时器了，直接结束以便析构
 };
 
 #endif

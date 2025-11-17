@@ -48,6 +48,8 @@ public:
     bool save_snapshot(const std::vector<uint8_t> &snapshot_data);
     std::optional<std::vector<uint8_t>> load_snapshot();
 
+    uint64_t state_size();
+    
 private:
     std::shared_mutex _mutex; // 临界资源访问
 

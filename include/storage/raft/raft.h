@@ -57,12 +57,19 @@ public:
     Raft();
     ~Raft();
 
+    
+    // 返回状态：term、isleader
+    std::tuple<uint64_t, bool> GetState();
+
     void Make(const std::vector<std::shared_ptr<RaftClient>> &peers, const uint32_t &me,
         std::shared_ptr<Persister> persister, std::shared_ptr<LockQueue<ApplyMsg>> applyChan);
 
+    // 读取 state 字节数量
+    uint64_t PersistBytes();
+
     // 服务层启动 Raft 确认一致性后，由 Leader 向客户端返回结果
     // 返回：index，term，isleader
-    std::tuple<int, int, bool> Start(const ::command::Command& command);
+    std::tuple<uint32_t, uint64_t, bool> Start(const ::command::Command& command);
 
     // 上层使用字节流保存状态机状态，这个状态为快照
     // 然后把这个字节流传给 raft 节点，调用 Snapshot 截断部分日志，并对这个状态机状态进行持久化
@@ -70,6 +77,8 @@ public:
 
     void Kill();
     bool Killed();
+
+    void UpdatePeers(const std::vector<std::shared_ptr<RaftClient>>& peer_conns);
 
 private:
     std::shared_mutex _mutex;
@@ -109,8 +118,6 @@ private:
 
     void TurnFollower(uint64_t term);
 
-    // 返回状态：term、isleader
-    std::tuple<int, bool> GetState();
 
     // 把日志提交给上层服务
     void Applier();
@@ -126,6 +133,7 @@ private:
     void AppendEntries();
     // Follower 接收日志/快照后更新 matchIndex
     void UpdateCommitIndex();
+
 
     // Leader 向落后的 follower 提供快照
     // 在 AppendEntries 中检测是否落后

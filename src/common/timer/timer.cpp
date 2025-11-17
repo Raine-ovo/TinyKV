@@ -5,12 +5,14 @@
 
 Timer::Timer(uint timeout, TimerCallback callback)
     : _timeout(timeout), _callback(callback), is_stopped(false),
-      _runningtime(0)
+      _runningtime(0), is_killed(false)
 {
 }
 
 Timer::~Timer()
 {
+    is_killed = true;
+
     if (_thread != nullptr)
     {
         // 如果对应线程还在执行，那就等待执行完毕后回收资源
@@ -61,7 +63,13 @@ void Timer::run()
     _thread = std::make_shared<std::thread>([&]() {
         while (true)
         {
-            if (is_stopped) {
+            if (is_killed)
+            {
+                return ;
+            }
+
+            if (is_stopped) 
+            {
                 continue;
             }
 
@@ -81,4 +89,9 @@ void Timer::run()
 void Timer::stop()
 {
     is_stopped = true;
+}
+
+void Timer::kill()
+{
+    is_killed = true;
 }

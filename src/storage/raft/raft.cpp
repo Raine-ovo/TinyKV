@@ -8,6 +8,7 @@
 #include "proto/persister.pb.h"
 #include <algorithm>
 #include <cassert>
+#include <cstddef>
 #include <cstdint>
 #include <iterator>
 #include <memory>
@@ -62,7 +63,7 @@ Raft::Raft()
 
 // 服务层启动 Raft 确认一致性后，由 Leader 向客户端返回结果
 // 返回：index，term，isleader
-std::tuple<int, int, bool> Raft::Start(const ::command::Command& command)
+std::tuple<uint32_t, uint64_t, bool> Raft::Start(const ::command::Command& command)
 {
     uint32_t index = -1;
     uint64_t term = -1;
@@ -133,7 +134,7 @@ Raft::~Raft()
 }
 
 // term、isleader
-std::tuple<int, bool> Raft::GetState()
+std::tuple<uint64_t, bool> Raft::GetState()
 {
     std::shared_lock<std::shared_mutex> lock(_mutex);
     return std::make_tuple(_currentTerm, _status == STATUS::LEADER);
@@ -184,6 +185,21 @@ void Raft::UnSerializeLogs(const std::vector<uint8_t>& meta_logs)
     entries.ParseFromArray(meta_logs.data(), meta_logs.size());
 }
 
+void Raft::UpdatePeers(const std::vector<std::shared_ptr<RaftClient>>& peer_conns)
+{
+    std::unique_lock<std::shared_mutex> lock(_mutex);
+    size_t new_size = peer_conns.size();
+    _peers = peer_conns;
+
+    _nextIndex.resize(new_size, _log_manager.lastIndex() + 1);
+    _matchIndex.resize(new_size, 0);
+
+    if (_me > peer_conns.size())
+    {
+        Kill();
+    }
+}
+
 // 持久化
 // 需要触发持久化时，状态发生变化，因此一定是在锁内，这里不用加锁
 void Raft::Persist(const std::vector<uint8_t> snapshot)
@@ -209,6 +225,13 @@ void Raft::Persist()
 
     // 把 logs 进行序列化
     _persister->save_state(_currentTerm, _votedFor, std::move(SerializeLogs()));
+}
+
+uint64_t Raft::PersistBytes()
+{
+    std::shared_lock<std::shared_mutex> lock(_mutex);
+    
+    return _persister->state_size();
 }
 
 void Raft::ReadPersistData()

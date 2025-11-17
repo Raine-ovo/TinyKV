@@ -29,6 +29,8 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/generated_enum_reflection.h>
+#include <google/protobuf/service.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
@@ -45,31 +47,77 @@ struct TableStruct_command_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_command_2eproto;
 namespace command {
+class AppendCommand;
+struct AppendCommandDefaultTypeInternal;
+extern AppendCommandDefaultTypeInternal _AppendCommand_default_instance_;
+class AppendReply;
+struct AppendReplyDefaultTypeInternal;
+extern AppendReplyDefaultTypeInternal _AppendReply_default_instance_;
 class Command;
 struct CommandDefaultTypeInternal;
 extern CommandDefaultTypeInternal _Command_default_instance_;
 class DeleteCommand;
 struct DeleteCommandDefaultTypeInternal;
 extern DeleteCommandDefaultTypeInternal _DeleteCommand_default_instance_;
+class DeleteReply;
+struct DeleteReplyDefaultTypeInternal;
+extern DeleteReplyDefaultTypeInternal _DeleteReply_default_instance_;
 class GetCommand;
 struct GetCommandDefaultTypeInternal;
 extern GetCommandDefaultTypeInternal _GetCommand_default_instance_;
-class IncrementCommand;
-struct IncrementCommandDefaultTypeInternal;
-extern IncrementCommandDefaultTypeInternal _IncrementCommand_default_instance_;
+class GetReply;
+struct GetReplyDefaultTypeInternal;
+extern GetReplyDefaultTypeInternal _GetReply_default_instance_;
 class PutCommand;
 struct PutCommandDefaultTypeInternal;
 extern PutCommandDefaultTypeInternal _PutCommand_default_instance_;
+class PutReply;
+struct PutReplyDefaultTypeInternal;
+extern PutReplyDefaultTypeInternal _PutReply_default_instance_;
 }  // namespace command
 PROTOBUF_NAMESPACE_OPEN
+template<> ::command::AppendCommand* Arena::CreateMaybeMessage<::command::AppendCommand>(Arena*);
+template<> ::command::AppendReply* Arena::CreateMaybeMessage<::command::AppendReply>(Arena*);
 template<> ::command::Command* Arena::CreateMaybeMessage<::command::Command>(Arena*);
 template<> ::command::DeleteCommand* Arena::CreateMaybeMessage<::command::DeleteCommand>(Arena*);
+template<> ::command::DeleteReply* Arena::CreateMaybeMessage<::command::DeleteReply>(Arena*);
 template<> ::command::GetCommand* Arena::CreateMaybeMessage<::command::GetCommand>(Arena*);
-template<> ::command::IncrementCommand* Arena::CreateMaybeMessage<::command::IncrementCommand>(Arena*);
+template<> ::command::GetReply* Arena::CreateMaybeMessage<::command::GetReply>(Arena*);
 template<> ::command::PutCommand* Arena::CreateMaybeMessage<::command::PutCommand>(Arena*);
+template<> ::command::PutReply* Arena::CreateMaybeMessage<::command::PutReply>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace command {
 
+enum StateCode : int {
+  OK = 0,
+  ErrNoKey = 1,
+  ErrVersion = 2,
+  ErrMaybe = 3,
+  ErrWrongLeader = 4,
+  ErrWrongGroup = 5,
+  ErrDBError = 6,
+  StateCode_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  StateCode_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool StateCode_IsValid(int value);
+constexpr StateCode StateCode_MIN = OK;
+constexpr StateCode StateCode_MAX = ErrDBError;
+constexpr int StateCode_ARRAYSIZE = StateCode_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* StateCode_descriptor();
+template<typename T>
+inline const std::string& StateCode_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, StateCode>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function StateCode_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    StateCode_descriptor(), enum_t_value);
+}
+inline bool StateCode_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, StateCode* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<StateCode>(
+    StateCode_descriptor(), name, value);
+}
 // ===================================================================
 
 class Command final :
@@ -119,7 +167,7 @@ class Command final :
     kPut = 1,
     kGet = 2,
     kDel = 3,
-    kIncrement = 4,
+    kAppend = 4,
     COMMAND_TYPE_NOT_SET = 0,
   };
 
@@ -204,7 +252,7 @@ class Command final :
     kPutFieldNumber = 1,
     kGetFieldNumber = 2,
     kDelFieldNumber = 3,
-    kIncrementFieldNumber = 4,
+    kAppendFieldNumber = 4,
   };
   // .command.PutCommand put = 1;
   bool has_put() const;
@@ -260,23 +308,23 @@ class Command final :
       ::command::DeleteCommand* del);
   ::command::DeleteCommand* unsafe_arena_release_del();
 
-  // .command.IncrementCommand increment = 4;
-  bool has_increment() const;
+  // .command.AppendCommand append = 4;
+  bool has_append() const;
   private:
-  bool _internal_has_increment() const;
+  bool _internal_has_append() const;
   public:
-  void clear_increment();
-  const ::command::IncrementCommand& increment() const;
-  PROTOBUF_NODISCARD ::command::IncrementCommand* release_increment();
-  ::command::IncrementCommand* mutable_increment();
-  void set_allocated_increment(::command::IncrementCommand* increment);
+  void clear_append();
+  const ::command::AppendCommand& append() const;
+  PROTOBUF_NODISCARD ::command::AppendCommand* release_append();
+  ::command::AppendCommand* mutable_append();
+  void set_allocated_append(::command::AppendCommand* append);
   private:
-  const ::command::IncrementCommand& _internal_increment() const;
-  ::command::IncrementCommand* _internal_mutable_increment();
+  const ::command::AppendCommand& _internal_append() const;
+  ::command::AppendCommand* _internal_mutable_append();
   public:
-  void unsafe_arena_set_allocated_increment(
-      ::command::IncrementCommand* increment);
-  ::command::IncrementCommand* unsafe_arena_release_increment();
+  void unsafe_arena_set_allocated_append(
+      ::command::AppendCommand* append);
+  ::command::AppendCommand* unsafe_arena_release_append();
 
   void clear_command_type();
   CommandTypeCase command_type_case() const;
@@ -286,7 +334,7 @@ class Command final :
   void set_has_put();
   void set_has_get();
   void set_has_del();
-  void set_has_increment();
+  void set_has_append();
 
   inline bool has_command_type() const;
   inline void clear_has_command_type();
@@ -301,7 +349,7 @@ class Command final :
       ::command::PutCommand* put_;
       ::command::GetCommand* get_;
       ::command::DeleteCommand* del_;
-      ::command::IncrementCommand* increment_;
+      ::command::AppendCommand* append_;
     } command_type_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
     uint32_t _oneof_case_[1];
@@ -756,7 +804,6 @@ class DeleteCommand final :
 
   enum : int {
     kKeyFieldNumber = 1,
-    kVersionFieldNumber = 2,
   };
   // bytes key = 1;
   void clear_key();
@@ -772,15 +819,6 @@ class DeleteCommand final :
   std::string* _internal_mutable_key();
   public:
 
-  // uint32 version = 2;
-  void clear_version();
-  uint32_t version() const;
-  void set_version(uint32_t value);
-  private:
-  uint32_t _internal_version() const;
-  void _internal_set_version(uint32_t value);
-  public:
-
   // @@protoc_insertion_point(class_scope:command.DeleteCommand)
  private:
   class _Internal;
@@ -790,7 +828,6 @@ class DeleteCommand final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr key_;
-    uint32_t version_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -798,24 +835,24 @@ class DeleteCommand final :
 };
 // -------------------------------------------------------------------
 
-class IncrementCommand final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:command.IncrementCommand) */ {
+class AppendCommand final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:command.AppendCommand) */ {
  public:
-  inline IncrementCommand() : IncrementCommand(nullptr) {}
-  ~IncrementCommand() override;
-  explicit PROTOBUF_CONSTEXPR IncrementCommand(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline AppendCommand() : AppendCommand(nullptr) {}
+  ~AppendCommand() override;
+  explicit PROTOBUF_CONSTEXPR AppendCommand(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  IncrementCommand(const IncrementCommand& from);
-  IncrementCommand(IncrementCommand&& from) noexcept
-    : IncrementCommand() {
+  AppendCommand(const AppendCommand& from);
+  AppendCommand(AppendCommand&& from) noexcept
+    : AppendCommand() {
     *this = ::std::move(from);
   }
 
-  inline IncrementCommand& operator=(const IncrementCommand& from) {
+  inline AppendCommand& operator=(const AppendCommand& from) {
     CopyFrom(from);
     return *this;
   }
-  inline IncrementCommand& operator=(IncrementCommand&& from) noexcept {
+  inline AppendCommand& operator=(AppendCommand&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -838,20 +875,20 @@ class IncrementCommand final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const IncrementCommand& default_instance() {
+  static const AppendCommand& default_instance() {
     return *internal_default_instance();
   }
-  static inline const IncrementCommand* internal_default_instance() {
-    return reinterpret_cast<const IncrementCommand*>(
-               &_IncrementCommand_default_instance_);
+  static inline const AppendCommand* internal_default_instance() {
+    return reinterpret_cast<const AppendCommand*>(
+               &_AppendCommand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     4;
 
-  friend void swap(IncrementCommand& a, IncrementCommand& b) {
+  friend void swap(AppendCommand& a, AppendCommand& b) {
     a.Swap(&b);
   }
-  inline void Swap(IncrementCommand* other) {
+  inline void Swap(AppendCommand* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -864,7 +901,7 @@ class IncrementCommand final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(IncrementCommand* other) {
+  void UnsafeArenaSwap(AppendCommand* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -872,14 +909,14 @@ class IncrementCommand final :
 
   // implements Message ----------------------------------------------
 
-  IncrementCommand* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<IncrementCommand>(arena);
+  AppendCommand* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<AppendCommand>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const IncrementCommand& from);
+  void CopyFrom(const AppendCommand& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const IncrementCommand& from) {
-    IncrementCommand::MergeImpl(*this, from);
+  void MergeFrom( const AppendCommand& from) {
+    AppendCommand::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -897,15 +934,15 @@ class IncrementCommand final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(IncrementCommand* other);
+  void InternalSwap(AppendCommand* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "command.IncrementCommand";
+    return "command.AppendCommand";
   }
   protected:
-  explicit IncrementCommand(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit AppendCommand(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -920,7 +957,7 @@ class IncrementCommand final :
 
   enum : int {
     kKeyFieldNumber = 1,
-    kDeltaFieldNumber = 2,
+    kValueFieldNumber = 2,
   };
   // bytes key = 1;
   void clear_key();
@@ -936,16 +973,21 @@ class IncrementCommand final :
   std::string* _internal_mutable_key();
   public:
 
-  // int64 delta = 2;
-  void clear_delta();
-  int64_t delta() const;
-  void set_delta(int64_t value);
+  // bytes value = 2;
+  void clear_value();
+  const std::string& value() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_value(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_value();
+  PROTOBUF_NODISCARD std::string* release_value();
+  void set_allocated_value(std::string* value);
   private:
-  int64_t _internal_delta() const;
-  void _internal_set_delta(int64_t value);
+  const std::string& _internal_value() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_value(const std::string& value);
+  std::string* _internal_mutable_value();
   public:
 
-  // @@protoc_insertion_point(class_scope:command.IncrementCommand)
+  // @@protoc_insertion_point(class_scope:command.AppendCommand)
  private:
   class _Internal;
 
@@ -954,12 +996,719 @@ class IncrementCommand final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr key_;
-    int64_t delta_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr value_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_command_2eproto;
 };
+// -------------------------------------------------------------------
+
+class PutReply final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:command.PutReply) */ {
+ public:
+  inline PutReply() : PutReply(nullptr) {}
+  ~PutReply() override;
+  explicit PROTOBUF_CONSTEXPR PutReply(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  PutReply(const PutReply& from);
+  PutReply(PutReply&& from) noexcept
+    : PutReply() {
+    *this = ::std::move(from);
+  }
+
+  inline PutReply& operator=(const PutReply& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PutReply& operator=(PutReply&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PutReply& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const PutReply* internal_default_instance() {
+    return reinterpret_cast<const PutReply*>(
+               &_PutReply_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(PutReply& a, PutReply& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PutReply* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PutReply* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  PutReply* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PutReply>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const PutReply& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const PutReply& from) {
+    PutReply::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PutReply* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "command.PutReply";
+  }
+  protected:
+  explicit PutReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kErrFieldNumber = 1,
+  };
+  // .command.StateCode Err = 1;
+  void clear_err();
+  ::command::StateCode err() const;
+  void set_err(::command::StateCode value);
+  private:
+  ::command::StateCode _internal_err() const;
+  void _internal_set_err(::command::StateCode value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:command.PutReply)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int err_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_command_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetReply final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:command.GetReply) */ {
+ public:
+  inline GetReply() : GetReply(nullptr) {}
+  ~GetReply() override;
+  explicit PROTOBUF_CONSTEXPR GetReply(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetReply(const GetReply& from);
+  GetReply(GetReply&& from) noexcept
+    : GetReply() {
+    *this = ::std::move(from);
+  }
+
+  inline GetReply& operator=(const GetReply& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetReply& operator=(GetReply&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetReply& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetReply* internal_default_instance() {
+    return reinterpret_cast<const GetReply*>(
+               &_GetReply_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  friend void swap(GetReply& a, GetReply& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetReply* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetReply* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetReply* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetReply>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetReply& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetReply& from) {
+    GetReply::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetReply* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "command.GetReply";
+  }
+  protected:
+  explicit GetReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kValueFieldNumber = 2,
+    kErrFieldNumber = 1,
+  };
+  // bytes value = 2;
+  void clear_value();
+  const std::string& value() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_value(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_value();
+  PROTOBUF_NODISCARD std::string* release_value();
+  void set_allocated_value(std::string* value);
+  private:
+  const std::string& _internal_value() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_value(const std::string& value);
+  std::string* _internal_mutable_value();
+  public:
+
+  // .command.StateCode Err = 1;
+  void clear_err();
+  ::command::StateCode err() const;
+  void set_err(::command::StateCode value);
+  private:
+  ::command::StateCode _internal_err() const;
+  void _internal_set_err(::command::StateCode value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:command.GetReply)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr value_;
+    int err_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_command_2eproto;
+};
+// -------------------------------------------------------------------
+
+class DeleteReply final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:command.DeleteReply) */ {
+ public:
+  inline DeleteReply() : DeleteReply(nullptr) {}
+  ~DeleteReply() override;
+  explicit PROTOBUF_CONSTEXPR DeleteReply(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  DeleteReply(const DeleteReply& from);
+  DeleteReply(DeleteReply&& from) noexcept
+    : DeleteReply() {
+    *this = ::std::move(from);
+  }
+
+  inline DeleteReply& operator=(const DeleteReply& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline DeleteReply& operator=(DeleteReply&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const DeleteReply& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const DeleteReply* internal_default_instance() {
+    return reinterpret_cast<const DeleteReply*>(
+               &_DeleteReply_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    7;
+
+  friend void swap(DeleteReply& a, DeleteReply& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(DeleteReply* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(DeleteReply* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  DeleteReply* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<DeleteReply>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const DeleteReply& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const DeleteReply& from) {
+    DeleteReply::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(DeleteReply* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "command.DeleteReply";
+  }
+  protected:
+  explicit DeleteReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kErrFieldNumber = 1,
+  };
+  // .command.StateCode Err = 1;
+  void clear_err();
+  ::command::StateCode err() const;
+  void set_err(::command::StateCode value);
+  private:
+  ::command::StateCode _internal_err() const;
+  void _internal_set_err(::command::StateCode value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:command.DeleteReply)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int err_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_command_2eproto;
+};
+// -------------------------------------------------------------------
+
+class AppendReply final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:command.AppendReply) */ {
+ public:
+  inline AppendReply() : AppendReply(nullptr) {}
+  ~AppendReply() override;
+  explicit PROTOBUF_CONSTEXPR AppendReply(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  AppendReply(const AppendReply& from);
+  AppendReply(AppendReply&& from) noexcept
+    : AppendReply() {
+    *this = ::std::move(from);
+  }
+
+  inline AppendReply& operator=(const AppendReply& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AppendReply& operator=(AppendReply&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AppendReply& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const AppendReply* internal_default_instance() {
+    return reinterpret_cast<const AppendReply*>(
+               &_AppendReply_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    8;
+
+  friend void swap(AppendReply& a, AppendReply& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(AppendReply* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AppendReply* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  AppendReply* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<AppendReply>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const AppendReply& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const AppendReply& from) {
+    AppendReply::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AppendReply* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "command.AppendReply";
+  }
+  protected:
+  explicit AppendReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNewValueFieldNumber = 2,
+    kErrFieldNumber = 1,
+  };
+  // bytes new_value = 2;
+  void clear_new_value();
+  const std::string& new_value() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_new_value(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_new_value();
+  PROTOBUF_NODISCARD std::string* release_new_value();
+  void set_allocated_new_value(std::string* new_value);
+  private:
+  const std::string& _internal_new_value() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_new_value(const std::string& value);
+  std::string* _internal_mutable_new_value();
+  public:
+
+  // .command.StateCode Err = 1;
+  void clear_err();
+  ::command::StateCode err() const;
+  void set_err(::command::StateCode value);
+  private:
+  ::command::StateCode _internal_err() const;
+  void _internal_set_err(::command::StateCode value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:command.AppendReply)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr new_value_;
+    int err_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_command_2eproto;
+};
+// ===================================================================
+
+class CommandServiceRPC_Stub;
+
+class CommandServiceRPC : public ::PROTOBUF_NAMESPACE_ID::Service {
+ protected:
+  // This class should be treated as an abstract interface.
+  inline CommandServiceRPC() {};
+ public:
+  virtual ~CommandServiceRPC();
+
+  typedef CommandServiceRPC_Stub Stub;
+
+  static const ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor* descriptor();
+
+  virtual void Put(::PROTOBUF_NAMESPACE_ID::RpcController* controller,
+                       const ::command::PutCommand* request,
+                       ::command::PutReply* response,
+                       ::google::protobuf::Closure* done);
+  virtual void Get(::PROTOBUF_NAMESPACE_ID::RpcController* controller,
+                       const ::command::GetCommand* request,
+                       ::command::GetReply* response,
+                       ::google::protobuf::Closure* done);
+  virtual void Delete(::PROTOBUF_NAMESPACE_ID::RpcController* controller,
+                       const ::command::DeleteCommand* request,
+                       ::command::DeleteReply* response,
+                       ::google::protobuf::Closure* done);
+  virtual void Append(::PROTOBUF_NAMESPACE_ID::RpcController* controller,
+                       const ::command::AppendCommand* request,
+                       ::command::AppendReply* response,
+                       ::google::protobuf::Closure* done);
+
+  // implements Service ----------------------------------------------
+
+  const ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor* GetDescriptor();
+  void CallMethod(const ::PROTOBUF_NAMESPACE_ID::MethodDescriptor* method,
+                  ::PROTOBUF_NAMESPACE_ID::RpcController* controller,
+                  const ::PROTOBUF_NAMESPACE_ID::Message* request,
+                  ::PROTOBUF_NAMESPACE_ID::Message* response,
+                  ::google::protobuf::Closure* done);
+  const ::PROTOBUF_NAMESPACE_ID::Message& GetRequestPrototype(
+    const ::PROTOBUF_NAMESPACE_ID::MethodDescriptor* method) const;
+  const ::PROTOBUF_NAMESPACE_ID::Message& GetResponsePrototype(
+    const ::PROTOBUF_NAMESPACE_ID::MethodDescriptor* method) const;
+
+ private:
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(CommandServiceRPC);
+};
+
+class CommandServiceRPC_Stub : public CommandServiceRPC {
+ public:
+  CommandServiceRPC_Stub(::PROTOBUF_NAMESPACE_ID::RpcChannel* channel);
+  CommandServiceRPC_Stub(::PROTOBUF_NAMESPACE_ID::RpcChannel* channel,
+                   ::PROTOBUF_NAMESPACE_ID::Service::ChannelOwnership ownership);
+  ~CommandServiceRPC_Stub();
+
+  inline ::PROTOBUF_NAMESPACE_ID::RpcChannel* channel() { return channel_; }
+
+  // implements CommandServiceRPC ------------------------------------------
+
+  void Put(::PROTOBUF_NAMESPACE_ID::RpcController* controller,
+                       const ::command::PutCommand* request,
+                       ::command::PutReply* response,
+                       ::google::protobuf::Closure* done);
+  void Get(::PROTOBUF_NAMESPACE_ID::RpcController* controller,
+                       const ::command::GetCommand* request,
+                       ::command::GetReply* response,
+                       ::google::protobuf::Closure* done);
+  void Delete(::PROTOBUF_NAMESPACE_ID::RpcController* controller,
+                       const ::command::DeleteCommand* request,
+                       ::command::DeleteReply* response,
+                       ::google::protobuf::Closure* done);
+  void Append(::PROTOBUF_NAMESPACE_ID::RpcController* controller,
+                       const ::command::AppendCommand* request,
+                       ::command::AppendReply* response,
+                       ::google::protobuf::Closure* done);
+ private:
+  ::PROTOBUF_NAMESPACE_ID::RpcChannel* channel_;
+  bool owns_channel_;
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(CommandServiceRPC_Stub);
+};
+
+
 // ===================================================================
 
 
@@ -1193,77 +1942,77 @@ inline ::command::DeleteCommand* Command::mutable_del() {
   return _msg;
 }
 
-// .command.IncrementCommand increment = 4;
-inline bool Command::_internal_has_increment() const {
-  return command_type_case() == kIncrement;
+// .command.AppendCommand append = 4;
+inline bool Command::_internal_has_append() const {
+  return command_type_case() == kAppend;
 }
-inline bool Command::has_increment() const {
-  return _internal_has_increment();
+inline bool Command::has_append() const {
+  return _internal_has_append();
 }
-inline void Command::set_has_increment() {
-  _impl_._oneof_case_[0] = kIncrement;
+inline void Command::set_has_append() {
+  _impl_._oneof_case_[0] = kAppend;
 }
-inline void Command::clear_increment() {
-  if (_internal_has_increment()) {
+inline void Command::clear_append() {
+  if (_internal_has_append()) {
     if (GetArenaForAllocation() == nullptr) {
-      delete _impl_.command_type_.increment_;
+      delete _impl_.command_type_.append_;
     }
     clear_has_command_type();
   }
 }
-inline ::command::IncrementCommand* Command::release_increment() {
-  // @@protoc_insertion_point(field_release:command.Command.increment)
-  if (_internal_has_increment()) {
+inline ::command::AppendCommand* Command::release_append() {
+  // @@protoc_insertion_point(field_release:command.Command.append)
+  if (_internal_has_append()) {
     clear_has_command_type();
-    ::command::IncrementCommand* temp = _impl_.command_type_.increment_;
+    ::command::AppendCommand* temp = _impl_.command_type_.append_;
     if (GetArenaForAllocation() != nullptr) {
       temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
     }
-    _impl_.command_type_.increment_ = nullptr;
+    _impl_.command_type_.append_ = nullptr;
     return temp;
   } else {
     return nullptr;
   }
 }
-inline const ::command::IncrementCommand& Command::_internal_increment() const {
-  return _internal_has_increment()
-      ? *_impl_.command_type_.increment_
-      : reinterpret_cast< ::command::IncrementCommand&>(::command::_IncrementCommand_default_instance_);
+inline const ::command::AppendCommand& Command::_internal_append() const {
+  return _internal_has_append()
+      ? *_impl_.command_type_.append_
+      : reinterpret_cast< ::command::AppendCommand&>(::command::_AppendCommand_default_instance_);
 }
-inline const ::command::IncrementCommand& Command::increment() const {
-  // @@protoc_insertion_point(field_get:command.Command.increment)
-  return _internal_increment();
+inline const ::command::AppendCommand& Command::append() const {
+  // @@protoc_insertion_point(field_get:command.Command.append)
+  return _internal_append();
 }
-inline ::command::IncrementCommand* Command::unsafe_arena_release_increment() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:command.Command.increment)
-  if (_internal_has_increment()) {
+inline ::command::AppendCommand* Command::unsafe_arena_release_append() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:command.Command.append)
+  if (_internal_has_append()) {
     clear_has_command_type();
-    ::command::IncrementCommand* temp = _impl_.command_type_.increment_;
-    _impl_.command_type_.increment_ = nullptr;
+    ::command::AppendCommand* temp = _impl_.command_type_.append_;
+    _impl_.command_type_.append_ = nullptr;
     return temp;
   } else {
     return nullptr;
   }
 }
-inline void Command::unsafe_arena_set_allocated_increment(::command::IncrementCommand* increment) {
+inline void Command::unsafe_arena_set_allocated_append(::command::AppendCommand* append) {
   clear_command_type();
-  if (increment) {
-    set_has_increment();
-    _impl_.command_type_.increment_ = increment;
+  if (append) {
+    set_has_append();
+    _impl_.command_type_.append_ = append;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:command.Command.increment)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:command.Command.append)
 }
-inline ::command::IncrementCommand* Command::_internal_mutable_increment() {
-  if (!_internal_has_increment()) {
+inline ::command::AppendCommand* Command::_internal_mutable_append() {
+  if (!_internal_has_append()) {
     clear_command_type();
-    set_has_increment();
-    _impl_.command_type_.increment_ = CreateMaybeMessage< ::command::IncrementCommand >(GetArenaForAllocation());
+    set_has_append();
+    _impl_.command_type_.append_ = CreateMaybeMessage< ::command::AppendCommand >(GetArenaForAllocation());
   }
-  return _impl_.command_type_.increment_;
+  return _impl_.command_type_.append_;
 }
-inline ::command::IncrementCommand* Command::mutable_increment() {
-  ::command::IncrementCommand* _msg = _internal_mutable_increment();
-  // @@protoc_insertion_point(field_mutable:command.Command.increment)
+inline ::command::AppendCommand* Command::mutable_append() {
+  ::command::AppendCommand* _msg = _internal_mutable_append();
+  // @@protoc_insertion_point(field_mutable:command.Command.append)
   return _msg;
 }
 
@@ -1488,66 +2237,46 @@ inline void DeleteCommand::set_allocated_key(std::string* key) {
   // @@protoc_insertion_point(field_set_allocated:command.DeleteCommand.key)
 }
 
-// uint32 version = 2;
-inline void DeleteCommand::clear_version() {
-  _impl_.version_ = 0u;
-}
-inline uint32_t DeleteCommand::_internal_version() const {
-  return _impl_.version_;
-}
-inline uint32_t DeleteCommand::version() const {
-  // @@protoc_insertion_point(field_get:command.DeleteCommand.version)
-  return _internal_version();
-}
-inline void DeleteCommand::_internal_set_version(uint32_t value) {
-  
-  _impl_.version_ = value;
-}
-inline void DeleteCommand::set_version(uint32_t value) {
-  _internal_set_version(value);
-  // @@protoc_insertion_point(field_set:command.DeleteCommand.version)
-}
-
 // -------------------------------------------------------------------
 
-// IncrementCommand
+// AppendCommand
 
 // bytes key = 1;
-inline void IncrementCommand::clear_key() {
+inline void AppendCommand::clear_key() {
   _impl_.key_.ClearToEmpty();
 }
-inline const std::string& IncrementCommand::key() const {
-  // @@protoc_insertion_point(field_get:command.IncrementCommand.key)
+inline const std::string& AppendCommand::key() const {
+  // @@protoc_insertion_point(field_get:command.AppendCommand.key)
   return _internal_key();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void IncrementCommand::set_key(ArgT0&& arg0, ArgT... args) {
+void AppendCommand::set_key(ArgT0&& arg0, ArgT... args) {
  
  _impl_.key_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:command.IncrementCommand.key)
+  // @@protoc_insertion_point(field_set:command.AppendCommand.key)
 }
-inline std::string* IncrementCommand::mutable_key() {
+inline std::string* AppendCommand::mutable_key() {
   std::string* _s = _internal_mutable_key();
-  // @@protoc_insertion_point(field_mutable:command.IncrementCommand.key)
+  // @@protoc_insertion_point(field_mutable:command.AppendCommand.key)
   return _s;
 }
-inline const std::string& IncrementCommand::_internal_key() const {
+inline const std::string& AppendCommand::_internal_key() const {
   return _impl_.key_.Get();
 }
-inline void IncrementCommand::_internal_set_key(const std::string& value) {
+inline void AppendCommand::_internal_set_key(const std::string& value) {
   
   _impl_.key_.Set(value, GetArenaForAllocation());
 }
-inline std::string* IncrementCommand::_internal_mutable_key() {
+inline std::string* AppendCommand::_internal_mutable_key() {
   
   return _impl_.key_.Mutable(GetArenaForAllocation());
 }
-inline std::string* IncrementCommand::release_key() {
-  // @@protoc_insertion_point(field_release:command.IncrementCommand.key)
+inline std::string* AppendCommand::release_key() {
+  // @@protoc_insertion_point(field_release:command.AppendCommand.key)
   return _impl_.key_.Release();
 }
-inline void IncrementCommand::set_allocated_key(std::string* key) {
+inline void AppendCommand::set_allocated_key(std::string* key) {
   if (key != nullptr) {
     
   } else {
@@ -1559,27 +2288,253 @@ inline void IncrementCommand::set_allocated_key(std::string* key) {
     _impl_.key_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:command.IncrementCommand.key)
+  // @@protoc_insertion_point(field_set_allocated:command.AppendCommand.key)
 }
 
-// int64 delta = 2;
-inline void IncrementCommand::clear_delta() {
-  _impl_.delta_ = int64_t{0};
+// bytes value = 2;
+inline void AppendCommand::clear_value() {
+  _impl_.value_.ClearToEmpty();
 }
-inline int64_t IncrementCommand::_internal_delta() const {
-  return _impl_.delta_;
+inline const std::string& AppendCommand::value() const {
+  // @@protoc_insertion_point(field_get:command.AppendCommand.value)
+  return _internal_value();
 }
-inline int64_t IncrementCommand::delta() const {
-  // @@protoc_insertion_point(field_get:command.IncrementCommand.delta)
-  return _internal_delta();
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void AppendCommand::set_value(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.value_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:command.AppendCommand.value)
 }
-inline void IncrementCommand::_internal_set_delta(int64_t value) {
+inline std::string* AppendCommand::mutable_value() {
+  std::string* _s = _internal_mutable_value();
+  // @@protoc_insertion_point(field_mutable:command.AppendCommand.value)
+  return _s;
+}
+inline const std::string& AppendCommand::_internal_value() const {
+  return _impl_.value_.Get();
+}
+inline void AppendCommand::_internal_set_value(const std::string& value) {
   
-  _impl_.delta_ = value;
+  _impl_.value_.Set(value, GetArenaForAllocation());
 }
-inline void IncrementCommand::set_delta(int64_t value) {
-  _internal_set_delta(value);
-  // @@protoc_insertion_point(field_set:command.IncrementCommand.delta)
+inline std::string* AppendCommand::_internal_mutable_value() {
+  
+  return _impl_.value_.Mutable(GetArenaForAllocation());
+}
+inline std::string* AppendCommand::release_value() {
+  // @@protoc_insertion_point(field_release:command.AppendCommand.value)
+  return _impl_.value_.Release();
+}
+inline void AppendCommand::set_allocated_value(std::string* value) {
+  if (value != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.value_.SetAllocated(value, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.value_.IsDefault()) {
+    _impl_.value_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:command.AppendCommand.value)
+}
+
+// -------------------------------------------------------------------
+
+// PutReply
+
+// .command.StateCode Err = 1;
+inline void PutReply::clear_err() {
+  _impl_.err_ = 0;
+}
+inline ::command::StateCode PutReply::_internal_err() const {
+  return static_cast< ::command::StateCode >(_impl_.err_);
+}
+inline ::command::StateCode PutReply::err() const {
+  // @@protoc_insertion_point(field_get:command.PutReply.Err)
+  return _internal_err();
+}
+inline void PutReply::_internal_set_err(::command::StateCode value) {
+  
+  _impl_.err_ = value;
+}
+inline void PutReply::set_err(::command::StateCode value) {
+  _internal_set_err(value);
+  // @@protoc_insertion_point(field_set:command.PutReply.Err)
+}
+
+// -------------------------------------------------------------------
+
+// GetReply
+
+// .command.StateCode Err = 1;
+inline void GetReply::clear_err() {
+  _impl_.err_ = 0;
+}
+inline ::command::StateCode GetReply::_internal_err() const {
+  return static_cast< ::command::StateCode >(_impl_.err_);
+}
+inline ::command::StateCode GetReply::err() const {
+  // @@protoc_insertion_point(field_get:command.GetReply.Err)
+  return _internal_err();
+}
+inline void GetReply::_internal_set_err(::command::StateCode value) {
+  
+  _impl_.err_ = value;
+}
+inline void GetReply::set_err(::command::StateCode value) {
+  _internal_set_err(value);
+  // @@protoc_insertion_point(field_set:command.GetReply.Err)
+}
+
+// bytes value = 2;
+inline void GetReply::clear_value() {
+  _impl_.value_.ClearToEmpty();
+}
+inline const std::string& GetReply::value() const {
+  // @@protoc_insertion_point(field_get:command.GetReply.value)
+  return _internal_value();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetReply::set_value(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.value_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:command.GetReply.value)
+}
+inline std::string* GetReply::mutable_value() {
+  std::string* _s = _internal_mutable_value();
+  // @@protoc_insertion_point(field_mutable:command.GetReply.value)
+  return _s;
+}
+inline const std::string& GetReply::_internal_value() const {
+  return _impl_.value_.Get();
+}
+inline void GetReply::_internal_set_value(const std::string& value) {
+  
+  _impl_.value_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetReply::_internal_mutable_value() {
+  
+  return _impl_.value_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetReply::release_value() {
+  // @@protoc_insertion_point(field_release:command.GetReply.value)
+  return _impl_.value_.Release();
+}
+inline void GetReply::set_allocated_value(std::string* value) {
+  if (value != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.value_.SetAllocated(value, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.value_.IsDefault()) {
+    _impl_.value_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:command.GetReply.value)
+}
+
+// -------------------------------------------------------------------
+
+// DeleteReply
+
+// .command.StateCode Err = 1;
+inline void DeleteReply::clear_err() {
+  _impl_.err_ = 0;
+}
+inline ::command::StateCode DeleteReply::_internal_err() const {
+  return static_cast< ::command::StateCode >(_impl_.err_);
+}
+inline ::command::StateCode DeleteReply::err() const {
+  // @@protoc_insertion_point(field_get:command.DeleteReply.Err)
+  return _internal_err();
+}
+inline void DeleteReply::_internal_set_err(::command::StateCode value) {
+  
+  _impl_.err_ = value;
+}
+inline void DeleteReply::set_err(::command::StateCode value) {
+  _internal_set_err(value);
+  // @@protoc_insertion_point(field_set:command.DeleteReply.Err)
+}
+
+// -------------------------------------------------------------------
+
+// AppendReply
+
+// .command.StateCode Err = 1;
+inline void AppendReply::clear_err() {
+  _impl_.err_ = 0;
+}
+inline ::command::StateCode AppendReply::_internal_err() const {
+  return static_cast< ::command::StateCode >(_impl_.err_);
+}
+inline ::command::StateCode AppendReply::err() const {
+  // @@protoc_insertion_point(field_get:command.AppendReply.Err)
+  return _internal_err();
+}
+inline void AppendReply::_internal_set_err(::command::StateCode value) {
+  
+  _impl_.err_ = value;
+}
+inline void AppendReply::set_err(::command::StateCode value) {
+  _internal_set_err(value);
+  // @@protoc_insertion_point(field_set:command.AppendReply.Err)
+}
+
+// bytes new_value = 2;
+inline void AppendReply::clear_new_value() {
+  _impl_.new_value_.ClearToEmpty();
+}
+inline const std::string& AppendReply::new_value() const {
+  // @@protoc_insertion_point(field_get:command.AppendReply.new_value)
+  return _internal_new_value();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void AppendReply::set_new_value(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.new_value_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:command.AppendReply.new_value)
+}
+inline std::string* AppendReply::mutable_new_value() {
+  std::string* _s = _internal_mutable_new_value();
+  // @@protoc_insertion_point(field_mutable:command.AppendReply.new_value)
+  return _s;
+}
+inline const std::string& AppendReply::_internal_new_value() const {
+  return _impl_.new_value_.Get();
+}
+inline void AppendReply::_internal_set_new_value(const std::string& value) {
+  
+  _impl_.new_value_.Set(value, GetArenaForAllocation());
+}
+inline std::string* AppendReply::_internal_mutable_new_value() {
+  
+  return _impl_.new_value_.Mutable(GetArenaForAllocation());
+}
+inline std::string* AppendReply::release_new_value() {
+  // @@protoc_insertion_point(field_release:command.AppendReply.new_value)
+  return _impl_.new_value_.Release();
+}
+inline void AppendReply::set_allocated_new_value(std::string* new_value) {
+  if (new_value != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.new_value_.SetAllocated(new_value, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.new_value_.IsDefault()) {
+    _impl_.new_value_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:command.AppendReply.new_value)
 }
 
 #ifdef __GNUC__
@@ -1593,10 +2548,28 @@ inline void IncrementCommand::set_delta(int64_t value) {
 
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace command
+
+PROTOBUF_NAMESPACE_OPEN
+
+template <> struct is_proto_enum< ::command::StateCode> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::command::StateCode>() {
+  return ::command::StateCode_descriptor();
+}
+
+PROTOBUF_NAMESPACE_CLOSE
 
 // @@protoc_insertion_point(global_scope)
 

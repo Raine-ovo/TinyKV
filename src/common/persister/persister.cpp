@@ -6,6 +6,7 @@
 #include <filesystem>
 #include <fstream>
 #include <optional>
+#include <ostream>
 #include <shared_mutex>
 #include <tuple>
 
@@ -208,4 +209,13 @@ std::optional<std::vector<uint8_t>> Persister::load_snapshot()
         LOG_ERROR("read persistence state: {} failed.", _snapshot_file.string());
         return std::nullopt;
     }
+}
+
+uint64_t Persister::state_size()
+{
+    std::ifstream file(_state_file, std::ios::binary);
+    file.seekg(0, std::ios::end);
+    uint64_t size = file.tellg();
+    file.close();
+    return size;
 }

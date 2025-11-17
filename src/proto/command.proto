@@ -4,6 +4,8 @@ syntax = "proto3";
 
 package command;
 
+option cc_generic_services = true;
+
 message Command
 {
     
@@ -13,7 +15,7 @@ message Command
         PutCommand put = 1;
         GetCommand get = 2;
         DeleteCommand del = 3; // delete 是 proto 的关键字，不能用作标识符
-        IncrementCommand increment = 4;
+        AppendCommand append = 4;
     }
 }
 
@@ -31,11 +33,56 @@ message GetCommand
 message DeleteCommand
 {
     bytes key = 1;
-    uint32 version = 2;
 }
 
-message IncrementCommand
+message AppendCommand
 {
     bytes key = 1;
-    int64 delta = 2;
+    bytes value = 2;
+}
+
+enum StateCode
+{
+    OK = 0;
+    ErrNoKey = 1;
+    ErrVersion = 2;
+
+    ErrMaybe = 3;
+
+    ErrWrongLeader = 4;
+    ErrWrongGroup = 5;
+
+    // 数据库错误
+    ErrDBError = 6;
+}
+
+message PutReply
+{
+    StateCode Err = 1;
+}
+
+message GetReply
+{
+    StateCode Err = 1;
+    bytes value = 2;
+}
+
+message DeleteReply
+{
+    StateCode Err = 1;
+}
+
+message AppendReply
+{
+    StateCode Err = 1;
+    bytes new_value = 2;
+}
+
+// 定义 service
+service CommandServiceRPC
+{
+    rpc Put(PutCommand) returns (PutReply);
+    rpc Get(GetCommand) returns (GetReply);
+    rpc Delete(DeleteCommand) returns (DeleteReply);
+    rpc Append(AppendCommand) returns (AppendReply);
 }
