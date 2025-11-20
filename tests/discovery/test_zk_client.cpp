@@ -6,11 +6,18 @@
 int main ()
 {
     ZkClient zh;
-    zh.start(); // 建立连接
-    zh.create("/test", "test_data", sizeof("test_data"), 0);
-    std::cout << zh.get("/test") << std::endl;
+    zh.connect(); // 建立连接
+    zh.CreatePersistentNode("/test", "test_data");
+    std::string res;
+    if (zh.GetNodeData("/test", res))
+    {
+        std::cout << res << std::endl;
+    }
     
-    zh.create("/test/hello", "world", sizeof("world"), ZOO_EPHEMERAL);
-    std::cout << zh.get("/test/hello") << std::endl;
+    zh.CreateEphemeralNode("/test/hello", "world");
+    if (zh.GetNodeData("/test/hello", res))
+    {
+        std::cout << res << std::endl;
+    }
     return 0;
 }

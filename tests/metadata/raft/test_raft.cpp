@@ -23,7 +23,7 @@ void Start_A_Raft_Node(const std::string& ip, uint32_t port)
 
     auto raft = std::make_shared<Raft>();
     // 连接 raft，提供 service
-    std::thread td([&]() {
+    std::thread td([raft, ip, port]() {
         RpcProvider provider(ip, std::to_string(port));
         provider.registerService(raft.get());
         provider.run();
@@ -36,7 +36,7 @@ void Start_A_Raft_Node(const std::string& ip, uint32_t port)
     );
 
     // 创建日志提交通道
-    auto applyChan = std::make_shared<LockQueue<ApplyMsg>>();
+    auto applyChan = std::make_shared<ApplyChan<ApplyMsg>>();
 
     // 创建 peers ，即创建其他连接的 stub
     std::vector<std::shared_ptr<RaftClient>> peers;
@@ -108,6 +108,7 @@ void Start_A_Raft_Node(const std::string& ip, uint32_t port)
     td.join();
     applyChan_thread.join();
     add_logs.join();
+    std::cout << "节点" << node_id << "结束共识算法" << std::endl;
 }
 
 // 传入 ip 、 node_id

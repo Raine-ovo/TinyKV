@@ -84,12 +84,12 @@ void RpcChannel::CallMethod(const ::google::protobuf::MethodDescriptor* method,
 
     // socket 编程连接服务器，首先使用服务发现找到对应服务器
     ZkClient zk_cli;
-    zk_cli.start();
+    zk_cli.connect();
     // 规定服务发现的规则: /service/method, method 存储对应服务器的 host:port
     const std::string &path = "/" + service_name + "/" + method_name;
-    std::string conn_str = zk_cli.get(path);
+    std::string conn_str;
 
-    if ("" == conn_str)
+    if (zk_cli.GetNodeData(path, conn_str))
     {
         LOG_ERROR("{}:{} is not exist in zookeeper!", service_name, method_name);
         if (controller) controller->SetFailed(std::format("{}:{} is not exist in zookeeper!", service_name, method_name));

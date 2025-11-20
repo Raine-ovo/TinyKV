@@ -5,7 +5,6 @@
 #include "common/persister/persister.h"
 #include "kvservice/kvservice_interface.h"
 #include "proto/command.pb.h"
-#include "storage/raft/command_interface.h"
 #include "raft.h"
 #include <cstdint>
 #include <memory>
@@ -59,7 +58,7 @@ private:
     uint32_t _me;
 
     std::shared_ptr<Raft> _raft;
-    std::shared_ptr<LockQueue<ApplyMsg>> _applyChan;
+    std::shared_ptr<ApplyChan<ApplyMsg>> _applyChan;
     // 用于 readApplyChan 和上层服务 Submit 之间的信息交互
     // 这里需要进行一个处理：当调用 start 后，leader 发生变化，导致操作丢失
     // 即我们在 queue 中加入这个处理请求，但是还没 apply 就领导权发生变化，那 readApplyChan 就永远

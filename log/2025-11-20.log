@@ -1,0 +1,15 @@
+14:51:27 [INFO] Creating RaftRpcChannel for 127.0.0.1:8000
+14:51:27 [INFO] Creating RaftRpcChannel for 127.0.0.1:8002
+14:54:26 [INFO] Creating RaftRpcChannel for 127.0.0.1:8000
+14:54:26 [INFO] Creating RaftRpcChannel for 127.0.0.1:8002
+14:56:55 [INFO] Creating RaftRpcChannel for 127.0.0.1:8000
+14:56:55 [INFO] Creating RaftRpcChannel for 127.0.0.1:8002
+14:59:06 [INFO] Creating RaftRpcChannel for 127.0.0.1:8000
+14:59:06 [INFO] Creating RaftRpcChannel for 127.0.0.1:8002
+14:59:06 [INFO] Raft 节点 1 启动成功
+14:59:06 [INFO] RaftService registerService.
+14:59:06 [INFO] method RequestVoteRPC has been registered by service RaftService
+14:59:06 [INFO] method AppendEntriesRPC has been registered by service RaftService
+14:59:06 [INFO] method InstallSnapshotRPC has been registered by service RaftService
+14:59:06 [INFO] service RaftService has been registered!
+14:59:06 [INFO] zookeeper start for conn_str => 127.0.0.1:2181

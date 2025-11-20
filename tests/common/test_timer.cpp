@@ -6,8 +6,8 @@
 int main ()
 {
     auto now = std::chrono::steady_clock::now();
-    Timer timer(3000, []() { std::cout << "after 3s ..." << std::endl; });
-    timer.run();
+    Timer timer;
+    timer.start(3000, true, [] { std::cout << "hello" << std::endl; }, Timer::Mode::Normal);
     auto after = std::chrono::steady_clock::now();
 
     return 0;

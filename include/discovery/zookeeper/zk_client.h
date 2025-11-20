@@ -3,11 +3,13 @@
 
 #include <functional>
 #include <mutex>
+#include <semaphore>
 #include <shared_mutex>
 #include <unordered_map>
 #include <vector>
 #include <zookeeper/zookeeper.h>
 #include <string>
+#include <semaphore.h>
 
 class ZkClient
 {
@@ -58,6 +60,8 @@ private:
     bool _connected;
     // zookeeper 的会话端口
     zhandle_t *_zk_client;
+
+    std::binary_semaphore _conn_sem{0};
 };
 
 #endif

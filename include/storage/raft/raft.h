@@ -17,6 +17,7 @@
 #include "raft_client.h"
 #include "common/persister/persister.h"
 #include "log_manager.h"
+#include "storage/raft/applyChan.h"
 
 /*
  * Raft 算法实现：
@@ -53,7 +54,7 @@ class Raft : public raft::RaftService
 {
 public:
     Raft(std::vector<std::shared_ptr<RaftClient>> &peers, const uint32_t &me,
-        std::shared_ptr<Persister> persister, std::shared_ptr<LockQueue<ApplyMsg>> applyChan);
+        std::shared_ptr<Persister> persister, std::shared_ptr<ApplyChan<ApplyMsg>> applyChan);
     Raft();
     ~Raft();
 
@@ -62,7 +63,7 @@ public:
     std::tuple<uint64_t, bool> GetState();
 
     void Make(const std::vector<std::shared_ptr<RaftClient>> &peers, const uint32_t &me,
-        std::shared_ptr<Persister> persister, std::shared_ptr<LockQueue<ApplyMsg>> applyChan);
+        std::shared_ptr<Persister> persister, std::shared_ptr<ApplyChan<ApplyMsg>> applyChan);
 
     // 读取 state 字节数量
     uint64_t PersistBytes();
@@ -112,7 +113,7 @@ private:
     std::vector<uint64_t> _nextIndex; // 下一个要给 i 节点传输的日志索引
 
     // 提交上层信息的通道
-    std::shared_ptr<LockQueue<ApplyMsg>> _applyChan;
+    std::shared_ptr<ApplyChan<ApplyMsg>> _applyChan;
 
 private:
 

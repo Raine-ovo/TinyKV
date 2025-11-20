@@ -25,7 +25,7 @@ KVStateMathine::~KVStateMathine()
 void KVStateMathine::Make(const std::vector<std::shared_ptr<RaftClient>>& peers, uint32_t me, std::shared_ptr<Persister> persister, std::shared_ptr<KVServiceInterface> kv_service, uint64_t max_raft_logs)
 {
     _me = me;
-    _applyChan = std::make_shared<LockQueue<ApplyMsg>>();
+    _applyChan = std::make_shared<ApplyChan<ApplyMsg>>();
     
     _max_raft_logs = max_raft_logs;
     _last_applied = 0;
@@ -37,9 +37,9 @@ void KVStateMathine::Make(const std::vector<std::shared_ptr<RaftClient>>& peers,
     readSnapshot(persister); // 状态机重启后需要读取快照恢复状态
 
     _readApplyChan = std::make_shared<std::thread>(std::bind(&KVStateMathine::readApplyChan, this));
-    _snapshotHandler = std::make_shared<Timer>(100, std::bind(&KVStateMathine::snapshotHandler, this));
+    _snapshotHandler = std::make_shared<Timer>();
 
-    _snapshotHandler->run();
+    _snapshotHandler->start(100, true, std::bind(&KVStateMathine::snapshotHandler, this), Timer::Mode::Normal);
 }
 
 const ::command::Command KVStateMathine::readApplyChan()
@@ -143,7 +143,8 @@ std::pair<StateCode, Result> KVStateMathine::submit(const ::command::Command& co
 
     // raft 完成日志复制->applier 需要时间，这里用定时器
     std::pair<StateCode, Result> result;
-    std::unique_ptr<Timer> wait = std::make_unique<Timer>(50, [&, this]() {
+    std::unique_ptr<Timer> wait = std::make_unique<Timer>();
+    wait->start(50, true, [&, this] {
         std::shared_lock<std::shared_mutex> lock(_mutex);
         SubmitMsg& msg = _waiter[index];
         assert(msg.queue.size() <= 1);
@@ -161,16 +162,17 @@ std::pair<StateCode, Result> KVStateMathine::submit(const ::command::Command& co
                 result.first = StateCode::OK;
                 result.second = rst.value();
             }
-            wait->kill(); // 定时器结束
+            wait->stop(); // 定时器结束
             return ;
         }
-    });
+    }, Timer::Mode::Normal);
 
-    std::unique_ptr<Timer> max_wait = std::make_unique<Timer>(5000, [&, this]() {
-        wait->kill();
+    std::unique_ptr<Timer> max_wait = std::make_unique<Timer>();
+    max_wait->start(5000, false, [&, this] {
+        wait->stop();
         result.first = StateCode::ErrWrongLeader;
         result.second = ::command::GetReply{};
-    });
+    }, Timer::Mode::Normal);
 
     // 删除 index 处的 queue
     _waiter.erase(index);
@@ -186,4 +188,5 @@ Result KVStateMathine::do_command(::command::Command command)
     else if (command.has_put()) return _kvservice->Put(command.put());
     else if (command.has_del()) return _kvservice->Delete(command.del());
     else if (command.has_append()) return _kvservice->Append(command.append());
+    else return {};
 }

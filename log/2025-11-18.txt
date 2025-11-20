@@ -1,0 +1,263 @@
+15:50:27 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8001
+15:50:27 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+15:50:27 => [INFO]RaftService registerService.
+15:50:27 => [INFO]method RequestVoteRPC has been registered by service RaftService
+15:50:27 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+15:50:27 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+15:50:27 => [INFO]service RaftService has been registered!
+15:50:27 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+15:52:28 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8001
+15:52:28 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+15:52:28 => [INFO]Raft 节点 0 启动成功
+15:52:28 => [INFO]RaftService registerService.
+15:52:28 => [INFO]method RequestVoteRPC has been registered by service RaftService
+15:52:28 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+15:52:28 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+15:52:28 => [INFO]service RaftService has been registered!
+15:52:28 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+15:54:59 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8001
+15:54:59 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+15:54:59 => [INFO]Raft 节点 0 启动成功
+15:54:59 => [INFO]RaftService registerService.
+15:54:59 => [INFO]method RequestVoteRPC has been registered by service RaftService
+15:54:59 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+15:54:59 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+15:54:59 => [INFO]service RaftService has been registered!
+15:54:59 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+15:57:6 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8001
+15:57:6 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+15:57:6 => [INFO]Raft 节点 0 启动成功
+15:57:6 => [INFO]RaftService registerService.
+15:57:6 => [INFO]method RequestVoteRPC has been registered by service RaftService
+15:57:6 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+15:57:6 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+15:57:6 => [INFO]service RaftService has been registered!
+15:57:6 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+16:7:38 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8001
+16:7:38 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+16:7:38 => [INFO]Raft 节点 0 启动成功
+16:7:38 => [INFO]RaftService registerService.
+16:7:38 => [INFO]method RequestVoteRPC has been registered by service RaftService
+16:7:38 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+16:7:38 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+16:7:38 => [INFO]service RaftService has been registered!
+16:7:38 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+16:10:0 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8001
+16:10:0 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+16:10:0 => [INFO]Raft 节点 0 启动成功
+16:10:0 => [INFO]RaftService registerService.
+16:10:0 => [INFO]method RequestVoteRPC has been registered by service RaftService
+16:10:0 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+16:10:0 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+16:10:0 => [INFO]service RaftService has been registered!
+16:10:0 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+16:15:32 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8000
+16:15:32 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+16:15:32 => [INFO]Raft 节点 1 启动成功
+16:15:32 => [INFO]RaftService registerService.
+16:15:32 => [INFO]method RequestVoteRPC has been registered by service RaftService
+16:15:32 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+16:15:32 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+16:15:32 => [INFO]service RaftService has been registered!
+16:15:32 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+16:17:2 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8001
+16:17:2 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+16:17:2 => [INFO]RaftService registerService.
+16:17:2 => [INFO]method RequestVoteRPC has been registered by service RaftService
+16:17:2 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+16:17:2 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+16:17:2 => [INFO]service RaftService has been registered!
+16:17:2 => [INFO]Raft 节点 0 启动成功
+16:17:2 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+16:18:35 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8001
+16:18:35 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+16:18:35 => [INFO]Raft 节点 0 启动成功
+16:18:35 => [INFO]RaftService registerService.
+16:18:35 => [INFO]method RequestVoteRPC has been registered by service RaftService
+16:18:35 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+16:18:35 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+16:18:35 => [INFO]service RaftService has been registered!
+16:18:35 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+16:37:18 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8001
+16:37:18 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+16:37:18 => [INFO]RaftService registerService.
+16:37:18 => [INFO]method RequestVoteRPC has been registered by service RaftService
+16:37:18 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+16:37:18 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+16:37:18 => [INFO]service RaftService has been registered!
+16:37:18 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+16:41:32 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8001
+16:41:32 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+16:41:44 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8000
+16:41:44 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+16:41:44 => [INFO]RaftService registerService.
+16:41:44 => [INFO]method RequestVoteRPC has been registered by service RaftService
+16:41:44 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+16:41:44 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+16:41:44 => [INFO]service RaftService has been registered!
+16:41:44 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+16:42:51 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8000
+16:42:51 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+16:42:51 => [ERROR]load_state => open file: ../data/8001/state failed.
+16:42:51 => [INFO]RaftService registerService.
+16:42:51 => [INFO]method RequestVoteRPC has been registered by service RaftService
+16:42:51 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+16:42:51 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+16:42:51 => [INFO]service RaftService has been registered!
+16:42:51 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+16:44:15 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8000
+16:44:15 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+16:44:15 => [ERROR]load_state => open file: ../data/8001/state failed.
+16:44:15 => [INFO]RaftService registerService.
+16:44:15 => [INFO]method RequestVoteRPC has been registered by service RaftService
+16:44:15 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+16:44:15 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+16:44:15 => [INFO]service RaftService has been registered!
+16:44:15 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+16:44:24 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8000
+16:44:24 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+16:44:24 => [ERROR]load_state => open file: ../data/8001/state failed.
+16:44:24 => [INFO]RaftService registerService.
+16:44:24 => [INFO]method RequestVoteRPC has been registered by service RaftService
+16:44:24 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+16:44:24 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+16:44:24 => [INFO]service RaftService has been registered!
+16:44:24 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+16:46:43 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8000
+16:46:43 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+16:46:43 => [ERROR]load_state => open file: ../data/8001/state failed.
+16:46:43 => [INFO]Raft 节点 1 启动成功
+16:46:43 => [INFO]RaftService registerService.
+16:46:43 => [INFO]method RequestVoteRPC has been registered by service RaftService
+16:46:43 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+16:46:43 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+16:46:43 => [INFO]service RaftService has been registered!
+16:46:43 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+17:5:27 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8000
+17:5:27 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+17:5:27 => [ERROR]load_state => open file: ../data/8001/state failed.
+17:5:27 => [INFO]Raft 节点 1 启动成功
+17:5:27 => [INFO]RaftService registerService.
+17:5:27 => [INFO]method RequestVoteRPC has been registered by service RaftService
+17:5:27 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+17:5:27 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+17:5:27 => [INFO]service RaftService has been registered!
+17:5:27 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+17:5:27 => [INFO]Raft[1] 开始一次选举
+17:5:28 => [DEBUG]Successfully persisted data to ../data/8001/state
+17:5:28 => [DEBUG][1] start one election, term=1
+17:6:28 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8000
+17:6:28 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+17:6:28 => [INFO]Raft 节点 1 启动成功
+17:6:28 => [INFO]RaftService registerService.
+17:6:28 => [INFO]method RequestVoteRPC has been registered by service RaftService
+17:6:28 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+17:6:28 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+17:6:28 => [INFO]service RaftService has been registered!
+17:6:28 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+17:14:44 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+17:19:33 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+17:29:38 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+17:29:38 => [INFO]zookeeper 成功初始化并连接到 127.0.0.1:2181
+17:29:38 => [INFO]创建永久 Znode 节点 /test 成功.
+17:29:38 => [INFO]创建临时 Znode 节点 /test/hello 成功.
+17:29:47 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8000
+17:29:47 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+17:29:47 => [INFO]Raft 节点 1 启动成功
+17:29:47 => [INFO]RaftService registerService.
+17:29:47 => [INFO]method RequestVoteRPC has been registered by service RaftService
+17:29:47 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+17:29:47 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+17:29:47 => [INFO]service RaftService has been registered!
+17:29:47 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+17:29:47 => [INFO]zookeeper 成功初始化并连接到 127.0.0.1:2181
+17:29:47 => [ERROR]创建永久 Znode 节点 /RaftService 失败: 已经存在该节点
+17:29:47 => [INFO]创建临时 Znode 节点 /RaftService/InstallSnapshotRPC 成功.
+17:29:47 => [INFO]register /RaftService/InstallSnapshotRPC on 127.0.0.1:8001
+17:29:47 => [INFO]创建临时 Znode 节点 /RaftService/AppendEntriesRPC 成功.
+17:29:47 => [INFO]register /RaftService/AppendEntriesRPC on 127.0.0.1:8001
+17:29:47 => [INFO]创建临时 Znode 节点 /RaftService/RequestVoteRPC 成功.
+17:29:47 => [INFO]register /RaftService/RequestVoteRPC on 127.0.0.1:8001
+17:29:47 => [INFO]Raft[1] 开始一次选举
+17:29:47 => [DEBUG]Successfully persisted data to ../data/8001/state
+17:29:47 => [DEBUG][1] start one election, term=2
+17:32:9 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8000
+17:32:9 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+17:32:9 => [INFO]Raft 节点 1 启动成功
+17:32:9 => [INFO]RaftService registerService.
+17:32:9 => [INFO]method RequestVoteRPC has been registered by service RaftService
+17:32:9 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+17:32:9 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+17:32:9 => [INFO]service RaftService has been registered!
+17:32:9 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+17:32:9 => [INFO]zookeeper 成功初始化并连接到 127.0.0.1:2181
+17:32:9 => [ERROR]创建永久 Znode 节点 /RaftService 失败: 已经存在该节点
+17:32:9 => [INFO]创建临时 Znode 节点 /RaftService/InstallSnapshotRPC 成功.
+17:32:9 => [INFO]register /RaftService/InstallSnapshotRPC on 127.0.0.1:8001
+17:32:9 => [INFO]创建临时 Znode 节点 /RaftService/AppendEntriesRPC 成功.
+17:32:9 => [INFO]register /RaftService/AppendEntriesRPC on 127.0.0.1:8001
+17:32:9 => [INFO]创建临时 Znode 节点 /RaftService/RequestVoteRPC 成功.
+17:32:9 => [INFO]register /RaftService/RequestVoteRPC on 127.0.0.1:8001
+17:32:9 => [INFO]Raft[1] 开始一次选举
+17:32:10 => [DEBUG]Successfully persisted data to ../data/8001/state
+17:32:10 => [DEBUG][1] start one election, term=3
+17:35:6 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8000
+17:35:6 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+17:35:6 => [INFO]Raft 节点 1 启动成功
+17:35:6 => [INFO]RaftService registerService.
+17:35:6 => [INFO]method RequestVoteRPC has been registered by service RaftService
+17:35:6 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+17:35:6 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+17:35:6 => [INFO]service RaftService has been registered!
+17:35:6 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+17:35:6 => [INFO]zookeeper 成功初始化并连接到 127.0.0.1:2181
+17:35:6 => [ERROR]创建永久 Znode 节点 /RaftService 失败: 已经存在该节点
+17:35:6 => [INFO]创建临时 Znode 节点 /RaftService/InstallSnapshotRPC 成功.
+17:35:6 => [INFO]register /RaftService/InstallSnapshotRPC on 127.0.0.1:8001
+17:35:6 => [INFO]创建临时 Znode 节点 /RaftService/AppendEntriesRPC 成功.
+17:35:6 => [INFO]register /RaftService/AppendEntriesRPC on 127.0.0.1:8001
+17:35:6 => [INFO]创建临时 Znode 节点 /RaftService/RequestVoteRPC 成功.
+17:35:6 => [INFO]register /RaftService/RequestVoteRPC on 127.0.0.1:8001
+17:35:6 => [INFO]Raft[1] 开始一次选举
+17:35:7 => [DEBUG]Successfully persisted data to ../data/8001/state
+17:35:7 => [DEBUG][1] start one election, term=4
+17:45:2 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8000
+17:45:2 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+17:45:2 => [INFO]Raft 节点 1 启动成功
+17:45:2 => [INFO]RaftService registerService.
+17:45:2 => [INFO]method RequestVoteRPC has been registered by service RaftService
+17:45:2 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+17:45:2 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+17:45:2 => [INFO]service RaftService has been registered!
+17:45:2 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+17:45:2 => [INFO]zookeeper connected to 127.0.0.1:2181
+17:45:2 => [ERROR]创建永久 Znode 节点 /RaftService 失败: 已经存在该节点
+17:45:2 => [INFO]创建临时 Znode 节点 /RaftService/InstallSnapshotRPC 成功.
+17:45:2 => [INFO]register /RaftService/InstallSnapshotRPC on 127.0.0.1:8001
+17:45:2 => [INFO]创建临时 Znode 节点 /RaftService/AppendEntriesRPC 成功.
+17:45:2 => [INFO]register /RaftService/AppendEntriesRPC on 127.0.0.1:8001
+17:45:2 => [INFO]创建临时 Znode 节点 /RaftService/RequestVoteRPC 成功.
+17:45:2 => [INFO]register /RaftService/RequestVoteRPC on 127.0.0.1:8001
+17:45:2 => [INFO]Raft[1] 开始一次选举
+17:45:2 => [DEBUG]Successfully persisted data to ../data/8001/state
+17:45:2 => [DEBUG][1] start one election, term=5
+17:46:26 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8000
+17:46:26 => [INFO]Creating RaftRpcChannel for 127.0.0.1:8002
+17:46:26 => [INFO]Raft 节点 1 启动成功
+17:46:26 => [INFO]RaftService registerService.
+17:46:26 => [INFO]method RequestVoteRPC has been registered by service RaftService
+17:46:26 => [INFO]method AppendEntriesRPC has been registered by service RaftService
+17:46:26 => [INFO]method InstallSnapshotRPC has been registered by service RaftService
+17:46:26 => [INFO]service RaftService has been registered!
+17:46:26 => [INFO]zookeeper start for conn_str => 127.0.0.1:2181
+17:46:26 => [INFO]zookeeper connected to 127.0.0.1:2181
+17:46:26 => [ERROR]创建永久 Znode 节点 /RaftService 失败: 已经存在该节点
+17:46:26 => [INFO]创建临时 Znode 节点 /RaftService/InstallSnapshotRPC 成功.
+17:46:26 => [INFO]register /RaftService/InstallSnapshotRPC on 127.0.0.1:8001
+17:46:26 => [INFO]创建临时 Znode 节点 /RaftService/AppendEntriesRPC 成功.
+17:46:26 => [INFO]register /RaftService/AppendEntriesRPC on 127.0.0.1:8001
+17:46:26 => [INFO]创建临时 Znode 节点 /RaftService/RequestVoteRPC 成功.
+17:46:26 => [INFO]register /RaftService/RequestVoteRPC on 127.0.0.1:8001
+17:46:26 => [INFO]Raft[1] 开始一次选举
+17:46:26 => [DEBUG]Successfully persisted data to ../data/8001/state
+17:46:26 => [DEBUG][1] start one election, term=6

@@ -36,19 +36,19 @@ void RpcProvider::run()
     
     // 同时需要把新的服务告知给 zookeeper
     ZkClient zk_cli;
-    zk_cli.start();
+    zk_cli.connect();
     // service 为永久性节点，method为临时性节点
     for (auto &sn: _serviceMap)
     {
         //  /service_name 
         std::string service_name = '/' + sn.first;
-        zk_cli.create(service_name, "", 0, 0);
+        zk_cli.CreatePersistentNode(service_name, "");
         
         for (auto &mn: sn.second._methodMap)
         {
             std::string method_name = service_name + '/' + mn.first;
             std::string method_data = _serverPtr->ipPort();
-            zk_cli.create(method_name, method_data, method_data.size(), ZOO_EPHEMERAL);
+            zk_cli.CreateEphemeralNode(method_name, method_data);
             LOG_INFO("register {} on {}", method_name, method_data);
         }
     }

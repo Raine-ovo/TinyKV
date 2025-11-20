@@ -1,97 +1,82 @@
 #include "common/timer/timer.h"
 
-#include <random>
 #include <chrono>
+#include <memory>
+#include <mutex>
+#include <random>
+#include <thread>
 
-Timer::Timer(uint timeout, TimerCallback callback)
-    : _timeout(timeout), _callback(callback), is_stopped(false),
-      _runningtime(0), is_killed(false)
+uint32_t Timer::random_time(const uint32_t& begin, const uint32_t& end)
 {
+    if (begin >= end) return begin;
+    static thread_local std::mt19937 rng{std::random_device{}()};
+    std::uniform_int_distribution<uint32_t> dist(begin, end);
+    return dist(rng);
 }
 
-Timer::~Timer()
+void Timer::start(const uint32_t& period_ms, bool forever, TimerCallBack callback, Mode mode)
 {
-    is_killed = true;
-
-    if (_thread != nullptr)
-    {
-        // 如果对应线程还在执行，那就等待执行完毕后回收资源
-        if (_thread->joinable())
-        {
-            _thread->join();
-        }
-    }
-}
-
-uint Timer::random_time(const uint &begin, const uint &end)
-{
-    if (begin >= end) return 0;
-
-    unsigned long long seed = std::chrono::steady_clock::now().time_since_epoch().count();
-    std::mt19937 engine(seed);
-    std::uniform_int_distribution<int> dist(begin, end);
-    
-    return dist(engine);
-}
-
-void Timer::reset(uint timeout)
-{
-    _timeout = timeout;
-    _runningtime = 0;
-}
-
-void Timer::random_reset(const uint &begin, const uint &end)
-{
-    reset(random_time(begin, end));
-}
-
-void Timer::setCallback(TimerCallback callback)
-{
+    stop(); // 先停掉原本的线程
+    _mode = mode;
+    _period = Period(period_ms);
+    _forever = forever;
     _callback = callback;
-}
 
-void Timer::run()
-{
-    is_stopped = false;
-    
-    // 确保一个计时器只有一个线程运行
-    if (_thread != nullptr)
-    {
-        return ;
-    }
-
-    _thread = std::make_shared<std::thread>([&]() {
-        while (true)
-        {
-            if (is_killed)
-            {
-                return ;
-            }
-
-            if (is_stopped) 
-            {
-                continue;
-            }
-
-            // sleep 1ms
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
-            ++ _runningtime;
-
-            if (_runningtime >= _timeout)
-            {
-                _callback();
-                _runningtime = 0; // 实现循环定时触发
-            }
-        }
-    });
+    _is_running = true;
+    _td = std::make_shared<std::thread>([this] { worker(); });
 }
 
 void Timer::stop()
 {
-    is_stopped = true;
+    if (_td != nullptr && _td->joinable())
+    {
+        _is_running = false;
+        _cond.notify_one(); // 唤醒线程
+        _td->join();
+    }
 }
 
-void Timer::kill()
+void Timer::set_random(const uint32_t& begin, const uint32_t& end)
 {
-    is_killed = true;
+    random_begin = begin;
+    random_end = end;
+}
+
+void Timer::reset(const uint32_t& new_period_ms)
+{
+    if (_mode == Mode::Random)
+    {
+        _period = Period(random_time(random_begin, random_end));
+    }
+    else
+    {
+        _period = Period(new_period_ms);
+    }
+    _resetting = true;
+    _cond.notify_one();
+}
+
+void Timer::worker()
+{
+    using Clock = std::chrono::steady_clock;
+    Clock::time_point next = Clock::now() + _period.load();
+
+    while (_is_running)
+    {
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            if (_cond.wait_until(lock, next, [this] { return !_is_running; }))
+                return ;
+        }
+
+        if (_resetting) _resetting = false;
+        else if (_is_running) _callback();
+        
+        if (!_forever) 
+        {
+            _is_running = false;
+            break;
+        }
+        next = Clock::now() + _period.load();
+    }
 }

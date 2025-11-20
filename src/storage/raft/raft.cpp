@@ -22,40 +22,6 @@
 #include <ranges>
 #include <chrono>
 
-Raft::Raft(std::vector<std::shared_ptr<RaftClient>> &peers, const uint32_t &me,
-        std::shared_ptr<Persister> persister, std::shared_ptr<LockQueue<ApplyMsg>> applyChan)
-    : _peers(peers),
-      _me(me),
-      _persister(persister),
-      _applyChan(applyChan),
-      _isDead(false),
-
-      _currentTerm(0),
-      _votedFor(-1),
-      _status(STATUS::FOLLOWER),
-      _commitIndex(0),
-      _lastApplied(0),
-
-      _log_manager(),
-
-      // logs 默认初始 index = 1
-      _matchIndex(std::move(std::vector<uint64_t>(peers.size(), 0))),
-      _nextIndex(std::move(std::vector<uint64_t>(peers.size(), 1))),
-
-      _electTimer(std::make_shared<Timer>(0, std::bind(&Raft::ElectPrepare, this))),
-
-      _heartbeatTimer(std::make_shared<Timer>(HEARTBEAT_TIMEOUT, std::bind(&Raft::HeartBeat, this)))
-{
-    // 恢复持久化数据
-    ReadPersistData();
-
-    // 启动线程，开始 apply log
-    std::thread _thread(std::bind(&Raft::Applier, this));
-    _thread.detach();
-
-    _electTimer->random_reset(MIN_ELECT_TIMEOUT, MAX_ELECT_TIMEOUT);
-}
-
 Raft::Raft()
 {
 
@@ -90,7 +56,7 @@ std::tuple<uint32_t, uint64_t, bool> Raft::Start(const ::command::Command& comma
 }
 
 void Raft::Make(const std::vector<std::shared_ptr<RaftClient>> &peers, const uint32_t &me,
-        std::shared_ptr<Persister> persister, std::shared_ptr<LockQueue<ApplyMsg>> applyChan)
+        std::shared_ptr<Persister> persister, std::shared_ptr<ApplyChan<ApplyMsg>> applyChan)
 {
     _peers = peers;
     _me = me;
@@ -113,10 +79,9 @@ void Raft::Make(const std::vector<std::shared_ptr<RaftClient>> &peers, const uin
     _matchIndex = std::move(std::vector<uint64_t>(peers.size(), 0));
     _nextIndex = std::move(std::vector<uint64_t>(peers.size(), 1));
 
-    _electTimer = std::make_shared<Timer>(0, std::bind(&Raft::ElectPrepare, this));
-    _electTimer->random_reset(MIN_ELECT_TIMEOUT, MAX_ELECT_TIMEOUT);
+    _electTimer = std::make_shared<Timer>();
 
-    _heartbeatTimer = std::make_shared<Timer>(HEARTBEAT_TIMEOUT, std::bind(&Raft::HeartBeat, this));
+    _heartbeatTimer = std::make_shared<Timer>();
 
     // 恢复持久化数据
     ReadPersistData();
@@ -125,7 +90,11 @@ void Raft::Make(const std::vector<std::shared_ptr<RaftClient>> &peers, const uin
     std::thread _thread(std::bind(&Raft::Applier, this));
     _thread.detach();
 
-    _electTimer->run(); // 开启选举超时计时
+    // 开启选举超时计时器
+    _electTimer->set_random(MIN_ELECT_TIMEOUT, MAX_ELECT_TIMEOUT);
+    _electTimer->start(Timer::random_time(MIN_ELECT_TIMEOUT, MAX_ELECT_TIMEOUT), true, std::bind(&Raft::ElectPrepare, this), Timer::Mode::Random);
+
+    LOG_INFO("Raft 节点 {} 启动成功", me);
 }
 
 Raft::~Raft()
@@ -160,8 +129,7 @@ void Raft::TurnFollower(uint64_t term)
     Persist();
 
     // 因为通过 leader rpc 变为了非 leader ，需要重置计时器
-    _heartbeatTimer->stop();
-    _electTimer->random_reset(MIN_ELECT_TIMEOUT, MAX_ELECT_TIMEOUT);
+    _electTimer.reset();
 }
 
 std::vector<uint8_t> Raft::SerializeLogs()
@@ -259,6 +227,7 @@ void Raft::Snapshot(uint64_t index, std::vector<uint8_t> snapshot)
 void Raft::ElectPrepare()
 {
     std::unique_lock<std::shared_mutex> lock(_mutex);
+    LOG_INFO("Raft[{}] 开始一次选举", _me);
     
     // leader 不会进行 elect
     if (_status == STATUS::LEADER) return ;
@@ -285,7 +254,7 @@ void Raft::ElectPrepare()
     td.detach();
     
     // 4. 重置计时器
-    _electTimer->random_reset(MIN_ELECT_TIMEOUT, MAX_ELECT_TIMEOUT);
+    _electTimer.reset();
 }
 
 // 开始进行一次选举，在独立线程中完成
@@ -338,7 +307,7 @@ void Raft::Elect(const ::raft::RequestVoteRequest &request)
                     std::for_each(_nextIndex.begin(), _nextIndex.end(), [&](uint64_t& index) { index = _log_manager.lastIndex() + 1; });
                     std::for_each(_matchIndex.begin(), _matchIndex.end(), [](uint64_t& index) { index = 0; });
                     // 立刻开始发送心跳确认身份
-                    _heartbeatTimer->run();
+                    _heartbeatTimer->start(HEARTBEAT_TIMEOUT, true, std::bind(&Raft::HeartBeat, this), Timer::Mode::Normal);
                 }
             }
         }, i);
@@ -479,7 +448,7 @@ void Raft::AppendEntries()
                 if (response.term() > _currentTerm)
                 {
                     TurnFollower(response.term());
-                    _electTimer->random_reset(MIN_ELECT_TIMEOUT, MAX_ELECT_TIMEOUT);
+                    _electTimer.reset();
                     return ;
                 }
 
@@ -657,7 +626,7 @@ bool Raft::newerLogs(uint64_t lastLogIndex, uint64_t lastLogTerm)
     }
 
     // leader 发来的 rpc ，重置计时器
-    _electTimer->random_reset(MIN_ELECT_TIMEOUT, MAX_ELECT_TIMEOUT);
+    _electTimer.reset();
 
     if (term > _currentTerm)
     {

@@ -1,73 +1,109 @@
 #include "common/logger/logger.h"
+#include "storage/raft/log_manager.h"
 
+#include <chrono>
 #include <ctime>
+#include <filesystem>
+#include <format>
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <string_view>
+#include <ctime>
+#include <thread>
 
-const std::string Logger::get_prefix()
+static std::string level_str(LogLevel l)
 {
-    if (_log_level == LogLevel::INFO) return "INFO";
-    else if (_log_level == LogLevel::DEBUG) return "DEBUG";
-    else if (_log_level == LogLevel::ERROR) return "ERROR";
-    else if (_log_level == LogLevel::FATAL) return "FATAL";
+    switch (l) {
+        case LogLevel::INFO: return "INFO";
+        case LogLevel::DEBUG: return "DEBUG";
+        case LogLevel::ERROR: return "ERROR";
+        case LogLevel:: FATAL: return "FATAL";
+        case LogLevel::WARNING: return "WARNING";
+    }
+    return "UNK";
+}
 
-    return "";
+Logger::Logger()
+    : _worker(&Logger::backend, this) {};
+
+Logger::~Logger()
+{
+    shutdown();
 }
 
 Logger& Logger::getInstance()
 {
-    static Logger logger;
-    return logger;
+    static Logger instance;
+    return instance;
 }
 
-Logger::Logger()
+void Logger::set_level(LogLevel l)
 {
-    _log_level = LogLevel::INFO;
-    _log_thread = std::make_unique<std::thread>([&]() {
-        while (true) 
-        {
-            // 组装格式: time [INFO] msg
-            // 年/月/日 文件名，时/分/秒 条目
-            time_t now = time(nullptr);
-            tm *nowtm = localtime(&now);
-            
-            std::string file_name = std::format("{}-{}-{}.txt", 
-                nowtm->tm_year+1900, nowtm->tm_mon+1, nowtm->tm_mday);
-            // 放在 log 文件夹下
-            file_name.insert(0, "../log/");
-
-            // msg 内容
-            std::string msg = _queue.pop();
-            std::string format_msg = std::format("{:2>0}:{:2>0}:{:2>0} => {}",
-                nowtm->tm_hour, nowtm->tm_min, nowtm->tm_sec, msg);
-                
-            // 打开文件，追加写
-            std::ofstream outfile;
-            outfile.open(file_name.c_str(), std::ios::app);
-            outfile << format_msg << '\n';
-            outfile.close();
-        }
-    });
+    _min_level = l;
 }
 
-Logger::~Logger()
+void Logger::set_log_dir(std::string dir)
 {
-    if (_log_thread != nullptr)
+    _log_dir = std::move(dir);
+}
+
+void Logger::shutdown()
+{
+    _queue.shutdown();
+}
+
+void Logger::backend()
+{
+    auto open_file = [this](const std::tm& tm) -> std::ofstream
     {
-        if (_log_thread->joinable())
+        std::filesystem::create_directories(_log_dir);
+        std::string name = std::format("{}/{:04d}-{:02d}-{:02d}.log",
+                                        _log_dir, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
+        return std::ofstream(name, std::ios::app);
+    };
+
+    std::ofstream out;
+    std::time_t last_day = 0;
+    std::tm tm_now{};
+    
+    while (true)
+    {
+        // DEBUG 阶段，这里先不用 try pop
+        auto batch = _queue.pop();
+
+        std::cout << "batch size: " << batch.size() << std::endl;
+        for (const LogEntry& e: batch)
         {
-            _log_thread->join();
+            std::time_t t = std::chrono::system_clock::to_time_t(e.tp);
+            
+            // 日期切换 或 首次打开
+            if (t / 86400 != last_day / 86400 || !out.is_open())
+            {
+                if (out.is_open())
+                {
+                    out.flush();
+                    out.close();
+                }
+                
+                localtime_r(&t, &tm_now);
+                out = open_file(tm_now);
+                last_day = t;
+            }
+            std::cout << "LOG写入文件了" << std::endl;
+            out << std::format("{:02d}:{:02d}:{:02d} [{}] {}\n",
+                                tm_now.tm_hour, tm_now.tm_min, tm_now.tm_sec,
+                                level_str(e.lvl), e.msg);
         }
+
+        out.flush();
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
-}
 
-void Logger::log(const std::string &msg)
-{
-    _queue.push(msg);
-}
-
-void Logger::setLogLevel(const LogLevel &level)
-{
-    _log_level = level;
+    if (out.is_open())
+    {
+        out.flush();
+        out.close();
+    }
 }

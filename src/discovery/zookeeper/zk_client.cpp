@@ -14,6 +14,12 @@
 
 void ZkClient::GlobalWatcher(zhandle_t *zh, int type, int state,
                     const char *path, void *watcherCtx) {
+    if (watcherCtx == nullptr)
+    {
+        LOG_FATAL("ZKClient GlobalWatcher: watcherCtx is null");
+        exit(EXIT_FAILURE) ;
+    }
+
     ZkClient* client = static_cast<ZkClient*>(watcherCtx);
     
     // 触发的是与 zookeeper 会话相关的事件
@@ -33,14 +39,12 @@ void ZkClient::HandleSessionEvent(int state)
     if (state == ZOO_CONNECTED_STATE)
     {
         // 连接事件
-        _connected = true;
-        sem_t *sem = (sem_t*)zoo_get_context(_zk_client);
-        sem_post(sem);
+        this->_conn_sem.release();
     }
     else if (state == ZOO_EXPIRED_SESSION_STATE)
     {
         // 会话过期事件
-        _connected = false;
+        this->_connected = false;
     }
 }
 
@@ -80,34 +84,32 @@ ZkClient::~ZkClient()
 // 建立连接
 void ZkClient::connect()
 {
-    std::unique_lock<std::shared_mutex> lock(_mutex);
-
     Config& config = Config::getInstance();
-    std::string host = config.Load("zookeeper.host");
-    std::string port = config.Load("zookeeper.port");
-    std::string conn_str = host + ":" + port; // zk 的连接要求
-
+    std::string conn_str = config.Load("zookeeper.host") + ":"
+                         + config.Load("zookeeper.port");
     LOG_INFO("zookeeper start for conn_str => {}", conn_str);
 
-    // 内核态创建一个用于连接的句柄并尝试连接
-    _zk_client = zookeeper_init(conn_str.c_str(), &ZkClient::GlobalWatcher, 30000, nullptr, nullptr, 0);
-    if (nullptr == _zk_client)
-    {
+    /* 创建句柄 */
+    _zk_client = zookeeper_init(conn_str.c_str(),
+                               &ZkClient::GlobalWatcher,
+                               _timeout, nullptr, this, 0);
+    if (!_zk_client)
+    { 
         // 内核态的句柄都没有创建成功
         LOG_FATAL("zookeeper init failed.");
         exit(EXIT_FAILURE);
     }
 
-    // 等待创建的句柄成功连接上 zookeeper 服务器
-    sem_t sem;
-    sem_init(&sem, 0, 0);
-    // 把信号量放到句柄的上下文，以便从回调函数中获取这个信号量
-    zoo_set_context(_zk_client, &sem);
+    /* 等待连接成功 */
+    _conn_sem.acquire();
 
-    // zookeeper 连接成功后执行回调函数，回调函数会触发信号量，这里等待信号量，即连接成功
-    sem_wait(&sem);
+    /* 连接成功后再拿一次锁，只改状态 */
+    {
+        std::unique_lock<std::shared_mutex> lock(_mutex);
+        _connected = true;
+    }
 
-    LOG_INFO("zookeeper init success.");
+    LOG_INFO("zookeeper connected to {}", conn_str);
 }
 
 bool ZkClient::CreateEphemeralNode(const std::string& path, const std::string& data)
