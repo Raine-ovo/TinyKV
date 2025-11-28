@@ -1,5 +1,7 @@
 #include "common/storage/rocksdb_client.h"
 #include "common/logger/logger.h"
+#include <functional>
+#include "common/logger/logger.h"
 #include "proto/command.pb.h"
 
 #include <memory>
@@ -464,4 +466,114 @@ bool RocksDBClient::Exists(const std::string& key)
 {
     std::string value;
     return Get(key, value);
+}
+
+// 导出指定分片的数据
+std::unordered_map<std::string, std::string> RocksDBClient::ExportShardData(
+    uint32_t shard_id,
+    std::function<uint32_t(const std::string&)> get_shard_func)
+{
+    std::shared_lock<std::shared_mutex> lock(_kv_mutex);
+    if (!_db || !_kv_cf)
+    {
+        LOG_ERROR("导出分片数据失败：列族不存在或数据库没有初始化");
+        return {};
+    }
+
+    std::unordered_map<std::string, std::string> shard_data;
+    rocksdb::Iterator* iter = _db->NewIterator(rocksdb::ReadOptions(), _kv_cf);
+    
+    for (iter->SeekToFirst(); iter->Valid(); iter->Next())
+    {
+        std::string key = iter->key().ToString();
+        // 计算key所属的分片
+        uint32_t key_shard = get_shard_func(key);
+        
+        // 只导出属于指定分片的数据
+        if (key_shard == shard_id)
+        {
+            shard_data[key] = iter->value().ToString();
+        }
+    }
+    
+    delete iter;
+    LOG_INFO("导出分片{}的数据，共{}条记录", shard_id, shard_data.size());
+    return shard_data;
+}
+
+// 导入分片数据（批量写入）
+bool RocksDBClient::ImportShardData(const std::unordered_map<std::string, std::string>& data)
+{
+    std::unique_lock<std::shared_mutex> lock(_kv_mutex);
+    if (!_db || !_kv_cf)
+    {
+        LOG_ERROR("导入分片数据失败：列族不存在或数据库没有初始化");
+        return false;
+    }
+
+    // 使用批量写入提高性能
+    rocksdb::WriteBatch batch;
+    for (const auto& [key, value] : data)
+    {
+        batch.Put(_kv_cf, key, value);
+    }
+
+    rocksdb::Status status = _db->Write(rocksdb::WriteOptions(), &batch);
+    if (!status.ok())
+    {
+        LOG_ERROR("导入分片数据失败: {}", status.ToString());
+        return false;
+    }
+
+    LOG_INFO("导入分片数据成功，共{}条记录", data.size());
+    return true;
+}
+
+// 删除指定分片的所有数据
+bool RocksDBClient::DeleteShardData(
+    uint32_t shard_id,
+    std::function<uint32_t(const std::string&)> get_shard_func)
+{
+    std::unique_lock<std::shared_mutex> lock(_kv_mutex);
+    if (!_db || !_kv_cf)
+    {
+        LOG_ERROR("删除分片数据失败：列族不存在或数据库没有初始化");
+        return false;
+    }
+
+    // 先找出所有属于该分片的key
+    std::vector<std::string> keys_to_delete;
+    rocksdb::Iterator* iter = _db->NewIterator(rocksdb::ReadOptions(), _kv_cf);
+    
+    for (iter->SeekToFirst(); iter->Valid(); iter->Next())
+    {
+        std::string key = iter->key().ToString();
+        uint32_t key_shard = get_shard_func(key);
+        
+        if (key_shard == shard_id)
+        {
+            keys_to_delete.push_back(key);
+        }
+    }
+    delete iter;
+
+    // 批量删除
+    if (!keys_to_delete.empty())
+    {
+        rocksdb::WriteBatch batch;
+        for (const auto& key : keys_to_delete)
+        {
+            batch.Delete(_kv_cf, key);
+        }
+
+        rocksdb::Status status = _db->Write(rocksdb::WriteOptions(), &batch);
+        if (!status.ok())
+        {
+            LOG_ERROR("删除分片数据失败: {}", status.ToString());
+            return false;
+        }
+    }
+
+    LOG_INFO("删除分片{}的数据，共{}条记录", shard_id, keys_to_delete.size());
+    return true;
 }

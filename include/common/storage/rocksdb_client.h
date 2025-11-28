@@ -47,6 +47,21 @@ public:
     // 安装客户端操作快照
     bool InstallClientSnapshot(std::unordered_map<std::string, std::string>& client_snapshot);
     
+    // 导出指定分片的数据（用于迁移）
+    // shard_id: 分片ID
+    // shard_manager: 分片管理器，用于判断key属于哪个分片
+    std::unordered_map<std::string, std::string> ExportShardData(
+        uint32_t shard_id, 
+        std::function<uint32_t(const std::string&)> get_shard_func);
+    
+    // 导入分片数据（批量写入）
+    bool ImportShardData(const std::unordered_map<std::string, std::string>& data);
+    
+    // 删除指定分片的所有数据
+    bool DeleteShardData(
+        uint32_t shard_id,
+        std::function<uint32_t(const std::string&)> get_shard_func);
+    
 
 
     // 对数据库操作

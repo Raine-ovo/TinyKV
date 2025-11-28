@@ -3,6 +3,8 @@
 
 #include "common/persister/persister.h"
 #include "common/storage/rocksdb_client.h"
+#include "common/shard/shard_manager.h"
+#include "kvservice/kv_client.h"
 #include "kvservice_interface.h"
 #include "proto/command.pb.h"
 #include "storage/raft/raft_client.h"
@@ -23,8 +25,18 @@ public:
             std::shared_ptr<Persister> persister,
             std::vector<std::shared_ptr<RaftClient>>& peer_conns,
             std::shared_ptr<KVStateMathine> sm,
-            const std::string& name);
+            const std::string& name,
+            std::shared_ptr<ShardManager> shard_manager = nullptr);
     ~KVService();
+
+    // 设置状态机
+    void SetStateMachine(std::shared_ptr<KVStateMathine> sm);
+
+    // 设置分片管理器
+    void SetShardManager(std::shared_ptr<ShardManager> shard_manager);
+
+    // 更新节点列表（用于分片重新分配）
+    void UpdateNodes(const std::vector<std::string>& nodes);
 
     // 向 statemachine 暴露的接口
     ::command::GetReply Get(::command::GetCommand command) override;
@@ -54,6 +66,28 @@ public:
                 const ::command::AppendCommand* request,
                 ::command::AppendReply* response,
                 ::google::protobuf::Closure* done) override;
+    
+    // 迁移相关的RPC接口
+    void PullShard(::google::protobuf::RpcController* controller,
+                   const ::command::PullShardCommand* request,
+                   ::command::PullShardReply* response,
+                   ::google::protobuf::Closure* done) override;
+    
+    void DeleteShard(::google::protobuf::RpcController* controller,
+                     const ::command::DeleteShardCommand* request,
+                     ::command::DeleteShardReply* response,
+                     ::google::protobuf::Closure* done) override;
+
+private:
+    /**
+     * 获取或创建到指定节点的KV客户端
+     */
+    std::shared_ptr<KVClient> GetOrCreateClient(const std::string& node_name);
+
+    /**
+     * 从节点名称解析IP和端口
+     */
+    std::pair<std::string, uint16_t> ParseNodeAddress(const std::string& node_name) const;
 
 private:
     std::shared_mutex _mutex;
@@ -63,6 +97,10 @@ private:
     std::shared_ptr<Persister> _persister;
 
     std::shared_ptr<KVStateMathine> _sm;
+    
+    // 分片相关
+    std::shared_ptr<ShardManager> _shard_manager;
+    std::unordered_map<std::string, std::shared_ptr<KVClient>> _node_clients;  // 节点名称到客户端的映射
     
     // 客户端状态记录
     std::unordered_map<std::string, uint64_t> _last_request_ids;

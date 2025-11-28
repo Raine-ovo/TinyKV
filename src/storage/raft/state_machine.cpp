@@ -65,17 +65,33 @@ const ::command::Command KVStateMathine::readApplyChan()
         {
             // 解析命令
             ::command::Command command = msg.Command;
+            
+            // 检查是否是配置变更命令
+            bool is_config_change = command.has_config_change();
+            
             Result rst = do_command(command);
             _last_applied = std::max(_last_applied, msg.CommandIndex);
             
-            SubmitMsg& submsg = _waiter[msg.CommandIndex];
-            if (submsg.me == _me)
+            // 如果是配置变更命令，通知上层（KVServer）
+            if (is_config_change && _config_change_callback)
             {
-                submsg.queue.push(rst);
+                lock.unlock(); // 释放锁，避免回调时死锁
+                _config_change_callback(command.config_change());
+                lock.lock();
             }
-            else
+            
+            // 配置变更命令不需要返回结果给waiter（因为不是用户请求）
+            if (!is_config_change)
             {
-                submsg.queue.push(std::nullopt);
+                SubmitMsg& submsg = _waiter[msg.CommandIndex];
+                if (submsg.me == _me)
+                {
+                    submsg.queue.push(rst);
+                }
+                else
+                {
+                    submsg.queue.push(std::nullopt);
+                }
             }
         }
         else
@@ -89,6 +105,36 @@ void KVStateMathine::UpdatePeers(const std::vector<std::shared_ptr<RaftClient>>&
 {
     std::unique_lock<std::shared_mutex> lock(_mutex);
     _raft->UpdatePeers(peer_conns);
+}
+
+void KVStateMathine::SetConfigChangeCallback(std::function<void(const ::command::ConfigChangeCommand&)> callback)
+{
+    std::unique_lock<std::shared_mutex> lock(_mutex);
+    _config_change_callback = callback;
+}
+
+std::pair<StateCode, bool> KVStateMathine::ProposeConfigChange(const ::command::ConfigChangeCommand& config_change)
+{
+    std::unique_lock<std::shared_mutex> lock(_mutex);
+    
+    auto [index, term, isLeader] = _raft->ProposeConfigChange(config_change);
+    
+    if (!isLeader)
+    {
+        return {StateCode::ErrWrongLeader, false};
+    }
+    
+    if (index == 0)
+    {
+        // 配置变更被拒绝（可能有待处理的配置变更）
+        return {StateCode::ErrMaybe, false};
+    }
+    
+    // 等待配置变更被提交和应用
+    // 这里简化处理，实际应该等待配置变更日志被提交
+    LOG_INFO("状态机提议配置变更成功: index={}, term={}", index, term);
+    
+    return {StateCode::OK, true};
 }
 
 void KVStateMathine::readSnapshot(std::shared_ptr<Persister> persister)
@@ -188,5 +234,14 @@ Result KVStateMathine::do_command(::command::Command command)
     else if (command.has_put()) return _kvservice->Put(command.put());
     else if (command.has_del()) return _kvservice->Delete(command.del());
     else if (command.has_append()) return _kvservice->Append(command.append());
+    else if (command.has_config_change())
+    {
+        // 处理配置变更命令
+        _raft->ApplyConfigChange(command.config_change());
+        // 配置变更命令不返回结果，返回空的GetReply
+        ::command::GetReply reply;
+        reply.set_err(::command::StateCode::OK);
+        return reply;
+    }
     else return {};
 }

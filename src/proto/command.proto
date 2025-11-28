@@ -16,6 +16,9 @@ message Command
         GetCommand get = 2;
         DeleteCommand del = 3; // delete 是 proto 的关键字，不能用作标识符
         AppendCommand append = 4;
+        ConfigChangeCommand config_change = 5; // 配置变更命令（成员变更）
+        PullShardCommand pull_shard = 6; // 拉取分片数据（迁移）
+        DeleteShardCommand delete_shard = 7; // 删除分片数据（迁移完成）
     }
 }
 
@@ -41,6 +44,33 @@ message AppendCommand
     bytes value = 2;
 }
 
+// 配置变更命令（用于Raft成员变更）
+message ConfigChangeCommand
+{
+    enum ChangeType
+    {
+        ADD_PEER = 0;    // 添加节点
+        REMOVE_PEER = 1; // 移除节点
+    }
+    ChangeType change_type = 1;
+    uint32 peer_id = 2;  // 节点ID（在peers数组中的索引）
+    string peer_address = 3; // 节点地址（格式: "ip:port"），仅在ADD_PEER时使用
+}
+
+// 拉取分片数据命令（用于分片迁移）
+message PullShardCommand
+{
+    uint32 shard_id = 1; // 要拉取的分片ID
+    uint64 config_num = 2; // 配置版本号，用于验证
+}
+
+// 删除分片数据命令（迁移完成后清理）
+message DeleteShardCommand
+{
+    uint32 shard_id = 1; // 要删除的分片ID
+    uint64 config_num = 2; // 配置版本号，用于验证
+}
+
 enum StateCode
 {
     OK = 0;
@@ -54,6 +84,10 @@ enum StateCode
 
     // 数据库错误
     ErrDBError = 6;
+    
+    // 迁移相关错误
+    ErrShardMigrating = 7; // 分片正在迁移中
+    ErrShardNotFound = 8;   // 分片不存在
 }
 
 message PutReply
@@ -78,6 +112,20 @@ message AppendReply
     bytes new_value = 2;
 }
 
+// 拉取分片数据响应
+message PullShardReply
+{
+    StateCode Err = 1;
+    uint32 shard_id = 2;
+    map<string, string> data = 3; // 分片的所有key-value数据
+}
+
+// 删除分片数据响应
+message DeleteShardReply
+{
+    StateCode Err = 1;
+}
+
 // 定义 service
 service CommandServiceRPC
 {
@@ -85,4 +133,6 @@ service CommandServiceRPC
     rpc Get(GetCommand) returns (GetReply);
     rpc Delete(DeleteCommand) returns (DeleteReply);
     rpc Append(AppendCommand) returns (AppendReply);
+    rpc PullShard(PullShardCommand) returns (PullShardReply);
+    rpc DeleteShard(DeleteShardCommand) returns (DeleteShardReply);
 }

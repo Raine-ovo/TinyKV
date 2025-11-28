@@ -79,7 +79,17 @@ public:
     void Kill();
     bool Killed();
 
+    // 旧的成员变更方法（向后兼容，不推荐使用）
     void UpdatePeers(const std::vector<std::shared_ptr<RaftClient>>& peer_conns);
+
+    // 新的成员变更方法：通过配置变更命令来安全地变更成员
+    // 使用单服务器更改策略，一次只变更一个节点，避免脑裂
+    // 返回: (index, term, isLeader)
+    std::tuple<uint32_t, uint64_t, bool> ProposeConfigChange(
+        const ::command::ConfigChangeCommand& config_change);
+
+    // 应用配置变更（由状态机调用，当配置变更日志被提交后）
+    void ApplyConfigChange(const ::command::ConfigChangeCommand& config_change);
 
 private:
     std::shared_mutex _mutex;
@@ -111,6 +121,10 @@ private:
     // 领导需要维护的状态
     std::vector<uint64_t> _matchIndex; // 和 i 节点匹配的日志索引
     std::vector<uint64_t> _nextIndex; // 下一个要给 i 节点传输的日志索引
+
+    // 配置变更
+    bool _pendingConfigChange; // 是否有待处理的配置变更
+    uint64_t _configChangeIndex; // 配置变更日志的索引
 
     // 提交上层信息的通道
     std::shared_ptr<ApplyChan<ApplyMsg>> _applyChan;

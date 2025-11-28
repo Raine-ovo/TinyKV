@@ -78,6 +78,10 @@ void Raft::Make(const std::vector<std::shared_ptr<RaftClient>> &peers, const uin
 
     _matchIndex = std::move(std::vector<uint64_t>(peers.size(), 0));
     _nextIndex = std::move(std::vector<uint64_t>(peers.size(), 1));
+    
+    // 初始化配置变更相关状态
+    _pendingConfigChange = false;
+    _configChangeIndex = 0;
 
     _electTimer = std::make_shared<Timer>();
 
@@ -162,10 +166,119 @@ void Raft::UpdatePeers(const std::vector<std::shared_ptr<RaftClient>>& peer_conn
     _nextIndex.resize(new_size, _log_manager.lastIndex() + 1);
     _matchIndex.resize(new_size, 0);
 
-    if (_me > peer_conns.size())
+    if (_me >= peer_conns.size())
     {
         Kill();
     }
+}
+
+// 提议配置变更（通过日志来安全地变更成员）
+std::tuple<uint32_t, uint64_t, bool> Raft::ProposeConfigChange(
+    const ::command::ConfigChangeCommand& config_change)
+{
+    std::unique_lock<std::shared_mutex> lock(_mutex);
+    
+    uint32_t index = 0;
+    uint64_t term = _currentTerm;
+    bool isLeader = (_status == STATUS::LEADER);
+
+    if (!isLeader)
+    {
+        return {index, term, isLeader};
+    }
+
+    // 检查是否有待处理的配置变更
+    if (_pendingConfigChange)
+    {
+        LOG_WARN("Raft[{}] 有待处理的配置变更，拒绝新的配置变更请求", _me);
+        return {index, term, false}; // 返回false表示当前不能处理
+    }
+
+    // 创建配置变更命令
+    ::command::Command command;
+    auto* cmd = command.mutable_config_change();
+    *cmd = config_change;
+
+    // 追加配置变更日志
+    Entry config_log{term, command};
+    _log_manager.put(config_log);
+    
+    index = _log_manager.lastIndex();
+    _pendingConfigChange = true;
+    _configChangeIndex = index;
+
+    LOG_INFO("Raft[{}] 提议配置变更: type={}, peer_id={}, index={}", 
+        _me, 
+        config_change.change_type() == ::command::ConfigChangeCommand::ADD_PEER ? "ADD" : "REMOVE",
+        config_change.peer_id(),
+        index);
+
+    Persist();
+    
+    return {index, term, isLeader};
+}
+
+// 应用配置变更（当配置变更日志被提交后调用）
+void Raft::ApplyConfigChange(const ::command::ConfigChangeCommand& config_change)
+{
+    std::unique_lock<std::shared_mutex> lock(_mutex);
+
+    LOG_INFO("Raft[{}] 应用配置变更: type={}, peer_id={}", 
+        _me,
+        config_change.change_type() == ::command::ConfigChangeCommand::ADD_PEER ? "ADD" : "REMOVE",
+        config_change.peer_id());
+
+    if (config_change.change_type() == ::command::ConfigChangeCommand::ADD_PEER)
+    {
+        // 添加节点
+        // 注意：这里需要外部提供RaftClient，因为Raft层不应该知道如何创建连接
+        // 实际实现中，应该由上层（如KVServer）创建RaftClient后调用UpdatePeers
+        // 这里只是标记需要添加节点
+        LOG_INFO("Raft[{}] 需要添加节点: peer_id={}, address={}", 
+            _me, config_change.peer_id(), config_change.peer_address());
+        
+        // 如果peer_id超出当前peers大小，需要扩展
+        if (config_change.peer_id() >= _peers.size())
+        {
+            size_t old_size = _peers.size();
+            _peers.resize(config_change.peer_id() + 1, nullptr);
+            _nextIndex.resize(config_change.peer_id() + 1, _log_manager.lastIndex() + 1);
+            _matchIndex.resize(config_change.peer_id() + 1, 0);
+            
+            LOG_INFO("Raft[{}] 扩展peers数组: {} -> {}", _me, old_size, _peers.size());
+        }
+    }
+    else if (config_change.change_type() == ::command::ConfigChangeCommand::REMOVE_PEER)
+    {
+        // 移除节点
+        uint32_t peer_id = config_change.peer_id();
+        
+        if (peer_id < _peers.size())
+        {
+            // 将peer设置为nullptr（标记为移除）
+            _peers[peer_id] = nullptr;
+            
+            // 如果是自己，则退出
+            if (peer_id == _me)
+            {
+                LOG_WARN("Raft[{}] 自己被移除，退出集群", _me);
+                Kill();
+            }
+            else
+            {
+                LOG_INFO("Raft[{}] 移除节点: peer_id={}", _me, peer_id);
+            }
+        }
+    }
+
+    // 清除待处理标记
+    if (_configChangeIndex > 0 && _commitIndex >= _configChangeIndex)
+    {
+        _pendingConfigChange = false;
+        _configChangeIndex = 0;
+    }
+
+    Persist();
 }
 
 // 持久化

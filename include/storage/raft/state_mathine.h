@@ -7,6 +7,7 @@
 #include "proto/command.pb.h"
 #include "raft.h"
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <queue>
@@ -43,6 +44,10 @@ public:
     std::pair<StateCode, Result> submit(const ::command::Command& command);
 
     void UpdatePeers(const std::vector<std::shared_ptr<RaftClient>>& peer_conns);
+
+    // 提议配置变更（安全的成员变更方法）
+    // 返回: (StateCode, 是否成功)
+    std::pair<StateCode, bool> ProposeConfigChange(const ::command::ConfigChangeCommand& config_change);
 
 private:
     void readSnapshot(std::shared_ptr<Persister> persister);
@@ -82,6 +87,9 @@ private:
 
     // 上层服务
     std::shared_ptr<KVServiceInterface> _kvservice;
+
+    // 配置变更回调函数
+    std::function<void(const ::command::ConfigChangeCommand&)> _config_change_callback;
 };
 
 #endif

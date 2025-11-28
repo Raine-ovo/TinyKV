@@ -2,6 +2,7 @@
 #define KVSERVER_H
 
 #include "common/persister/persister.h"
+#include "common/shard/shard_manager.h"
 #include "common/storage/rocksdb_client.h"
 #include "discovery/zookeeper/zk_client.h"
 #include "kvservice/kvservice_interface.h"
@@ -21,7 +22,7 @@ class KVServer : std::enable_shared_from_this<KVServer>
 {
 public:
     KVServer(const std::string& ip, uint16_t port, const std::string& zk_ip, uint16_t zk_port,
-            const std::string& db_path, uint64_t max_raft_logs);
+            const std::string& db_path, uint64_t max_raft_logs, uint32_t num_shards = 0, uint32_t replica_count = 1);
     ~KVServer();
 
     void Start();
@@ -34,6 +35,13 @@ public:
 private:
     void connectPeers(const std::vector<std::string>& servers);
     void childWatcher(); // zookeeper 子节点变化监听
+    
+    // 处理配置变更（当配置变更被应用时调用）
+    void handleConfigChange(const ::command::ConfigChangeCommand& config_change);
+    
+    // 迁移分片数据（当分片重新分配时调用）
+    void migrateShards(const std::unordered_map<uint32_t, std::string>& old_shard_leaders,
+                       const std::unordered_map<uint32_t, std::string>& new_shard_leaders);
 
 private:
     // 网络层
@@ -53,6 +61,10 @@ private:
     std::shared_ptr<KVService> _service; // 服务层
     std::shared_ptr<RocksDBClient> _db; // 数据库
     std::shared_ptr<ZkClient> _zk_conn; // zk 客户端
+
+    // 分片相关
+    std::shared_ptr<ShardManager> _shard_manager;
+    uint32_t _num_shards;  // 分片数量，0表示禁用分片
 
     // raft 相关
     std::shared_ptr<KVStateMathine> _sm;
