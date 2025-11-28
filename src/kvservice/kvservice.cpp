@@ -159,6 +159,31 @@ void KVService::Get(::google::protobuf::RpcController* controller,
     
     auto [stateCode, result] = _sm->submit(command);
 
+    if (stateCode == ::command::StateCode::ErrWrongLeader) {
+        ::command::GetReply final_reply; bool forwarded_ok = false;
+        if (_shard_manager) {
+            uint32_t shard_id = _shard_manager->GetShard(key);
+            auto group = _shard_manager->GetShardGroup(shard_id);
+            for (const auto& node_name : group.nodes) {
+                if (node_name == _name) continue;
+                auto client = GetOrCreateClient(node_name);
+                auto r = client->Get(*request);
+                if (r.err() == ::command::StateCode::OK || r.err() == ::command::StateCode::ErrNoKey) { final_reply = r; forwarded_ok = true; break; }
+            }
+        }
+        if (!forwarded_ok) {
+            std::shared_lock<std::shared_mutex> lk(_mutex);
+            for (const auto& [node_name, client] : _node_clients) {
+                if (node_name == _name) continue;
+                auto r = client->Get(*request);
+                if (r.err() == ::command::StateCode::OK || r.err() == ::command::StateCode::ErrNoKey) { final_reply = r; forwarded_ok = true; break; }
+            }
+        }
+        if (forwarded_ok) { *response = final_reply; } else { *response = std::get<::command::GetReply>(result); response->set_err(::command::StateCode::ErrWrongLeader); }
+        done->Run();
+        return;
+    }
+
     *response = std::get<::command::GetReply>(result);
 
     done->Run();
@@ -204,6 +229,34 @@ void KVService::Put(::google::protobuf::RpcController* controller,
     *cmd = *request;
     
     auto [stateCode, result] = _sm->submit(command);
+
+    if (stateCode == ::command::StateCode::ErrWrongLeader) {
+        // 转发给其他节点重试，最终会落到真实的Raft Leader
+        ::command::PutReply final_reply; bool forwarded_ok = false;
+        // 优先遍历该分片组的所有节点
+        if (_shard_manager) {
+            uint32_t shard_id = _shard_manager->GetShard(key);
+            auto group = _shard_manager->GetShardGroup(shard_id);
+            for (const auto& node_name : group.nodes) {
+                if (node_name == _name) continue;
+                auto client = GetOrCreateClient(node_name);
+                auto r = client->Put(*request);
+                if (r.err() == ::command::StateCode::OK) { final_reply = r; forwarded_ok = true; break; }
+            }
+        }
+        // 兜底：遍历已建立的其它节点连接
+        if (!forwarded_ok) {
+            std::shared_lock<std::shared_mutex> lk(_mutex);
+            for (const auto& [node_name, client] : _node_clients) {
+                if (node_name == _name) continue;
+                auto r = client->Put(*request);
+                if (r.err() == ::command::StateCode::OK) { final_reply = r; forwarded_ok = true; break; }
+            }
+        }
+        if (forwarded_ok) { *response = final_reply; } else { *response = std::get<::command::PutReply>(result); response->set_err(::command::StateCode::ErrWrongLeader); }
+        done->Run();
+        return;
+    }
 
     *response = std::get<::command::PutReply>(result);
 
@@ -251,6 +304,31 @@ void KVService::Delete(::google::protobuf::RpcController* controller,
     
     auto [stateCode, result] = _sm->submit(command);
 
+    if (stateCode == ::command::StateCode::ErrWrongLeader) {
+        ::command::DeleteReply final_reply; bool forwarded_ok = false;
+        if (_shard_manager) {
+            uint32_t shard_id = _shard_manager->GetShard(key);
+            auto group = _shard_manager->GetShardGroup(shard_id);
+            for (const auto& node_name : group.nodes) {
+                if (node_name == _name) continue;
+                auto client = GetOrCreateClient(node_name);
+                auto r = client->Delete(*request);
+                if (r.err() == ::command::StateCode::OK || r.err() == ::command::StateCode::ErrNoKey) { final_reply = r; forwarded_ok = true; break; }
+            }
+        }
+        if (!forwarded_ok) {
+            std::shared_lock<std::shared_mutex> lk(_mutex);
+            for (const auto& [node_name, client] : _node_clients) {
+                if (node_name == _name) continue;
+                auto r = client->Delete(*request);
+                if (r.err() == ::command::StateCode::OK || r.err() == ::command::StateCode::ErrNoKey) { final_reply = r; forwarded_ok = true; break; }
+            }
+        }
+        if (forwarded_ok) { *response = final_reply; } else { *response = std::get<::command::DeleteReply>(result); response->set_err(::command::StateCode::ErrWrongLeader); }
+        done->Run();
+        return;
+    }
+
     *response = std::get<::command::DeleteReply>(result);
 
     done->Run();
@@ -296,6 +374,31 @@ void KVService::Append(::google::protobuf::RpcController* controller,
     *cmd = *request;
     
     auto [stateCode, result] = _sm->submit(command);
+
+    if (stateCode == ::command::StateCode::ErrWrongLeader) {
+        ::command::AppendReply final_reply; bool forwarded_ok = false;
+        if (_shard_manager) {
+            uint32_t shard_id = _shard_manager->GetShard(key);
+            auto group = _shard_manager->GetShardGroup(shard_id);
+            for (const auto& node_name : group.nodes) {
+                if (node_name == _name) continue;
+                auto client = GetOrCreateClient(node_name);
+                auto r = client->Append(*request);
+                if (r.err() == ::command::StateCode::OK) { final_reply = r; forwarded_ok = true; break; }
+            }
+        }
+        if (!forwarded_ok) {
+            std::shared_lock<std::shared_mutex> lk(_mutex);
+            for (const auto& [node_name, client] : _node_clients) {
+                if (node_name == _name) continue;
+                auto r = client->Append(*request);
+                if (r.err() == ::command::StateCode::OK) { final_reply = r; forwarded_ok = true; break; }
+            }
+        }
+        if (forwarded_ok) { *response = final_reply; } else { *response = std::get<::command::AppendReply>(result); response->set_err(::command::StateCode::ErrWrongLeader); }
+        done->Run();
+        return;
+    }
 
     *response = std::get<::command::AppendReply>(result);
 
@@ -396,7 +499,7 @@ void KVService::PullShard(::google::protobuf::RpcController* controller,
     
     // 导出分片数据
     auto get_shard_func = [this](const std::string& key) -> uint32_t {
-        return _shard_manager->GetShardForKey(key);
+        return _shard_manager->GetShard(key);
     };
     
     auto shard_data = _db->ExportShardData(shard_id, get_shard_func);
@@ -442,7 +545,7 @@ void KVService::DeleteShard(::google::protobuf::RpcController* controller,
     
     // 删除分片数据
     auto get_shard_func = [this](const std::string& key) -> uint32_t {
-        return _shard_manager->GetShardForKey(key);
+        return _shard_manager->GetShard(key);
     };
     
     bool success = _db->DeleteShardData(shard_id, get_shard_func);
