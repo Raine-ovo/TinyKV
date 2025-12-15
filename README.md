@@ -1,4 +1,4 @@
-# TinyKV
+# RaftStore
 
 ## 简介
 基于 C++20 的分布式键值存储系统，使用 Raft 算法、 ZooKeeper、RocksDB、Muduo 网络库、Protobuf 完成。支持 Raft 一致性、分片、副本高可用、动态成员变更与分片迁移等功能。
